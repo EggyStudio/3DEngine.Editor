@@ -1,10 +1,5 @@
 <Project>
   <PropertyGroup>
-    <!-- License and Repository -->
-    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/3DEngine/3DEngine.Editor</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/3DEngine/3DEngine.Editor</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
 
     <!-- Build Configuration -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
