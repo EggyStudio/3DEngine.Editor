@@ -1,0 +1,268 @@
+@page "/components/toggle-group"
+@using BlazorBlueprint.Icons.Lucide.Components
+
+<PageTitle>Toggle Group Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Toggle Group Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A set of two-state buttons that can be toggled on or off.
+            </p>
+        </div>
+    </div>
+
+    <!-- Single Selection -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Single Selection</h2>
+            <p class="text-sm text-muted-foreground">
+                Only one item can be selected at a time.
+            </p>
+        </div>
+        <BbToggleGroup TValue="string" @bind-Value="_alignment" Variant="ToggleVariant.Outline">
+            <BbToggleGroupItem TValue="string" Value="@("left")">
+                <LucideIcon Name="align-left" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+            <BbToggleGroupItem TValue="string" Value="@("center")">
+                <LucideIcon Name="align-center" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+            <BbToggleGroupItem TValue="string" Value="@("right")">
+                <LucideIcon Name="align-right" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+        </BbToggleGroup>
+        <p class="text-sm text-muted-foreground">Selected: @(_alignment ?? "none")</p>
+        <CodeBlock Source="Components/ToggleGroup/single-selection.txt" />
+    </div>
+
+    <!-- Multiple Selection -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Multiple Selection</h2>
+            <p class="text-sm text-muted-foreground">
+                Multiple items can be selected at once.
+            </p>
+        </div>
+        <BbToggleGroup TValue="string" @bind-Values="_formatting" Type="ToggleGroupType.Multiple" Variant="ToggleVariant.Outline">
+            <BbToggleGroupItem TValue="string" Value="@("bold")">
+                <LucideIcon Name="bold" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+            <BbToggleGroupItem TValue="string" Value="@("italic")">
+                <LucideIcon Name="italic" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+            <BbToggleGroupItem TValue="string" Value="@("underline")">
+                <LucideIcon Name="underline" Class="h-4 w-4" />
+            </BbToggleGroupItem>
+        </BbToggleGroup>
+        <p class="text-sm text-muted-foreground">Selected: @(string.Join(", ", _formatting ?? new List<string>()))</p>
+        <CodeBlock Source="Components/ToggleGroup/multiple-selection.txt" />
+    </div>
+
+    <!-- Variants -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Variants</h2>
+            <p class="text-sm text-muted-foreground">
+                Toggle groups come in default and outline variants.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm mb-2">Default:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Default">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+            <div>
+                <p class="text-sm mb-2">Outline:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Outline">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+        </div>
+        <CodeBlock Source="Components/ToggleGroup/variants.txt" />
+    </div>
+
+    <!-- Sizes -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Sizes</h2>
+            <p class="text-sm text-muted-foreground">
+                Toggle groups come in small, default, and large sizes.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm mb-2">Small:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Outline" Size="ToggleSize.Small">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-3 w-3" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-3 w-3" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-3 w-3" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+            <div>
+                <p class="text-sm mb-2">Default:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Outline" Size="ToggleSize.Default">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+            <div>
+                <p class="text-sm mb-2">Large:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Outline" Size="ToggleSize.Large">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-5 w-5" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-5 w-5" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-5 w-5" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+        </div>
+        <CodeBlock Source="Components/ToggleGroup/sizes.txt" />
+    </div>
+
+    <!-- Disabled -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled</h2>
+            <p class="text-sm text-muted-foreground">
+                Toggle group can be disabled entirely or individual items can be disabled.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm mb-2">Entire group disabled:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("center")" Variant="ToggleVariant.Outline" Disabled="true">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")">
+                        <LucideIcon Name="align-center" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+            <div>
+                <p class="text-sm mb-2">Single item disabled:</p>
+                <BbToggleGroup TValue="string" DefaultValue="@("left")" Variant="ToggleVariant.Outline">
+                    <BbToggleGroupItem TValue="string" Value="@("left")">
+                        <LucideIcon Name="align-left" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("center")" Disabled="true">
+                        <LucideIcon Name="align-center" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                    <BbToggleGroupItem TValue="string" Value="@("right")">
+                        <LucideIcon Name="align-right" Class="h-4 w-4" />
+                    </BbToggleGroupItem>
+                </BbToggleGroup>
+            </div>
+        </div>
+        <CodeBlock Source="Components/ToggleGroup/disabled.txt" />
+    </div>
+
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>Uses <code>role="group"</code> on the container for grouping semantics</AccessibilityItem>
+            <AccessibilityItem><code>aria-pressed</code> indicates toggle state on each item</AccessibilityItem>
+            <AccessibilityItem>Disabled items are announced as unavailable by assistive technologies</AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Move focus between toggle items">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Activate focused toggle">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="ToggleGroup&lt;TValue&gt;">
+                <ApiParameter Name="Value" Type="TValue?" Default="null">
+                    Currently selected value for single selection mode. Supports two-way binding with <code>@@bind-Value</code>.
+                </ApiParameter>
+                <ApiParameter Name="Values" Type="List&lt;TValue&gt;?" Default="null">
+                    Currently selected values for multiple selection mode. Supports two-way binding with <code>@@bind-Values</code>.
+                </ApiParameter>
+                <ApiParameter Name="DefaultValue" Type="TValue?" Default="null">
+                    Initial value on component initialization.
+                </ApiParameter>
+                <ApiParameter Name="Type" Type="ToggleGroupType" Default="Single">
+                    Determines if group allows Single or Multiple selections.
+                </ApiParameter>
+                <ApiParameter Name="Variant" Type="ToggleVariant" Default="Default">
+                    Visual style. Options: Default, Outline.
+                </ApiParameter>
+                <ApiParameter Name="Size" Type="ToggleSize" Default="Default">
+                    Button size. Options: Small, Default, Large.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Disables all items in the group.
+                </ApiParameter>
+                <ApiParameter Name="Class" Type="string?" Default="null">
+                    Additional CSS classes for the group container.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="ToggleGroupItem&lt;TValue&gt;">
+                <ApiParameter Name="Value" Type="TValue?" Default="null">
+                    The value associated with this item.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Disables this specific item.
+                </ApiParameter>
+                <ApiParameter Name="Class" Type="string?" Default="null">
+                    Additional CSS classes for this item.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string? _alignment = "center";
+    private List<string>? _formatting = new() { "bold" };
+}

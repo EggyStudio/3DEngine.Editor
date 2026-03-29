@@ -1,0 +1,320 @@
+@page "/components/card"
+@using BlazorBlueprint.Icons
+
+<PageTitle>Card Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Card Component</h1>
+            <p class="text-xl text-muted-foreground">
+                Displays structured content in a visually distinct container with sections for headers, content, and footers.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Card -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Card</h2>
+            <p class="text-sm text-muted-foreground">
+                A simple card with header, content, and footer sections.
+            </p>
+        </div>
+        <div class="grid gap-4" style="max-width: 400px;">
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Card Title</BbCardTitle>
+                    <BbCardDescription>Card description goes here.</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <p class="text-sm">This is the main content area of the card.</p>
+                </BbCardContent>
+                <BbCardFooter>
+                    <BbButton Size="ButtonSize.Small">Action</BbButton>
+                </BbCardFooter>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/basic.txt" />
+    </div>
+
+    <!-- Login Form Card -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Login Form Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Card component used for a login form (matching shadcn/ui example).
+            </p>
+        </div>
+        <div class="grid gap-4" style="max-width: 400px;">
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Login to your account</BbCardTitle>
+                    <BbCardDescription>Enter your email below to login to your account</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium" for="email">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="m@example.com"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium" for="password">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                        </div>
+                    </div>
+                </BbCardContent>
+                <BbCardFooter>
+                    <div class="flex flex-col w-full gap-2">
+                        <BbButton Class="w-full">Login</BbButton>
+                        <BbButton Variant="ButtonVariant.Outline" Class="w-full">
+                            Login with Google
+                        </BbButton>
+                    </div>
+                </BbCardFooter>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/login-form.txt" />
+    </div>
+
+    <!-- Multiple Cards -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Card Grid Layout</h2>
+            <p class="text-sm text-muted-foreground">
+                Multiple cards in a responsive grid layout.
+            </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Total Revenue</BbCardTitle>
+                    <BbCardDescription>January - December 2024</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="text-2xl font-bold">$45,231.89</div>
+                    <p class="text-xs text-muted-foreground">
+                        +20.1% from last year
+                    </p>
+                </BbCardContent>
+            </BbCard>
+
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Active Users</BbCardTitle>
+                    <BbCardDescription>Current active subscriptions</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="text-2xl font-bold">+2,350</div>
+                    <p class="text-xs text-muted-foreground">
+                        +180.1% from last month
+                    </p>
+                </BbCardContent>
+            </BbCard>
+
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>New Customers</BbCardTitle>
+                    <BbCardDescription>This month</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="text-2xl font-bold">+573</div>
+                    <p class="text-xs text-muted-foreground">
+                        +12.5% from last month
+                    </p>
+                </BbCardContent>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/grid-layout.txt" />
+    </div>
+
+    <!-- Card with Actions -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Card with Action Buttons</h2>
+            <p class="text-sm text-muted-foreground">
+                Cards with footer action buttons in different layouts.
+            </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Create Project</BbCardTitle>
+                    <BbCardDescription>Deploy your new project in one-click.</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <p class="text-sm text-muted-foreground">
+                        Your project will be created with default settings.
+                    </p>
+                </BbCardContent>
+                <BbCardFooter Class="gap-2">
+                    <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                    <BbButton>Deploy</BbButton>
+                </BbCardFooter>
+            </BbCard>
+
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Team Members</BbCardTitle>
+                    <BbCardDescription>Invite your team to collaborate.</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium">
+                                JD
+                            </div>
+                            <span class="text-sm">John Doe</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium">
+                                JS
+                            </div>
+                            <span class="text-sm">Jane Smith</span>
+                        </div>
+                    </div>
+                </BbCardContent>
+                <BbCardFooter>
+                    <BbButton Size="ButtonSize.Small" Class="w-full">
+                        Invite Team Member
+                    </BbButton>
+                </BbCardFooter>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/action-buttons.txt" />
+    </div>
+
+    <!-- Card without Footer -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Content-Only Cards</h2>
+            <p class="text-sm text-muted-foreground">
+                Cards without footers, suitable for displaying information.
+            </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2" style="max-width: 800px;">
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>Notifications</BbCardTitle>
+                    <BbCardDescription>You have 3 unread messages.</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="h-2 w-2 rounded-full bg-blue-500 mt-2"></div>
+                            <div class="flex-1 space-y-1">
+                                <p class="text-sm font-medium">Your call has been confirmed.</p>
+                                <p class="text-xs text-muted-foreground">5 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="h-2 w-2 rounded-full bg-blue-500 mt-2"></div>
+                            <div class="flex-1 space-y-1">
+                                <p class="text-sm font-medium">You have a new message!</p>
+                                <p class="text-xs text-muted-foreground">1 hour ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </BbCardContent>
+            </BbCard>
+
+            <BbCard>
+                <BbCardHeader>
+                    <BbCardTitle>System Status</BbCardTitle>
+                    <BbCardDescription>All systems operational.</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">API Status</span>
+                            <span class="text-xs text-green-600 font-medium">Operational</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Database</span>
+                            <span class="text-xs text-green-600 font-medium">Operational</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Storage</span>
+                            <span class="text-xs text-green-600 font-medium">Operational</span>
+                        </div>
+                    </div>
+                </BbCardContent>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/content-only.txt" />
+    </div>
+
+    <!-- Custom Styling -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Styling</h2>
+            <p class="text-sm text-muted-foreground">
+                Cards with custom CSS classes for extended styling.
+            </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2" style="max-width: 800px;">
+            <BbCard Class="border-2 border-primary">
+                <BbCardHeader>
+                    <BbCardTitle>Featured Card</BbCardTitle>
+                    <BbCardDescription>With custom border color</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <p class="text-sm">This card has a custom border using the Class parameter.</p>
+                </BbCardContent>
+            </BbCard>
+
+            <BbCard Class="shadow-lg">
+                <BbCardHeader>
+                    <BbCardTitle>Enhanced Shadow</BbCardTitle>
+                    <BbCardDescription>With larger shadow effect</BbCardDescription>
+                </BbCardHeader>
+                <BbCardContent>
+                    <p class="text-sm">This card uses an enhanced shadow for more depth.</p>
+                </BbCardContent>
+            </BbCard>
+        </div>
+
+        <CodeBlock Source="Components/Card/custom-styling.txt" />
+    </div>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                Semantic HTML structure with proper heading hierarchy
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Clear visual hierarchy with title, description, and content sections
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Color contrast designed for readability
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Responsive layout adapts to different screen sizes
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Dark mode compatible via CSS variables
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Keyboard navigation works naturally with interactive elements
+            </AccessibilityItem>
+        </AriaAttributes>
+    </AccessibilityList>
+
+</div>
+
+@code {
+    // No code-behind needed for this demo
+}

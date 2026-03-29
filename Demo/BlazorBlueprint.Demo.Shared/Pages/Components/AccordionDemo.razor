@@ -1,0 +1,283 @@
+@page "/components/accordion"
+
+<PageTitle>Accordion Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Accordion Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A vertically stacked set of interactive headings that each reveal a section of content.
+            </p>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Default</h2>
+                <p class="text-muted-foreground">
+                    A basic accordion with shadcn styling.
+                </p>
+            </div>
+
+        <BbAccordion Type="AccordionType.Single" Collapsible="true" Class="w-full">
+            <BbAccordionItem Value="item-1">
+                <BbAccordionTrigger>Is it customizable?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    Yes. It includes ARIA attributes and keyboard support.
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="item-2">
+                <BbAccordionTrigger>Is it styled?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    Yes. It comes with default styles that matches the other components' aesthetic.
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="item-3">
+                <BbAccordionTrigger>Is it animated?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    Yes. It's animated by default, but you can disable it if you prefer.
+                </BbAccordionContent>
+            </BbAccordionItem>
+        </BbAccordion>
+
+        <CodeBlock Source="Components/Accordion/default.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">FAQ Example</h2>
+                <p class="text-muted-foreground">
+                    Common use case for accordions.
+                </p>
+            </div>
+
+        <BbAccordion Type="AccordionType.Single" Collapsible="true" Class="w-full">
+            <BbAccordionItem Value="faq-1">
+                <BbAccordionTrigger>What payment methods do you accept?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    We accept all major credit cards (Visa, MasterCard, American Express),
+                    PayPal, and bank transfers for enterprise customers.
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="faq-2">
+                <BbAccordionTrigger>How long does shipping take?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    Standard shipping typically takes 5-7 business days. Express shipping
+                    options are available for 2-3 day delivery.
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="faq-3">
+                <BbAccordionTrigger>What is your return policy?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    We offer a 30-day money-back guarantee. Items must be returned in original
+                    condition with all packaging and accessories.
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="faq-4">
+                <BbAccordionTrigger>Do you offer technical support?</BbAccordionTrigger>
+                <BbAccordionContent>
+                    Yes! We provide 24/7 technical support via email and live chat. Phone
+                    support is available Monday-Friday, 9AM-5PM EST.
+                </BbAccordionContent>
+            </BbAccordionItem>
+        </BbAccordion>
+
+        <CodeBlock Source="Components/Accordion/faq.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Multiple Open Items</h2>
+                <p class="text-muted-foreground">
+                    Allow multiple items to be open simultaneously.
+                </p>
+            </div>
+
+        <BbAccordion Type="AccordionType.Multiple" Class="w-full">
+            <BbAccordionItem Value="features-1">
+                <BbAccordionTrigger>Performance</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <p class="mb-2">Blazing fast rendering with optimized algorithms.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Minimal re-renders</li>
+                        <li>Virtual scrolling support</li>
+                        <li>Lazy loading capabilities</li>
+                    </ul>
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="features-2">
+                <BbAccordionTrigger>Customization</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <p class="mb-2">Fully customizable to match your brand.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Theme system</li>
+                        <li>Custom styling</li>
+                        <li>Component composition</li>
+                    </ul>
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="features-3">
+                <BbAccordionTrigger>Accessibility</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <p class="mb-2">Built with accessibility in mind.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Includes ARIA attributes (aria-expanded, aria-controls)</li>
+                        <li>Semantic HTML structure</li>
+                        <li>Keyboard interaction support</li>
+                    </ul>
+                </BbAccordionContent>
+            </BbAccordionItem>
+        </BbAccordion>
+
+        <CodeBlock Source="Components/Accordion/multiple.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">With Rich Content</h2>
+                <p class="text-muted-foreground">
+                    Accordion items can contain any content.
+                </p>
+            </div>
+
+        <BbAccordion Type="AccordionType.Single" Collapsible="true" Class="w-full">
+            <BbAccordionItem Value="rich-1">
+                <BbAccordionTrigger>Step 1: Installation</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <div class="space-y-2">
+                        <p>Install the package using your preferred package manager:</p>
+                        <div class="rounded-md bg-muted p-4">
+                            <code class="text-sm">dotnet add package BlazorBlueprint</code>
+                        </div>
+                    </div>
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="rich-2">
+                <BbAccordionTrigger>Step 2: Configuration</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <div class="space-y-2">
+                        <p>Add the services to your Program.cs:</p>
+                        <div class="rounded-md bg-muted p-4">
+                            <code class="text-sm">
+                                builder.Services.AddBlazorBlueprint();
+                            </code>
+                        </div>
+                    </div>
+                </BbAccordionContent>
+            </BbAccordionItem>
+
+            <BbAccordionItem Value="rich-3">
+                <BbAccordionTrigger>Step 3: Usage</BbAccordionTrigger>
+                <BbAccordionContent>
+                    <div class="space-y-2">
+                        <p>Start using components in your pages:</p>
+                        <div class="rounded-md bg-muted p-4">
+                            <code class="text-sm">
+                                &lt;Button&gt;Click me&lt;/Button&gt;
+                            </code>
+                        </div>
+                    </div>
+                </BbAccordionContent>
+            </BbAccordionItem>
+        </BbAccordion>
+
+        <CodeBlock Source="Components/Accordion/rich-content.txt" />
+        </section>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-expanded</code> on trigger buttons indicates open/closed state
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-controls</code> on trigger references the associated content panel
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Content panels use <code class="text-xs bg-muted px-1 py-0.5 rounded">role="region"</code> with <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-labelledby</code> referencing the trigger
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Trigger buttons are wrapped in heading elements (default <code class="text-xs bg-muted px-1 py-0.5 rounded">h3</code>) for document structure
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Disabled items have the <code class="text-xs bg-muted px-1 py-0.5 rounded">disabled</code> attribute on the trigger button
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Toggle the focused accordion item">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to the next trigger">
+                <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to the previous trigger">
+                <BbKbd>ArrowUp</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to the first trigger">
+                <BbKbd>Home</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to the last trigger">
+                <BbKbd>End</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="BbAccordion">
+                <ApiParameter Name="Type" Type="AccordionType" Default="AccordionType.Single">
+                    Whether only one item can be open at a time (Single) or multiple items (Multiple).
+                </ApiParameter>
+                <ApiParameter Name="Value" Type="HashSet&lt;string&gt;?" Default="null">
+                    Controls which items are open (controlled mode). Supports two-way binding with <code>@@bind-Value</code>.
+                </ApiParameter>
+                <ApiParameter Name="DefaultValue" Type="HashSet&lt;string&gt;?" Default="null">
+                    Default open items in uncontrolled mode.
+                </ApiParameter>
+                <ApiParameter Name="Collapsible" Type="bool" Default="false">
+                    Whether all items can be collapsed in Single mode. When false, one item always remains open.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="BbAccordionItem">
+                <ApiParameter Name="Value" Type="string" Default="string.Empty">
+                    Unique identifier for this accordion item. Required.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Whether this item is disabled.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="BbAccordionTrigger">
+                <ApiParameter Name="As" Type="string" Default="&quot;h3&quot;">
+                    HTML heading element tag to wrap the trigger button.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="BbAccordionContent">
+                <ApiParameter Name="ForceMount" Type="bool" Default="true">
+                    Whether to keep content in the DOM when collapsed. Enables CSS animations.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+    </div>
+</div>
+
+@code {
+}

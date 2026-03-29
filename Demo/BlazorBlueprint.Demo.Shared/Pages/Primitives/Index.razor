@@ -1,0 +1,349 @@
+@page "/primitives"
+
+<PageTitle>Primitives - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-6xl">
+    <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">Primitives</h1>
+        <p class="text-xl text-muted-foreground">
+            Headless, unstyled components that provide behavior, accessibility, and state management.
+            Style them however you want with complete control.
+        </p>
+    </div>
+
+    <div class="space-y-6">
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">What are Primitives?</h2>
+                <p class="text-muted-foreground">
+                    Primitives are headless components that handle all the complex behavior, keyboard navigation,
+                    accessibility, and state management while providing zero styling. They give you complete control
+                    to build exactly what you need.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 border rounded-lg">
+                    <div class="flex items-start gap-2 mb-2">
+                        <span class="text-green-600 dark:text-green-400 text-lg">✓</span>
+                        <div>
+                            <h3 class="font-semibold">Built for Accessibility</h3>
+                            <p class="text-sm text-muted-foreground mt-1">
+                                Includes ARIA attributes, keyboard support, and semantic HTML structure
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border rounded-lg">
+                    <div class="flex items-start gap-2 mb-2">
+                        <span class="text-green-600 dark:text-green-400 text-lg">✓</span>
+                        <div>
+                            <h3 class="font-semibold">Completely Unstyled</h3>
+                            <p class="text-sm text-muted-foreground mt-1">
+                                No CSS, no opinions. Apply your own design system and styling
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border rounded-lg">
+                    <div class="flex items-start gap-2 mb-2">
+                        <span class="text-green-600 dark:text-green-400 text-lg">✓</span>
+                        <div>
+                            <h3 class="font-semibold">Composable</h3>
+                            <p class="text-sm text-muted-foreground mt-1">
+                                Build complex components by composing simple primitives together
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Available Primitives</h2>
+                <p class="text-muted-foreground">
+                    Click on any primitive to view demos, API documentation, and code examples.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Accordion -->
+                <a href="/primitives/accordion" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Accordion</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Vertically stacked sections of content that can be expanded or collapsed
+                    </p>
+                </a>
+
+                <!-- Alert Dialog -->
+                <a href="/primitives/alert-dialog" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Alert Dialog</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Modal requiring explicit acknowledgement, no dismiss via overlay or Escape
+                    </p>
+                </a>
+
+                <!-- Checkbox -->
+                <a href="/primitives/checkbox" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Checkbox</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Binary selection control with indeterminate state support
+                    </p>
+                </a>
+
+                <!-- Collapsible -->
+                <a href="/primitives/collapsible" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Collapsible</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Expandable content area with trigger control
+                    </p>
+                </a>
+
+                <!-- Combobox -->
+                <a href="/primitives/combobox" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Combobox</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Autocomplete input with dropdown suggestions and keyboard navigation
+                    </p>
+                </a>
+
+                <!-- Context Menu -->
+                <a href="/primitives/context-menu" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Context Menu</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Right-click context menu with keyboard navigation and positioning
+                    </p>
+                </a>
+
+                <!-- DataGrid -->
+                <a href="/primitives/datagrid" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">DataGrid</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Enterprise data grid with multi-column sorting, pagination, and selection
+                    </p>
+                </a>
+
+                <!-- Dialog -->
+                <a href="/primitives/dialog" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Dialog</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Modal window with overlay, focus trap, and escape handling
+                    </p>
+                </a>
+
+                <!-- Dropdown Menu -->
+                <a href="/primitives/dropdown-menu" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Dropdown Menu</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Menu with items, keyboard navigation, and positioning
+                    </p>
+                </a>
+
+                <!-- Hover Card -->
+                <a href="/primitives/hovercard" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Hover Card</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Rich content preview on hover with configurable delays
+                    </p>
+                </a>
+
+                <!-- Label -->
+                <a href="/primitives/label" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Label</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Accessible label element with automatic input association
+                    </p>
+                </a>
+
+                <!-- Menubar -->
+                <a href="/primitives/menubar" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Menubar</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Horizontal menubar with keyboard navigation and hover-to-switch
+                    </p>
+                </a>
+
+                <!-- Navigation Menu -->
+                <a href="/primitives/navigation-menu" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Navigation Menu</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Site navigation with hover dropdowns and close timers
+                    </p>
+                </a>
+
+                <!-- Popover -->
+                <a href="/primitives/popover" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Popover</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Floating content panel anchored to a trigger element
+                    </p>
+                </a>
+
+                <!-- Progress -->
+                <a href="/primitives/progress" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Progress</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Accessible progress bar with determinate and indeterminate states
+                    </p>
+                </a>
+
+                <!-- Radio Group -->
+                <a href="/primitives/radio-group" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Radio Group</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Mutually exclusive selection with arrow key navigation
+                    </p>
+                </a>
+
+                <!-- Scroll Area -->
+                <a href="/primitives/scroll-area" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Scroll Area</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Custom scrollbar with accessible ARIA scrollbar role and drag support
+                    </p>
+                </a>
+
+                <!-- Select -->
+                <a href="/primitives/select" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Select</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Dropdown selection menu with keyboard navigation and search
+                    </p>
+                </a>
+
+                <!-- Separator -->
+                <a href="/primitives/separator" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Separator</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Semantic or decorative divider with orientation support
+                    </p>
+                </a>
+
+                <!-- Sheet -->
+                <a href="/primitives/sheet" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Sheet</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Side panel that slides in from edge of viewport with overlay
+                    </p>
+                </a>
+
+                <!-- Slider -->
+                <a href="/primitives/slider" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Slider</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Range input with keyboard navigation and pointer drag support
+                    </p>
+                </a>
+
+                <!-- Sortable -->
+                <a href="/primitives/sortable" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Sortable</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Headless drag-and-drop sortable lists with Sortable.js
+                    </p>
+                </a>
+
+                <!-- Switch -->
+                <a href="/primitives/switch" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Switch</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Toggle control for binary on/off states
+                    </p>
+                </a>
+
+                <!-- Table -->
+                <a href="/primitives/table" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Table</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Data table with sorting, pagination, and selection
+                    </p>
+                </a>
+
+                <!-- Tabs -->
+                <a href="/primitives/tabs" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Tabs</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Tabbed interface with keyboard navigation and orientation support
+                    </p>
+                </a>
+
+                <!-- Toggle -->
+                <a href="/primitives/toggle" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Toggle</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Button with pressed/active state and aria-pressed support
+                    </p>
+                </a>
+
+                <!-- Toggle Group -->
+                <a href="/primitives/toggle-group" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Toggle Group</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Group of toggles with single or multiple selection and keyboard navigation
+                    </p>
+                </a>
+
+                <!-- Tooltip -->
+                <a href="/primitives/tooltip" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Tooltip</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Brief informational popup on hover or focus with positioning
+                    </p>
+                </a>
+
+                <!-- Tree View -->
+                <a href="/primitives/tree-view" class="group p-5 border rounded-lg hover:border-primary hover:bg-accent transition-colors no-underline">
+                    <h3 class="font-semibold text-lg mb-2 group-hover:text-primary">Tree View</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Hierarchical data display with expand/collapse and keyboard navigation
+                    </p>
+                </a>
+            </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Why Use Primitives?</h2>
+            </div>
+
+            <div class="rounded-lg border p-6 space-y-4 bg-muted/30">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <h3 class="font-semibold">Perfect For:</h3>
+                        <ul class="space-y-2 text-sm text-muted-foreground">
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-600 dark:text-green-400">✓</span>
+                                <span>Building custom design systems from scratch</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-600 dark:text-green-400">✓</span>
+                                <span>Implementing unique brand-specific designs</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-600 dark:text-green-400">✓</span>
+                                <span>Using your own CSS framework or methodology</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-600 dark:text-green-400">✓</span>
+                                <span>Maximum flexibility and control over appearance</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold">Need Styled Components?</h3>
+                        <p class="text-sm text-muted-foreground">
+                            If you want pre-styled components with beautiful defaults based on shadcn/ui design,
+                            check out our <a href="/components" class="text-primary hover:underline">styled components</a>.
+                            They're built on top of these same primitives.
+                        </p>
+                        <a href="/components" class="inline-flex items-center px-4 py-2 border rounded text-sm hover:bg-accent transition-colors no-underline">
+                            View Styled Components →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

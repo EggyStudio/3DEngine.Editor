@@ -1,0 +1,1023 @@
+@page "/components/dialog"
+@inject DialogService DialogService
+<PageTitle>Dialog Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">Dialog Component</h1>
+        <p class="text-xl text-muted-foreground">
+            A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+        </p>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Simple Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            A basic dialog with title, description, and action buttons.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Dialog
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Are you absolutely sure?</BbDialogTitle>
+                    <BbDialogDescription>
+                        This action cannot be undone. This will permanently delete your account
+                        and remove your data from our servers.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/simple.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Dialog with Footer</h2>
+        <p class="text-sm text-muted-foreground">
+            Dialog with action buttons in the footer using DialogFooter component.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Edit Profile
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Edit profile</BbDialogTitle>
+                    <BbDialogDescription>
+                        Make changes to your profile here. Click save when you're done.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="grid gap-4 py-4">
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <label for="name" class="text-right text-sm font-medium">
+                            Name
+                        </label>
+                        <input id="name"
+                               value="Pedro Duarte"
+                               class="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    </div>
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <label for="username" class="text-right text-sm font-medium">
+                            Username
+                        </label>
+                        <input id="username"
+                               value="@@peduarte"
+                               class="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    </div>
+                </div>
+
+                <BbDialogFooter>
+                    <button type="submit"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Save changes
+                    </button>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/with-footer.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Controlled Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            Control the dialog state programmatically using @@bind-Open.
+        </p>
+
+        <div class="flex gap-2">
+            <button @onclick="() => isDialogOpen = true"
+                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Dialog
+            </button>
+        </div>
+
+        <BbDialog @bind-Open="isDialogOpen">
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Controlled Dialog</BbDialogTitle>
+                    <BbDialogDescription>
+                        This dialog's open state is controlled from the parent component.
+                        You can programmatically open and close it.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="py-4">
+                    <p class="text-sm">
+                        Dialog is open: <strong>@isDialogOpen</strong>
+                    </p>
+                </div>
+
+                <BbDialogFooter>
+                    <button @onclick="() => isDialogOpen = false"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Cancel
+                    </button>
+                    <button @onclick="HandleSave"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Save
+                    </button>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/controlled.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Custom Width</h2>
+        <p class="text-sm text-muted-foreground">
+            Customize the dialog width using the Class parameter.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Wide Dialog
+            </BbDialogTrigger>
+
+            <BbDialogContent Class="max-w-3xl">
+                <BbDialogHeader>
+                    <BbDialogTitle>Wide Dialog</BbDialogTitle>
+                    <BbDialogDescription>
+                        This dialog uses a custom max-width class to be wider than the default.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="py-4">
+                    <p class="text-sm">
+                        You can customize the dialog width by passing additional classes to the DialogContent component.
+                        This example uses <code class="bg-muted px-1 py-0.5 rounded">max-w-3xl</code> instead of the default <code class="bg-muted px-1 py-0.5 rounded">max-w-lg</code>.
+                    </p>
+                </div>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/custom-width.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Without Close Button</h2>
+        <p class="text-sm text-muted-foreground">
+            Hide the default close button using ShowClose="false".
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Dialog
+            </BbDialogTrigger>
+
+            <BbDialogContent ShowClose="false">
+                <BbDialogHeader>
+                    <BbDialogTitle>Confirm Action</BbDialogTitle>
+                    <BbDialogDescription>
+                        This dialog doesn't have a close button in the top-right corner.
+                        You must use one of the action buttons or press Escape to close.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <BbDialogFooter Class="mt-4">
+                    <BlazorBlueprint.Primitives.Dialog.BbDialogClose class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Cancel
+                    </BlazorBlueprint.Primitives.Dialog.BbDialogClose>
+                    <BlazorBlueprint.Primitives.Dialog.BbDialogClose class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Confirm
+                    </BlazorBlueprint.Primitives.Dialog.BbDialogClose>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/without-close.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">AsChild Pattern</h2>
+        <p class="text-sm text-muted-foreground">
+            Use AsChild to compose triggers with your own styled Button components instead of inline styles.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Without AsChild -->
+            <div class="space-y-3 p-4 border rounded-lg">
+                <h3 class="text-lg font-medium">Without AsChild</h3>
+                <p class="text-sm text-muted-foreground">
+                    DialogTrigger renders its own button element with inline classes.
+                </p>
+                <BbDialog>
+                    <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Open Dialog
+                    </BbDialogTrigger>
+                    <BbDialogContent>
+                        <BbDialogHeader>
+                            <BbDialogTitle>Without AsChild</BbDialogTitle>
+                            <BbDialogDescription>
+                                This dialog uses inline CSS classes on the trigger.
+                            </BbDialogDescription>
+                        </BbDialogHeader>
+                    </BbDialogContent>
+                </BbDialog>
+            </div>
+
+            <!-- With AsChild -->
+            <div class="space-y-3 p-4 border rounded-lg">
+                <h3 class="text-lg font-medium">With AsChild</h3>
+                <p class="text-sm text-muted-foreground">
+                    Button component receives trigger behavior via TriggerContext.
+                </p>
+                <BbDialog>
+                    <BbDialogTrigger>
+                        <BbButton Variant="ButtonVariant.Destructive">
+                            <LucideIcon Name="trash-2" Size="16" />
+                            Delete Account
+                        </BbButton>
+                    </BbDialogTrigger>
+                    <BbDialogContent>
+                        <BbDialogHeader>
+                            <BbDialogTitle>Delete Account</BbDialogTitle>
+                            <BbDialogDescription>
+                                This action cannot be undone. This will permanently delete your account.
+                            </BbDialogDescription>
+                        </BbDialogHeader>
+                        <BbDialogFooter>
+                            <BbDialogClose>
+                                <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                            </BbDialogClose>
+                            <BbButton Variant="ButtonVariant.Destructive">Delete</BbButton>
+                        </BbDialogFooter>
+                    </BbDialogContent>
+                </BbDialog>
+            </div>
+        </div>
+
+        <CodeBlock Source="Components/Dialog/as-child.txt" />
+
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Dropdown Controls in Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            Dialog containing Select, Combobox, and MultiSelect controls. Tests nested portal behavior
+            where each dropdown renders its floating content above the dialog overlay.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Dialog with Dropdowns
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Nested Dropdown Controls</BbDialogTitle>
+                    <BbDialogDescription>
+                        Select, Combobox, and MultiSelect all use nested portals to render above the dialog.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="grid gap-4 py-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Select</label>
+                        <BbSelect @bind-Value="selectedDialogFruit" TValue="string" Class="w-full">
+                            <BbSelectTrigger>
+                                <BbSelectValue Placeholder="Select a fruit..." />
+                            </BbSelectTrigger>
+                            <BbSelectContent>
+                                <BbSelectItem Value="@("apple")" Text="Apple" TValue="string">Apple</BbSelectItem>
+                                <BbSelectItem Value="@("banana")" Text="Banana" TValue="string">Banana</BbSelectItem>
+                                <BbSelectItem Value="@("blueberry")" Text="Blueberry" TValue="string">Blueberry</BbSelectItem>
+                                <BbSelectItem Value="@("grapes")" Text="Grapes" TValue="string">Grapes</BbSelectItem>
+                                <BbSelectItem Value="@("pineapple")" Text="Pineapple" TValue="string">Pineapple</BbSelectItem>
+                            </BbSelectContent>
+                        </BbSelect>
+                        <p class="text-xs text-muted-foreground">Value: @(selectedDialogFruit ?? "none")</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Combobox</label>
+                        <BbCombobox TValue="string"
+                                  Options="comboboxFrameworks"
+                                  @bind-Value="selectedComboboxFramework"
+                                  Placeholder="Select framework..."
+                                  SearchPlaceholder="Search framework..."
+                                  EmptyMessage="No framework found."
+                                  MatchTriggerWidth="true" />
+                        <p class="text-xs text-muted-foreground">Value: @(selectedComboboxFramework ?? "none")</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">MultiSelect</label>
+                        <BbMultiSelect TValue="string"
+                                     Options="multiSelectTechnologies"
+                                     @bind-Values="selectedTechnologies"
+                                     Placeholder="Select technologies..."
+                                     SearchPlaceholder="Search technologies..."
+                                     EmptyMessage="No technologies found."
+                                     MatchTriggerWidth="true" />
+                        <p class="text-xs text-muted-foreground">Values: @(selectedTechnologies?.Any() == true ? string.Join(", ", selectedTechnologies) : "none")</p>
+                    </div>
+                </div>
+
+                <BbDialogFooter>
+                    <BlazorBlueprint.Primitives.Dialog.BbDialogClose class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Cancel
+                    </BlazorBlueprint.Primitives.Dialog.BbDialogClose>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Confirm
+                    </button>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/dropdown-controls.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">DatePicker in Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            DatePicker inside a Dialog. The calendar popover renders above the dialog overlay
+            using fixed positioning and elevated z-index.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Dialog with DatePicker
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Schedule Event</BbDialogTitle>
+                    <BbDialogDescription>
+                        Pick a date for the event using the DatePicker below.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="grid gap-4 py-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Event Date</label>
+                        <BbDatePicker @bind-Value="dialogDatePickerValue" Class="w-full" />
+                    </div>
+                </div>
+
+                <BbDialogFooter>
+                    <BlazorBlueprint.Primitives.Dialog.BbDialogClose class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Cancel
+                    </BlazorBlueprint.Primitives.Dialog.BbDialogClose>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                        Confirm
+                    </button>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/datepicker.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Confirm Service <span class="text-xs font-normal text-primary bg-primary/10 px-1.5 py-0.5 rounded">New</span></h2>
+        <p class="text-sm text-muted-foreground">
+            Use <code>DialogService.Confirm()</code> for one-line programmatic confirm dialogs.
+            No markup, no state variables — just an async call that returns <code>true</code> or <code>false</code>.
+        </p>
+
+        <div class="flex items-center gap-4">
+            <BbButton OnClick="HandleConfirmDelete">Delete Item</BbButton>
+            <BbButton Variant="ButtonVariant.Destructive" OnClick="HandleDestructiveDelete">Destructive Delete</BbButton>
+            <span class="text-sm text-muted-foreground">Result: @confirmResult</span>
+        </div>
+
+        <CodeBlock Source="Components/Dialog/confirm-service.txt" />
+    </div>
+
+    <div class="mt-10 space-y-4">
+        <h2 class="text-2xl font-semibold">
+            Alert Service
+            <span class="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-xs font-normal">
+                New
+            </span>
+        </h2>
+
+        <p class="text-muted-foreground text-sm">
+            Use <code>DialogService.Alert()</code> for simple acknowledgment dialogs.
+            Returns a <code>Task</code> that completes when the user clicks OK.
+        </p>
+
+        <div class="flex items-center gap-4">
+            <BbButton OnClick="HandleAlert">
+                Show Alert
+            </BbButton>
+
+            <span class="text-muted-foreground text-sm">
+                Status: @alertStatus
+            </span>
+        </div>
+
+        <CodeBlock Source="Components/Dialog/alert-service.txt" />
+    </div>
+
+    <div class="mt-10 space-y-4">
+        <h2 class="text-2xl font-semibold">
+            Prompt Service
+            <span class="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-xs font-normal">
+                New
+            </span>
+        </h2>
+
+        <p class="text-muted-foreground text-sm">
+            Use <code>DialogService.Prompt()</code> to collect text input asynchronously.
+            Returns <code>string?</code>.
+        </p>
+
+        <div class="flex items-center gap-4">
+            <BbButton OnClick="HandlePrompt">
+                Rename File
+            </BbButton>
+
+            <span class="text-muted-foreground text-sm">
+                Result: @promptResult
+            </span>
+        </div>
+
+        <CodeBlock Source="Components/Dialog/prompt-service.txt" />
+    </div>
+
+    <div class="mt-10 space-y-4">
+        <h2 class="text-2xl font-semibold">
+            Custom Component Dialog
+            <span class="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-xs font-normal">
+                New
+            </span>
+        </h2>
+
+        <p class="text-muted-foreground text-sm">
+            Use <code>DialogService.Open&lt;TComponent&gt;()</code> to render a fully custom dialog component.
+            Returns a <code>DialogResult</code>.
+        </p>
+
+        <div class="flex items-center gap-4">
+            <BbButton OnClick="HandleCustomDialog">
+                Edit User
+            </BbButton>
+
+            <span class="text-muted-foreground text-sm">
+                Result: @customResult
+            </span>
+        </div>
+
+        <CodeBlock Source="Components/Dialog/custom-service.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Form in Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            Dialog with bound input fields. Typing should feel instant with no flicker — keyboard events
+            are handled in JavaScript, and only Escape triggers a C# interop call.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger>
+                <BbButton>Open Form Dialog</BbButton>
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Create Account</BbDialogTitle>
+                    <BbDialogDescription>
+                        Fill in the details below to create a new account.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="grid gap-4 py-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">First Name</label>
+                        <BbInput @bind-Value="formFirstName" Placeholder="Enter first name..." />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Last Name</label>
+                        <BbInput @bind-Value="formLastName" Placeholder="Enter last name..." />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Email</label>
+                        <BbInput @bind-Value="formEmail" Type="InputType.Email" Placeholder="you@example.com" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Bio</label>
+                        <BbTextarea @bind-Value="formBio" Placeholder="Tell us about yourself..." />
+                    </div>
+                </div>
+
+                <BbDialogFooter>
+                    <BbDialogClose>
+                        <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                    </BbDialogClose>
+                    <BbButton OnClick="HandleCreateAccount">Create Account</BbButton>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/form-in-dialog.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Nested Dialog</h2>
+        <p class="text-sm text-muted-foreground">
+            A dialog that opens another dialog. Pressing Escape should close only the innermost dialog.
+            Press Escape again to close the outer dialog.
+        </p>
+
+        <BbDialog @bind-Open="outerDialogOpen">
+            <BbDialogTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Outer Dialog</BbButton>
+            </BbDialogTrigger>
+
+            <BbDialogContent>
+                <BbDialogHeader>
+                    <BbDialogTitle>Outer Dialog</BbDialogTitle>
+                    <BbDialogDescription>
+                        This is the outer dialog. Click the button below to open a nested dialog inside.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+
+                <div class="py-4 space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium">Outer Input</label>
+                        <BbInput @bind-Value="outerDialogInput" Placeholder="Type here..." />
+                    </div>
+
+                    <BbDialog @bind-Open="innerDialogOpen">
+                        <BbDialogTrigger>
+                            <BbButton Variant="ButtonVariant.Secondary">Open Inner Dialog</BbButton>
+                        </BbDialogTrigger>
+
+                        <BbDialogContent>
+                            <BbDialogHeader>
+                                <BbDialogTitle>Inner Dialog</BbDialogTitle>
+                                <BbDialogDescription>
+                                    This is the nested inner dialog. Press Escape — only this dialog should close.
+                                </BbDialogDescription>
+                            </BbDialogHeader>
+
+                            <div class="py-4 space-y-2">
+                                <label class="text-sm font-medium">Inner Input</label>
+                                <BbInput @bind-Value="innerDialogInput" Placeholder="Type in the inner dialog..." />
+                            </div>
+
+                            <BbDialogFooter>
+                                <BbDialogClose>
+                                    <BbButton Variant="ButtonVariant.Outline">Close Inner</BbButton>
+                                </BbDialogClose>
+                            </BbDialogFooter>
+                        </BbDialogContent>
+                    </BbDialog>
+                </div>
+
+                <BbDialogFooter>
+                    <BbDialogClose>
+                        <BbButton Variant="ButtonVariant.Outline">Close Outer</BbButton>
+                    </BbDialogClose>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/nested-dialog.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Non-Dismissible Overlay</h2>
+        <p class="text-sm text-muted-foreground">
+            Set <code class="bg-muted px-1 py-0.5 rounded">CloseOnOverlayClick="false"</code> to prevent the dialog from closing when the backdrop is clicked.
+            The user must use an explicit action button or press Escape to close.
+        </p>
+
+        <BbDialog>
+            <BbDialogTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Dialog</BbButton>
+            </BbDialogTrigger>
+
+            <BbDialogContent CloseOnOverlayClick="false">
+                <BbDialogHeader>
+                    <BbDialogTitle>Non-Dismissible</BbDialogTitle>
+                    <BbDialogDescription>
+                        Clicking the backdrop will not close this dialog. Use the button below or press Escape.
+                    </BbDialogDescription>
+                </BbDialogHeader>
+                <BbDialogFooter Class="mt-4">
+                    <BbDialogClose>
+                        <BbButton>Got it</BbButton>
+                    </BbDialogClose>
+                </BbDialogFooter>
+            </BbDialogContent>
+        </BbDialog>
+
+        <CodeBlock Source="Components/Dialog/non-dismissible.txt" />
+    </div>
+
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>Focus is automatically trapped within the dialog</AccessibilityItem>
+            <AccessibilityItem>Includes role="dialog" and aria-modal attributes</AccessibilityItem>
+            <AccessibilityItem>Scroll lock on body when dialog is open</AccessibilityItem>
+            <AccessibilityItem>Respects prefers-reduced-motion for animations</AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Close the dialog">
+                <BbKbd>Escape</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to next element">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to previous element">
+                <BbKbd>Shift+Tab</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="Dialog">
+                <ApiParameter Name="Open" Type="bool?" Default="null">
+                    Controls whether the dialog is open (controlled mode). When null, the dialog manages its own state.
+                </ApiParameter>
+                <ApiParameter Name="OpenChanged" Type="EventCallback&lt;bool&gt;">
+                    Two-way binding callback for the open state. Use with <code>@@bind-Open</code>.
+                </ApiParameter>
+                <ApiParameter Name="DefaultOpen" Type="bool" Default="false">
+                    Default open state when in uncontrolled mode.
+                </ApiParameter>
+                <ApiParameter Name="Modal" Type="bool" Default="true">
+                    Whether the dialog is modal. Modal dialogs trap focus and lock scroll.
+                </ApiParameter>
+                <ApiParameter Name="OnOpenChange" Type="EventCallback&lt;bool&gt;">
+                    Event callback invoked when the dialog open state changes.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogContent">
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes to apply to the dialog content container.
+                </ApiParameter>
+                <ApiParameter Name="ShowClose" Type="bool" Default="true">
+                    Whether to show the close button (X icon).
+                </ApiParameter>
+                <ApiParameter Name="CloseOnOverlayClick" Type="bool" Default="true">
+                    Whether clicking the backdrop overlay should close the dialog.
+                </ApiParameter>
+                <ApiParameter Name="CloseOnEscape" Type="bool" Default="true">
+                    Whether pressing Escape should close the dialog.
+                </ApiParameter>
+                <ApiParameter Name="TrapFocus" Type="bool" Default="true">
+                    Whether to trap focus within the dialog.
+                </ApiParameter>
+                <ApiParameter Name="LockScroll" Type="bool" Default="true">
+                    Whether to lock body scroll when dialog is open.
+                </ApiParameter>
+                <ApiParameter Name="Container" Type="string?">
+                    Render inline within a named container instead of portaling to the document body.
+                </ApiParameter>
+                <ApiParameter Name="OnEscapeKeyDown" Type="EventCallback&lt;KeyboardEventArgs&gt;">
+                    Event callback invoked when the Escape key is pressed inside the dialog.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogTrigger">
+                <ApiParameter Name="AsChild" Type="bool" Default="true">
+                    When true, passes trigger behavior to child components instead of rendering its own button.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogClose">
+                <ApiParameter Name="AsChild" Type="bool" Default="true">
+                    When true, passes close behavior to child components instead of rendering its own button.
+                </ApiParameter>
+                <ApiParameter Name="OnClick" Type="EventCallback&lt;MouseEventArgs&gt;">
+                    Custom click handler invoked after the dialog is closed.
+                </ApiParameter>
+                <ApiParameter Name="PreventClose" Type="bool" Default="false">
+                    When true, prevents the default close behavior. Useful for validation before closing.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogHeader">
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes for the header container.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogFooter">
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes for the footer container.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogTitle">
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes for the title element.
+                </ApiParameter>
+                <ApiParameter Name="As" Type="string" Default="&quot;h2&quot;">
+                    The HTML element tag to render for the title.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogDescription">
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes for the description element.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <!-- DialogService API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">DialogService API</h2>
+            <p class="text-muted-foreground">Programmatic dialog methods available via dependency injection.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="DialogService">
+                <ApiParameter Name="ConfirmAsync()" Type="Task&lt;ConfirmDialogResult&gt;">
+                    Shows a confirm dialog. Returns a result with <code>Confirmed</code> (<code>bool</code>) property.
+                </ApiParameter>
+                <ApiParameter Name="AlertAsync()" Type="Task&lt;DialogResult&gt;">
+                    Shows an alert dialog with a single acknowledgment button. Cannot be dismissed via backdrop or Escape.
+                </ApiParameter>
+                <ApiParameter Name="PromptAsync()" Type="Task&lt;PromptDialogResult&gt;">
+                    Shows a prompt dialog that collects text input. Returns a result with <code>Value</code> (<code>string?</code>) property.
+                </ApiParameter>
+                <ApiParameter Name="OpenAsync&lt;T&gt;()" Type="Task&lt;DialogResult&gt;">
+                    Opens a custom component inside a dialog. The component receives <code>IDialogReference</code> as a cascading parameter.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="ConfirmDialogOptions">
+                <ApiParameter Name="ConfirmText" Type="string" Default="&quot;Continue&quot;">
+                    The label for the confirm button.
+                </ApiParameter>
+                <ApiParameter Name="CancelText" Type="string" Default="&quot;Cancel&quot;">
+                    The label for the cancel button.
+                </ApiParameter>
+                <ApiParameter Name="Destructive" Type="bool" Default="false">
+                    Whether the confirm button should use the destructive variant.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="AlertDialogOptions">
+                <ApiParameter Name="ButtonText" Type="string" Default="&quot;OK&quot;">
+                    The label for the acknowledgment button.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="PromptDialogOptions">
+                <ApiParameter Name="ConfirmText" Type="string" Default="&quot;OK&quot;">
+                    The label for the confirm button.
+                </ApiParameter>
+                <ApiParameter Name="CancelText" Type="string" Default="&quot;Cancel&quot;">
+                    The label for the cancel button.
+                </ApiParameter>
+                <ApiParameter Name="DefaultValue" Type="string?">
+                    The initial value of the input field.
+                </ApiParameter>
+                <ApiParameter Name="Placeholder" Type="string?">
+                    Placeholder text displayed in the input field.
+                </ApiParameter>
+                <ApiParameter Name="Required" Type="bool" Default="false">
+                    Whether the input field is required. Disables the confirm button when empty.
+                </ApiParameter>
+                <ApiParameter Name="MaxLength" Type="int?">
+                    Maximum allowed length of the input value.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DialogOpenOptions">
+                <ApiParameter Name="Title" Type="string?">
+                    Optional dialog title. If null, the component may render its own header.
+                </ApiParameter>
+                <ApiParameter Name="ShowClose" Type="bool" Default="true">
+                    Whether the close (X) button should be displayed.
+                </ApiParameter>
+                <ApiParameter Name="Size" Type="DialogSize" Default="DialogSize.Default">
+                    Controls the dialog width preset. Options: <code>Small</code>, <code>Default</code>, <code>Large</code>, <code>ExtraLarge</code>, <code>Full</code>.
+                </ApiParameter>
+                <ApiParameter Name="PreventClose" Type="bool" Default="false">
+                    Prevents closing via Escape key or backdrop click.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="IDialogReference">
+                <ApiParameter Name="CloseAsync()" Type="Task">
+                    Closes the dialog with a specified <code>DialogResult</code>. Use <code>DialogResult.Ok(data)</code> to return data.
+                </ApiParameter>
+                <ApiParameter Name="CancelAsync()" Type="Task">
+                    Cancels the dialog. Equivalent to closing with <code>DialogResult.Cancel()</code>.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="The dialog close button aria label is configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Close", "Close", "Aria label for the close button"),
+        })"
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.Dialog.Close = ""Schließen"";
+});")" />
+</div>
+
+@code {
+    private bool isDialogOpen = false;
+    private DateTime? dialogDatePickerValue;
+    private string? selectedComboboxFramework;
+    private string? selectedDialogFruit;
+    private IEnumerable<string>? selectedTechnologies = new List<string>();
+
+    private string confirmResult = "None";
+    private string alertStatus = "Idle";
+    private string promptResult = "-";
+    private string customResult = "-";
+
+    // Form in Dialog
+    private string? formFirstName;
+    private string? formLastName;
+    private string? formEmail;
+    private string? formBio;
+
+    // Nested Dialog
+    private bool outerDialogOpen;
+    private bool innerDialogOpen;
+    private string? outerDialogInput;
+    private string? innerDialogInput;
+
+    private readonly SelectOption<string>[] multiSelectTechnologies =
+    [
+        new("Blazor", "Blazor"),
+        new("React", "React"),
+        new("Vue", "Vue"),
+        new("Angular", "Angular"),
+        new("Svelte", "Svelte"),
+        new("Next.js", "Next.js"),
+        new("Nuxt", "Nuxt"),
+        new("SolidJS", "SolidJS"),
+        new("Astro", "Astro"),
+        new("Remix", "Remix")
+    ];
+
+    private readonly SelectOption<string>[] comboboxFrameworks =
+    [
+        new("blazor", "Blazor"),
+        new("react", "React"),
+        new("vue", "Vue"),
+        new("angular", "Angular"),
+        new("svelte", "Svelte"),
+        new("nextjs", "Next.js"),
+        new("nuxt", "Nuxt")
+    ];
+
+    private void HandleSave()
+    {
+        // Handle save logic
+        isDialogOpen = false;
+    }
+
+    private void HandleCreateAccount()
+    {
+        // Handle account creation
+    }
+
+    private string GetComboboxFrameworkLabel(string? value) =>
+        comboboxFrameworks.FirstOrDefault(f => f.Value == value)?.Text ?? value ?? "";
+
+    private async Task HandleConfirmDelete()
+    {
+        var result = await DialogService.ConfirmAsync(
+            "Delete item?",
+            "This action cannot be undone. The item will be permanently removed.");
+
+        confirmResult = result.Confirmed ? "Confirmed" : "Cancelled";
+    }
+
+    private async Task HandleDestructiveDelete()
+    {
+        var data = await DialogService.ConfirmAsync(
+            "Delete item?",
+            "This action cannot be undone.",
+            new ConfirmDialogOptions
+            {
+                ConfirmText = "Yes, delete",
+                CancelText = "Keep it",
+                Destructive = true
+            });
+
+        confirmResult = data.Confirmed ? "Deleted!" : "Kept";
+    }
+
+    private async Task HandleAlert()
+    {
+        alertStatus = "Waiting...";
+        await DialogService.AlertAsync(
+            "Session Expired",
+            "Please log in again.");
+
+        alertStatus = "Acknowledged";
+    }
+
+    private async Task HandlePrompt()
+    {
+        var name = await DialogService.PromptAsync(
+            "Rename File",
+            "Enter a new file name:",
+            new PromptDialogOptions
+            {
+                DefaultValue = "document.txt",
+                Placeholder = "file-name.txt",
+                Required = true,
+                MaxLength = 50
+            });
+
+        promptResult = name.Value ?? "Cancelled";
+    }
+
+    private async Task HandleCustomDialog()
+    {
+        var result = await DialogService.OpenAsync<EditUserDemoComponent>(
+            new Dictionary<string, object?>
+            {
+                ["UserId"] = 42
+            },
+            new DialogOpenOptions
+            {
+                Title = "Edit User",
+                Size = DialogSize.Large
+            });
+
+        if (!result.Cancelled)
+        {
+            var data = result.GetData<UserDto>();
+            customResult = $"Saved: {data}";
+        }
+        else
+        {
+            customResult = "Cancelled";
+        }
+    }
+
+    public sealed class EditUserDemoComponent : ComponentBase
+    {
+        [Parameter] public int UserId { get; set; }
+
+        [CascadingParameter]
+        public IDialogReference DialogRef { get; set; } = default!;
+
+        private string? userName;
+        private string? userEmail;
+
+        protected override void OnInitialized()
+        {
+            // Simulate loading user data
+            userName = $"User {UserId}";
+            userEmail = "example@company.com";
+        }
+
+        private Task Save()
+        {
+            var dto = new UserDto(
+                UserId,
+                userName ?? string.Empty,
+                userEmail ?? string.Empty);
+
+            return DialogRef.CloseAsync(DialogResult.Ok(dto));
+        }
+
+        private Task Cancel()
+            => DialogRef.CancelAsync();
+
+        protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
+        {
+            <div class="space-y-4">
+                <div>Editing User @UserId</div>
+                <BbInput @bind-Value="userName" Placeholder="Name" />
+                <BbInput @bind-Value="userEmail" Placeholder="Email" Type="InputType.Email" />
+                <div class="flex justify-end gap-2">
+                    <BbButton Variant="ButtonVariant.Outline" OnClick="Cancel">Cancel</BbButton>
+                    <BbButton OnClick="Save">Save</BbButton>
+                </div>
+            </div>
+        }
+    }
+
+    public sealed record UserDto(int Id, string Name, string Email);
+}

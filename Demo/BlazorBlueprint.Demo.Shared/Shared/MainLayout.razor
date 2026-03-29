@@ -1,0 +1,27 @@
+@inherits LayoutComponentBase
+@using BlazorBlueprint.Primitives.Services
+<PageTitle>BlazorBlueprint Demo</PageTitle>
+
+<BbSidebarProvider DefaultOpen="true" HeightClass="h-screen">
+    <DemoSidebar />
+
+    <BbSidebarInset Class="overflow-hidden">
+        <header class="flex h-16 shrink-0 items-center gap-4 border-b bg-background px-4 z-10 focus:outline-none">
+            <BbSidebarTrigger />
+            <div class="ml-auto flex items-center gap-2">
+                <CommandSearch />
+                <AnimationToggle />
+                <BbDarkModeToggle />
+                <BbThemeSwitcher />
+            </div>
+        </header>
+
+        <div id="main-content" class="flex-1 overflow-auto p-6 md:p-8">
+            @Body
+        </div>
+    </BbSidebarInset>
+</BbSidebarProvider>
+
+<BbToastProvider Position="ToastPosition.BottomRight" />
+<BbDialogProvider />
+<BbPortalHost />

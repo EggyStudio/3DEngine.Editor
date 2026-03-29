@@ -1,0 +1,186 @@
+@page "/components/context-menu"
+@using BlazorBlueprint.Icons.Lucide.Components
+<PageTitle>Context Menu Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Context Menu Component</h1>
+            <p class="text-xl text-muted-foreground">
+                Displays a menu triggered by right-click.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Right-click the area below to open the context menu.
+            </p>
+        </div>
+        <BbContextMenu>
+            <BbContextMenuTrigger>
+                <div class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+                    Right click here
+                </div>
+            </BbContextMenuTrigger>
+            <BbContextMenuContent>
+                <BbContextMenuItem OnClick="@(() => HandleAction("Back"))">
+                    Back
+                    <BbContextMenuShortcut>Ctrl+[</BbContextMenuShortcut>
+                </BbContextMenuItem>
+                <BbContextMenuItem OnClick="@(() => HandleAction("Forward"))" Disabled="true">
+                    Forward
+                    <BbContextMenuShortcut>Ctrl+]</BbContextMenuShortcut>
+                </BbContextMenuItem>
+                <BbContextMenuItem OnClick="@(() => HandleAction("Reload"))">
+                    Reload
+                    <BbContextMenuShortcut>Ctrl+R</BbContextMenuShortcut>
+                </BbContextMenuItem>
+                <BbContextMenuSeparator />
+                <BbContextMenuItem OnClick="@(() => HandleAction("Save Page As..."))">
+                    Save Page As...
+                    <BbContextMenuShortcut>Ctrl+S</BbContextMenuShortcut>
+                </BbContextMenuItem>
+                <BbContextMenuItem OnClick="@(() => HandleAction("Print"))">
+                    Print...
+                    <BbContextMenuShortcut>Ctrl+P</BbContextMenuShortcut>
+                </BbContextMenuItem>
+            </BbContextMenuContent>
+        </BbContextMenu>
+        @if (!string.IsNullOrEmpty(_lastAction))
+        {
+            <p class="text-sm text-muted-foreground">Last action: @_lastAction</p>
+        }
+
+        <CodeBlock Source="Components/ContextMenu/basic.txt" />
+    </div>
+
+    <!-- With Labels -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Labels and Groups</h2>
+            <p class="text-sm text-muted-foreground">
+                Context menu with labeled sections.
+            </p>
+        </div>
+        <BbContextMenu>
+            <BbContextMenuTrigger>
+                <div class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+                    Right click here
+                </div>
+            </BbContextMenuTrigger>
+            <BbContextMenuContent>
+                <BbContextMenuLabel>Edit</BbContextMenuLabel>
+                <BbContextMenuItem>Cut</BbContextMenuItem>
+                <BbContextMenuItem>Copy</BbContextMenuItem>
+                <BbContextMenuItem>Paste</BbContextMenuItem>
+                <BbContextMenuSeparator />
+                <BbContextMenuLabel>View</BbContextMenuLabel>
+                <BbContextMenuItem>Zoom In</BbContextMenuItem>
+                <BbContextMenuItem>Zoom Out</BbContextMenuItem>
+                <BbContextMenuItem>Reset Zoom</BbContextMenuItem>
+            </BbContextMenuContent>
+        </BbContextMenu>
+
+        <CodeBlock Source="Components/ContextMenu/labels-and-groups.txt" />
+    </div>
+
+    <!-- Icon Shorthand -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Icon Shorthand</h2>
+            <p class="text-sm text-muted-foreground">
+                Use the <code class="bg-muted px-1 py-0.5 rounded">Icon</code> parameter to add icons to menu items cleanly.
+            </p>
+        </div>
+        <BbContextMenu>
+            <BbContextMenuTrigger>
+                <div class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+                    Right click here
+                </div>
+            </BbContextMenuTrigger>
+            <BbContextMenuContent>
+                <BbContextMenuItem>
+                    <Icon><LucideIcon Name="scissors" Size="16" /></Icon>
+                    <ChildContent>Cut</ChildContent>
+                </BbContextMenuItem>
+                <BbContextMenuItem>
+                    <Icon><LucideIcon Name="copy" Size="16" /></Icon>
+                    <ChildContent>Copy</ChildContent>
+                </BbContextMenuItem>
+                <BbContextMenuItem>
+                    <Icon><LucideIcon Name="clipboard" Size="16" /></Icon>
+                    <ChildContent>Paste</ChildContent>
+                </BbContextMenuItem>
+            </BbContextMenuContent>
+        </BbContextMenu>
+
+        <CodeBlock Source="Components/ContextMenu/icon-shorthand.txt" />
+    </div>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                Menu content uses <code class="text-xs bg-muted px-1 py-0.5 rounded">role="menu"</code> with <code class="text-xs bg-muted px-1 py-0.5 rounded">tabindex="-1"</code>
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Each menu item has <code class="text-xs bg-muted px-1 py-0.5 rounded">role="menuitem"</code>
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Separators use <code class="text-xs bg-muted px-1 py-0.5 rounded">role="separator"</code>
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Disabled items are excluded from keyboard navigation via <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-disabled</code>
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Navigate menu items">
+                <BbKbd>ArrowUp</BbKbd> / <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Jump to first/last item">
+                <BbKbd>Home</BbKbd> / <BbKbd>End</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Activate the focused item">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Close the context menu">
+                <BbKbd>Escape</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="ContextMenuItem">
+                <ApiParameter Name="OnClick" Type="EventCallback">
+                    Click handler.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool">
+                    Disables the item.
+                </ApiParameter>
+                <ApiParameter Name="Inset" Type="bool">
+                    Adds left padding.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string? _lastAction;
+
+    private void HandleAction(string action)
+    {
+        _lastAction = action;
+    }
+}

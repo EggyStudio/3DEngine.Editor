@@ -1,0 +1,304 @@
+@page "/components/date-picker"
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Date Picker Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Date Picker Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A date picker component with a popover calendar.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Click the button to open the calendar popover and select a date.
+            </p>
+        </div>
+        <BbDatePicker @bind-Value="_basicDate" />
+        <p class="text-sm text-muted-foreground">
+            Selected: @(_basicDate?.ToString("MMMM d, yyyy") ?? "None")
+        </p>
+        <CodeBlock Source="Components/DatePicker/basic.txt" />
+    </div>
+
+    <!-- With Preselected Date -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Preselected Date</h2>
+            <p class="text-sm text-muted-foreground">
+                Date picker with an initial value.
+            </p>
+        </div>
+        <BbDatePicker @bind-Value="_preselectedDate" />
+        <CodeBlock Source="Components/DatePicker/preselected.txt" />
+    </div>
+
+    <!-- Custom Placeholder -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Placeholder</h2>
+            <p class="text-sm text-muted-foreground">
+                Customize the placeholder text when no date is selected.
+            </p>
+        </div>
+        <BbDatePicker @bind-Value="_customPlaceholder" Placeholder="Select birth date" />
+        <CodeBlock Source="Components/DatePicker/custom-placeholder.txt" />
+    </div>
+
+    <!-- Custom Date Format -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Date Format</h2>
+            <p class="text-sm text-muted-foreground">
+                Customize how the selected date is displayed.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm mb-2">Long format (default):</p>
+                <BbDatePicker @bind-Value="_formatDate1" DateFormat="MMMM d, yyyy" />
+            </div>
+            <div>
+                <p class="text-sm mb-2">Short format:</p>
+                <BbDatePicker @bind-Value="_formatDate2" DateFormat="MM/dd/yyyy" />
+            </div>
+            <div>
+                <p class="text-sm mb-2">ISO format:</p>
+                <BbDatePicker @bind-Value="_formatDate3" DateFormat="yyyy-MM-dd" />
+            </div>
+        </div>
+        <CodeBlock Source="Components/DatePicker/custom-format.txt" />
+    </div>
+
+    <!-- Date Constraints -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Date Constraints</h2>
+            <p class="text-sm text-muted-foreground">
+                Limit the selectable date range.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <p class="text-sm mb-2">Future dates only (from today):</p>
+                <BbDatePicker @bind-Value="_futureDate" MinDate="@DateTime.Today" />
+            </div>
+            <div>
+                <p class="text-sm mb-2">Past dates only (until today):</p>
+                <BbDatePicker @bind-Value="_pastDate" MaxDate="@DateTime.Today" />
+            </div>
+            <div>
+                <p class="text-sm mb-2">Next 30 days only:</p>
+                <BbDatePicker @bind-Value="_rangeDate" MinDate="@DateTime.Today" MaxDate="@DateTime.Today.AddDays(30)" />
+            </div>
+        </div>
+        <CodeBlock Source="Components/DatePicker/constraints.txt" />
+    </div>
+
+    <!-- Disabled Weekends -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled Dates</h2>
+            <p class="text-sm text-muted-foreground">
+                Disable specific dates using a custom function.
+            </p>
+        </div>
+        <div>
+            <p class="text-sm mb-2">No weekends:</p>
+            <BbDatePicker @bind-Value="_noWeekendsDate" DisabledDates="@IsWeekend" />
+        </div>
+        <CodeBlock Source="Components/DatePicker/disabled-dates.txt" />
+    </div>
+
+    <!-- Week Start Day -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Week Start Day</h2>
+            <p class="text-sm text-muted-foreground">
+                Configure which day the week starts on.
+            </p>
+        </div>
+        <div class="flex gap-8">
+            <div>
+                <p class="text-sm mb-2">Sunday (default):</p>
+                <BbDatePicker @bind-Value="_sundayStart" FirstDayOfWeek="DayOfWeek.Sunday" />
+            </div>
+            <div>
+                <p class="text-sm mb-2">Monday:</p>
+                <BbDatePicker @bind-Value="_mondayStart" FirstDayOfWeek="DayOfWeek.Monday" />
+            </div>
+        </div>
+        <CodeBlock Source="Components/DatePicker/week-start-day.txt" />
+    </div>
+
+    <!-- Form Validation with EditForm -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Form Validation</h2>
+            <p class="text-sm text-muted-foreground">
+                DatePicker integrates with Blazor's EditForm and EditContext for model validation.
+                Use <code class="text-xs bg-muted px-1 py-0.5 rounded">@@bind-Value</code> within an EditForm and
+                validation errors will automatically apply error styling via <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-invalid</code>.
+            </p>
+        </div>
+        <EditForm Model="dateFormModel" OnValidSubmit="HandleDateFormSubmit" class="max-w-md space-y-4">
+            <DataAnnotationsValidator />
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Event Date</label>
+                <BbDatePicker @bind-Value="dateFormModel.EventDate" Placeholder="Select event date" />
+                <ValidationMessage For="@(() => dateFormModel.EventDate)" class="text-sm text-destructive" />
+            </div>
+
+            <div class="flex gap-4">
+                <BbButton Type="ButtonType.Submit" Variant="ButtonVariant.Default">Submit</BbButton>
+                <BbButton Type="ButtonType.Button" Variant="ButtonVariant.Outline" OnClick="ResetDateForm">Reset</BbButton>
+            </div>
+
+            @if (!string.IsNullOrEmpty(dateFormMessage))
+            {
+                <div class="p-4 bg-card rounded-lg border">
+                    <p class="text-sm">@dateFormMessage</p>
+                </div>
+            }
+        </EditForm>
+    </div>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                Trigger button includes <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-haspopup</code> and <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-expanded</code> via the Popover primitive
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Calendar uses <code class="text-xs bg-muted px-1 py-0.5 rounded">role="grid"</code> with <code class="text-xs bg-muted px-1 py-0.5 rounded">role="gridcell"</code> on each day
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-selected</code> indicates the currently selected date
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Navigation buttons include descriptive <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> ("Go to previous month" / "Go to next month")
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Disabled dates have the <code class="text-xs bg-muted px-1 py-0.5 rounded">disabled</code> attribute on day buttons
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Move to the previous/next day">
+                <BbKbd>ArrowLeft</BbKbd> / <BbKbd>ArrowRight</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move to the same day in the previous/next week">
+                <BbKbd>ArrowUp</BbKbd> / <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Jump to the first/last day of the month">
+                <BbKbd>Home</BbKbd> / <BbKbd>End</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Go to the previous/next month (or year with Shift)">
+                <BbKbd>PageUp</BbKbd> / <BbKbd>PageDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Select the focused date">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Close the popover">
+                <BbKbd>Escape</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="DatePicker">
+                <ApiParameter Name="Value" Type="DateTime?">
+                    The selected date. Use @@bind-Value for two-way binding.
+                </ApiParameter>
+                <ApiParameter Name="DateFormat" Type="string" Default="&quot;MMMM d, yyyy&quot;">
+                    Format string for displaying the date.
+                </ApiParameter>
+                <ApiParameter Name="Placeholder" Type="string" Default="&quot;Pick a date&quot;">
+                    Placeholder text when no date is selected.
+                </ApiParameter>
+                <ApiParameter Name="MinDate" Type="DateTime?">
+                    Minimum selectable date.
+                </ApiParameter>
+                <ApiParameter Name="MaxDate" Type="DateTime?">
+                    Maximum selectable date.
+                </ApiParameter>
+                <ApiParameter Name="DisabledDates" Type="Func&lt;DateTime, bool&gt;?">
+                    Function to determine if a date should be disabled.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Whether the date picker is disabled.
+                </ApiParameter>
+                <ApiParameter Name="Required" Type="bool" Default="false">
+                    Whether the date picker is required.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="The date picker placeholder and its internal calendar labels are configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Placeholder", "Pick a date", "Placeholder text when no date is selected"),
+        })"
+        CultureAware="true"
+        CultureDescription="The internal calendar uses CultureInfo.CurrentCulture for month/day names. The DateFormat parameter accepts standard .NET format strings that respect the current culture."
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.DatePicker.Placeholder = ""Datum auswählen"";
+});")" />
+</div>
+
+@code {
+    private DateTime? _basicDate;
+    private DateTime? _preselectedDate = DateTime.Today;
+    private DateTime? _customPlaceholder;
+    private DateTime? _formatDate1;
+    private DateTime? _formatDate2;
+    private DateTime? _formatDate3;
+    private DateTime? _futureDate;
+    private DateTime? _pastDate;
+    private DateTime? _rangeDate;
+    private DateTime? _noWeekendsDate;
+    private DateTime? _sundayStart;
+    private DateTime? _mondayStart;
+
+    private bool IsWeekend(DateTime date)
+    {
+        return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+    }
+
+    private DateFormModel dateFormModel = new();
+    private string? dateFormMessage;
+
+    private void HandleDateFormSubmit()
+    {
+        dateFormMessage = $"Form submitted! Event Date: {dateFormModel.EventDate?.ToString("MMMM d, yyyy")}";
+    }
+
+    private void ResetDateForm()
+    {
+        dateFormModel = new();
+        dateFormMessage = null;
+    }
+
+    private class DateFormModel
+    {
+        [Required(ErrorMessage = "Please select an event date.")]
+        public DateTime? EventDate { get; set; }
+    }
+}

@@ -1,0 +1,214 @@
+@page "/components/alert-dialog"
+<PageTitle>Alert Dialog Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Alert Dialog Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A modal dialog that interrupts the user with important content and expects a response.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Alert dialogs are used for critical confirmations that require user acknowledgement.
+            </p>
+        </div>
+        <BbAlertDialog>
+            <BbAlertDialogTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Show Dialog</BbButton>
+            </BbAlertDialogTrigger>
+            <BbAlertDialogContent>
+                <BbAlertDialogHeader>
+                    <BbAlertDialogTitle>Are you absolutely sure?</BbAlertDialogTitle>
+                    <BbAlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your
+                        account and remove your data from our servers.
+                    </BbAlertDialogDescription>
+                </BbAlertDialogHeader>
+                <BbAlertDialogFooter>
+                    <BbAlertDialogCancel>
+                        <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                    </BbAlertDialogCancel>
+                    <BbAlertDialogAction>
+                        <BbButton>Continue</BbButton>
+                    </BbAlertDialogAction>
+                </BbAlertDialogFooter>
+            </BbAlertDialogContent>
+        </BbAlertDialog>
+
+        <CodeBlock Source="Components/AlertDialog/basic.txt" />
+    </div>
+
+    <!-- Destructive Action -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Destructive Action</h2>
+            <p class="text-sm text-muted-foreground">
+                Use destructive button variant for dangerous actions.
+            </p>
+        </div>
+        <BbAlertDialog>
+            <BbAlertDialogTrigger>
+                <BbButton Variant="ButtonVariant.Destructive">Delete Account</BbButton>
+            </BbAlertDialogTrigger>
+            <BbAlertDialogContent>
+                <BbAlertDialogHeader>
+                    <BbAlertDialogTitle>Delete Account</BbAlertDialogTitle>
+                    <BbAlertDialogDescription>
+                        Are you sure you want to delete your account? All of your data will be
+                        permanently removed. This action cannot be undone.
+                    </BbAlertDialogDescription>
+                </BbAlertDialogHeader>
+                <BbAlertDialogFooter>
+                    <BbAlertDialogCancel>
+                        <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                    </BbAlertDialogCancel>
+                    <BbAlertDialogAction>
+                        <BbButton Variant="ButtonVariant.Destructive">Yes, delete account</BbButton>
+                    </BbAlertDialogAction>
+                </BbAlertDialogFooter>
+            </BbAlertDialogContent>
+        </BbAlertDialog>
+
+        <CodeBlock Source="Components/AlertDialog/destructive.txt" />
+    </div>
+
+    <!-- Controlled State -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Controlled State</h2>
+            <p class="text-sm text-muted-foreground">
+                Control the open state programmatically with @@bind-Open.
+            </p>
+        </div>
+        <div class="flex items-center gap-4">
+            <BbButton OnClick="@(() => _isControlledOpen = true)">Open Dialog</BbButton>
+            <span class="text-sm text-muted-foreground">
+                Dialog is: @(_isControlledOpen ? "Open" : "Closed")
+            </span>
+        </div>
+        <BbAlertDialog @bind-Open="_isControlledOpen">
+            <BbAlertDialogContent>
+                <BbAlertDialogHeader>
+                    <BbAlertDialogTitle>Controlled Dialog</BbAlertDialogTitle>
+                    <BbAlertDialogDescription>
+                        This dialog's open state is controlled by a parent component.
+                    </BbAlertDialogDescription>
+                </BbAlertDialogHeader>
+                <BbAlertDialogFooter>
+                    <BbAlertDialogCancel>
+                        <BbButton Variant="ButtonVariant.Outline">Close</BbButton>
+                    </BbAlertDialogCancel>
+                </BbAlertDialogFooter>
+            </BbAlertDialogContent>
+        </BbAlertDialog>
+
+        <CodeBlock Source="Components/AlertDialog/controlled.txt" />
+    </div>
+
+    <!-- Key Differences from Dialog -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Alert Dialog vs Dialog</h2>
+            <p class="text-sm text-muted-foreground">
+                Key differences between Alert Dialog and regular Dialog.
+            </p>
+        </div>
+        <div class="border rounded-lg p-6 space-y-3 bg-muted/50">
+            <p class="text-sm">
+                <strong>Alert Dialog:</strong>
+            </p>
+            <ul class="text-sm space-y-2 ml-4">
+                <li>• Cannot be dismissed by clicking the backdrop — enforced at the component level</li>
+                <li>• Cannot be dismissed by pressing Escape</li>
+                <li>• Must be acknowledged with an action button</li>
+                <li>• Uses role="alertdialog" for accessibility</li>
+                <li>• Use for destructive or critical confirmations</li>
+            </ul>
+            <p class="text-sm mt-4">
+                <strong>Regular Dialog:</strong>
+            </p>
+            <ul class="text-sm space-y-2 ml-4">
+                <li>• Can be dismissed by clicking outside</li>
+                <li>• Can be dismissed by pressing Escape</li>
+                <li>• More flexible for general content</li>
+                <li>• Use for forms, settings, and non-critical content</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="AlertDialog">
+                <ApiParameter Name="Open" Type="bool?">
+                    Controls the open state in controlled mode.
+                </ApiParameter>
+                <ApiParameter Name="DefaultOpen" Type="bool" Default="false">
+                    Initial open state for uncontrolled mode.
+                </ApiParameter>
+                <ApiParameter Name="OnOpenChange" Type="EventCallback&lt;bool&gt;">
+                    Callback when the open state changes.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="AlertDialogContent">
+                <ApiParameter Name="Class" Type="string?" Default="null">
+                    Additional CSS classes for custom sizing or styling.
+                </ApiParameter>
+            </ApiReference>
+
+            <div class="rounded-md border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30 px-4 py-3 text-sm text-amber-800 dark:text-amber-300">
+                <strong>Note:</strong> <code>AlertDialogContent</code> intentionally does not expose <code>CloseOnOverlayClick</code> or <code>CloseOnEscape</code> parameters.
+                Both are hardcoded to <code>false</code> to enforce the <code>role="alertdialog"</code> contract — the user must respond via an action button.
+            </div>
+        </div>
+    </section>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">role="alertdialog"</code> on the content panel distinguishes it from a regular dialog
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-modal="true"</code> indicates the dialog blocks interaction with the rest of the page
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-labelledby</code> and <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-describedby</code> link the title and description to the dialog
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Focus is automatically trapped within the dialog
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Overlay click and Escape key do not close the dialog — user must respond via an action button
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Scroll lock on body when dialog is open
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Move focus to next element">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus to previous element">
+                <BbKbd>Shift+Tab</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+</div>
+
+@code {
+    private bool _isControlledOpen;
+}

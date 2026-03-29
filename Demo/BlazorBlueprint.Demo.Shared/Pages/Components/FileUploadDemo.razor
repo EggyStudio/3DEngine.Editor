@@ -1,0 +1,274 @@
+@page "/components/file-upload"
+<PageTitle>FileUpload Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">FileUpload Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A file upload component with drag-and-drop, image previews, and file validation.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Drag and drop files or click to browse.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_basicFiles" />
+        <p class="text-sm text-muted-foreground">
+            Files: @(_basicFiles?.Count ?? 0)
+        </p>
+
+        <CodeBlock Source="Components/FileUpload/basic.txt" />
+    </div>
+
+    <!-- Multiple Files -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Multiple Files</h2>
+            <p class="text-sm text-muted-foreground">
+                Upload up to 5 files at once.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_multipleFiles" Multiple="true" MaxFileCount="5" />
+        <p class="text-sm text-muted-foreground">
+            Files: @(_multipleFiles?.Count ?? 0) / 5
+        </p>
+
+        <CodeBlock Source="Components/FileUpload/multiple.txt" />
+    </div>
+
+    <!-- Images Only -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Images Only</h2>
+            <p class="text-sm text-muted-foreground">
+                Only accepts image files with preview.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_imageFiles"
+                    Multiple="true"
+                    Accept="image/*"
+                    MaxFileCount="4" />
+
+        <CodeBlock Source="Components/FileUpload/images.txt" />
+    </div>
+
+    <!-- Documents -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Documents Only</h2>
+            <p class="text-sm text-muted-foreground">
+                Accepts PDF, Word, and Excel files.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_docFiles"
+                    Multiple="true"
+                    Accept=".pdf,.doc,.docx,.xls,.xlsx"
+                    MaxFileSize="@(20 * 1024 * 1024)" />
+
+        <CodeBlock Source="Components/FileUpload/documents.txt" />
+    </div>
+
+    <!-- Custom Size Limit -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Small Files (1MB limit)</h2>
+            <p class="text-sm text-muted-foreground">
+                Files larger than 1MB will be rejected.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_smallFiles"
+                    Multiple="true"
+                    MaxFileSize="@(1 * 1024 * 1024)"
+                    OnValidationError="HandleValidationError" />
+        @if (!string.IsNullOrEmpty(_lastError))
+        {
+            <p class="text-sm text-destructive">Last error: @_lastError</p>
+        }
+
+        <CodeBlock Source="Components/FileUpload/size-limit.txt" />
+    </div>
+
+    <!-- No Preview -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Without Image Preview</h2>
+            <p class="text-sm text-muted-foreground">
+                Image previews are disabled.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_noPreviewFiles" Multiple="true" ShowPreview="false" />
+
+        <CodeBlock Source="Components/FileUpload/no-preview.txt" />
+    </div>
+
+    <!-- Single File -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Single File</h2>
+            <p class="text-sm text-muted-foreground">
+                Only one file at a time.
+            </p>
+        </div>
+        <BbFileUpload @bind-Files="_singleFile" Multiple="false" />
+
+        <CodeBlock Source="Components/FileUpload/single.txt" />
+    </div>
+
+    <!-- Clear Files -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Clear Files</h2>
+            <p class="text-sm text-muted-foreground">
+                Use the <code class="text-xs bg-muted px-1 py-0.5 rounded">ClearFiles()</code> method to programmatically reset the upload.
+            </p>
+        </div>
+        <BbFileUpload @ref="_clearUploader" @bind-Files="_clearFiles" Multiple="true" />
+        <BbButton Variant="ButtonVariant.Outline"
+                  OnClick="() => _clearUploader!.ClearFiles()"
+                  Disabled="@(_clearFiles is null || _clearFiles.Count == 0)">
+            Clear Files
+        </BbButton>
+        <p class="text-sm text-muted-foreground">
+            Files: @(_clearFiles?.Count ?? 0)
+        </p>
+
+        <CodeBlock Source="Components/FileUpload/clear-files.txt" />
+    </div>
+
+    <!-- Disabled -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled</h2>
+        </div>
+        <BbFileUpload Disabled="true" />
+
+        <CodeBlock Source="Components/FileUpload/disabled.txt" />
+    </div>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                Remove buttons include descriptive <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> ("Remove {filename}") for each file
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Image previews include <code class="text-xs bg-muted px-1 py-0.5 rounded">alt</code> text with the file name
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Uses a native file input element for built-in keyboard accessibility
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Open the file browser dialog">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Navigate between the dropzone and remove buttons">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="FileUpload">
+                <ApiParameter Name="Files" Type="IReadOnlyList&lt;FileUploadItem&gt;?">
+                    Selected files.
+                </ApiParameter>
+                <ApiParameter Name="Multiple" Type="bool" Default="false">
+                    Allow multiple files.
+                </ApiParameter>
+                <ApiParameter Name="Accept" Type="string?">
+                    Accepted file types (e.g., "image/*,.pdf").
+                </ApiParameter>
+                <ApiParameter Name="MaxFileSize" Type="long" Default="10485760">
+                    Maximum file size in bytes (default: 10MB).
+                </ApiParameter>
+                <ApiParameter Name="MaxFileCount" Type="int" Default="10">
+                    Maximum number of files.
+                </ApiParameter>
+                <ApiParameter Name="ShowPreview" Type="bool" Default="true">
+                    Show image previews.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Disables the upload.
+                </ApiParameter>
+                <ApiParameter Name="Required" Type="bool" Default="false">
+                    Whether the file upload is required.
+                </ApiParameter>
+                <ApiParameter Name="OnValidationError" Type="EventCallback&lt;FileValidationError&gt;">
+                    Validation error callback.
+                </ApiParameter>
+                <ApiParameter Name="DropzoneContent" Type="RenderFragment?">
+                    Custom dropzone content.
+                </ApiParameter>
+                <ApiParameter Name="ClearFiles()" Type="Task">
+                    Clears all files and validation errors, resetting the component.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="FileUploadItem">
+                <ApiParameter Name="File" Type="IBrowserFile">
+                    The browser file reference.
+                </ApiParameter>
+                <ApiParameter Name="Name" Type="string">
+                    File name.
+                </ApiParameter>
+                <ApiParameter Name="Size" Type="long">
+                    File size in bytes.
+                </ApiParameter>
+                <ApiParameter Name="ContentType" Type="string">
+                    MIME type.
+                </ApiParameter>
+                <ApiParameter Name="FormattedSize" Type="string">
+                    Human-readable size.
+                </ApiParameter>
+                <ApiParameter Name="IsImage" Type="bool">
+                    Whether file is an image.
+                </ApiParameter>
+                <ApiParameter Name="PreviewUrl" Type="string?">
+                    Data URL for preview.
+                </ApiParameter>
+            </ApiReference>
+
+            <div class="border rounded-lg p-6">
+                <h3 class="font-mono text-sm font-semibold mb-2">Validation Error Types</h3>
+                <div class="text-sm text-muted-foreground space-y-1">
+                    <p><strong>FileTooLarge:</strong> File exceeds size limit</p>
+                    <p><strong>InvalidType:</strong> File type not accepted</p>
+                    <p><strong>TooManyFiles:</strong> Max file count exceeded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    private IReadOnlyList<FileUploadItem>? _basicFiles;
+    private IReadOnlyList<FileUploadItem>? _multipleFiles;
+    private IReadOnlyList<FileUploadItem>? _imageFiles;
+    private IReadOnlyList<FileUploadItem>? _docFiles;
+    private IReadOnlyList<FileUploadItem>? _smallFiles;
+    private IReadOnlyList<FileUploadItem>? _noPreviewFiles;
+    private IReadOnlyList<FileUploadItem>? _singleFile;
+    private BbFileUpload? _clearUploader;
+    private IReadOnlyList<FileUploadItem>? _clearFiles;
+    private string? _lastError;
+
+    private void HandleValidationError(FileValidationError error)
+    {
+        _lastError = error.Message;
+    }
+}

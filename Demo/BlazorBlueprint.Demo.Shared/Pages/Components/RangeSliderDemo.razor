@@ -1,0 +1,219 @@
+@page "/components/range-slider"
+<PageTitle>RangeSlider Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">RangeSlider Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A dual-handle slider for selecting a range of values with keyboard navigation and optional tooltips.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Example</h2>
+            <p class="text-sm text-muted-foreground">
+                Select a range by dragging the two handles.
+            </p>
+        </div>
+        <div class="w-[60%]">
+            <BbRangeSlider @bind-Value="_basicValue" />
+        </div>
+        <p class="text-sm text-muted-foreground">Range: @_basicValue.Start - @_basicValue.End</p>
+        <CodeBlock Source="Components/RangeSlider/basic.txt" />
+    </div>
+
+    <!-- With Tooltips -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Tooltips</h2>
+            <p class="text-sm text-muted-foreground">
+                Shows value tooltips above each handle.
+            </p>
+        </div>
+        <div class="w-[60%] pt-8">
+            <BbRangeSlider @bind-Value="_tooltipValue" ShowTooltips="true" />
+        </div>
+        <p class="text-sm text-muted-foreground">Range: @_tooltipValue.Start - @_tooltipValue.End</p>
+        <CodeBlock Source="Components/RangeSlider/tooltips.txt" />
+    </div>
+
+    <!-- Custom Range -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Range</h2>
+            <p class="text-sm text-muted-foreground">
+                Custom min/max values (0-1000).
+            </p>
+        </div>
+        <div class="w-[60%]">
+            <BbRangeSlider @bind-Value="_customRange" Min="0" Max="1000" Step="10" />
+        </div>
+        <p class="text-sm text-muted-foreground">Range: @_customRange.Start - @_customRange.End (step: 10)</p>
+        <CodeBlock Source="Components/RangeSlider/custom-range.txt" />
+    </div>
+
+    <!-- With Minimum Gap -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Minimum Gap</h2>
+            <p class="text-sm text-muted-foreground">
+                Handles must be at least 20 units apart.
+            </p>
+        </div>
+        <div class="w-[60%]">
+            <BbRangeSlider @bind-Value="_minGapValue" MinRange="20" />
+        </div>
+        <p class="text-sm text-muted-foreground">Range: @_minGapValue.Start - @_minGapValue.End (min gap: 20)</p>
+        <CodeBlock Source="Components/RangeSlider/min-gap.txt" />
+    </div>
+
+    <!-- With Tick Marks -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Tick Marks</h2>
+            <p class="text-sm text-muted-foreground">
+                Shows tick marks at specified positions.
+            </p>
+        </div>
+        <div class="w-[60%] pb-4">
+            <BbRangeSlider @bind-Value="_tickValue"
+                         ShowTickMarks="true"
+                         TickValues="@(new double[] { 0, 25, 50, 75, 100 })" />
+        </div>
+        <p class="text-sm text-muted-foreground">Range: @_tickValue.Start - @_tickValue.End</p>
+        <CodeBlock Source="Components/RangeSlider/tick-marks.txt" />
+    </div>
+
+    <!-- Price Range -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Price Range Filter</h2>
+            <p class="text-sm text-muted-foreground">
+                Common use case: filtering by price range.
+            </p>
+        </div>
+        <div class="w-[60%] pt-8">
+            <BbRangeSlider @bind-Value="_priceRange"
+                         Min="0"
+                         Max="500"
+                         Step="10"
+                         ShowTooltips="true"
+                         FormatValueFunc="@(v => $"${v:F0}")" />
+        </div>
+        <p class="text-sm text-muted-foreground">Price: $@_priceRange.Start - $@_priceRange.End</p>
+        <CodeBlock Source="Components/RangeSlider/price-range.txt" />
+    </div>
+
+    <!-- Default Values -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Default Values</h2>
+            <p class="text-sm text-muted-foreground">
+                Uncontrolled slider with initial values.
+            </p>
+        </div>
+        <div class="w-[60%]">
+            <BbRangeSlider DefaultStart="10" DefaultEnd="90" />
+        </div>
+        <CodeBlock Source="Components/RangeSlider/default-values.txt" />
+    </div>
+
+    <!-- Disabled -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled</h2>
+            <p class="text-sm text-muted-foreground">
+                A disabled range slider.
+            </p>
+        </div>
+        <div class="w-[60%]">
+            <BbRangeSlider Value="@((25.0, 75.0))" Disabled="true" />
+        </div>
+        <CodeBlock Source="Components/RangeSlider/disabled.txt" />
+    </div>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                Both thumbs use <code class="text-xs bg-muted px-1 py-0.5 rounded">role="slider"</code> with <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-valuemin</code>, <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-valuemax</code>, and <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-valuenow</code>
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Start thumb defaults to <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label="Range start"</code>, end thumb to <code class="text-xs bg-muted px-1 py-0.5 rounded">"Range end"</code> (customizable via StartLabel/EndLabel)
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-disabled</code> conveys the disabled state
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Increase/decrease value by one step">
+                <BbKbd>ArrowRight</BbKbd> / <BbKbd>ArrowLeft</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Increase/decrease value by one step">
+                <BbKbd>ArrowUp</BbKbd> / <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Increase/decrease value by a large step">
+                <BbKbd>PageUp</BbKbd> / <BbKbd>PageDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Jump to minimum/maximum value">
+                <BbKbd>Home</BbKbd> / <BbKbd>End</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="RangeSlider">
+                <ApiParameter Name="Value" Type="(double Start, double End)">
+                    Current range value.
+                </ApiParameter>
+                <ApiParameter Name="Min" Type="double" Default="0">
+                    Minimum value.
+                </ApiParameter>
+                <ApiParameter Name="Max" Type="double" Default="100">
+                    Maximum value.
+                </ApiParameter>
+                <ApiParameter Name="Step" Type="double" Default="1">
+                    Step increment.
+                </ApiParameter>
+                <ApiParameter Name="MinRange" Type="double" Default="0">
+                    Minimum gap between handles.
+                </ApiParameter>
+                <ApiParameter Name="ShowTooltips" Type="bool" Default="false">
+                    Show value tooltips.
+                </ApiParameter>
+                <ApiParameter Name="ShowTickMarks" Type="bool" Default="false">
+                    Show tick marks.
+                </ApiParameter>
+                <ApiParameter Name="TickValues" Type="double[]?">
+                    Custom tick positions.
+                </ApiParameter>
+                <ApiParameter Name="FormatValueFunc" Type="Func<double, string>?">
+                    Custom value formatter.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool">
+                    Disables the slider.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+</div>
+
+@code {
+    private (double Start, double End) _basicValue = (25, 75);
+    private (double Start, double End) _tooltipValue = (30, 70);
+    private (double Start, double End) _customRange = (200, 800);
+    private (double Start, double End) _minGapValue = (30, 70);
+    private (double Start, double End) _tickValue = (25, 75);
+    private (double Start, double End) _priceRange = (50, 350);
+}

@@ -1,0 +1,516 @@
+@page "/components/sheet"
+<PageTitle>Sheet Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">Sheet Component</h1>
+        <p class="text-xl text-muted-foreground">
+            Extends the Dialog component to display content that complements the main content of the screen.
+        </p>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+    </div>
+
+    <!-- AsChild Pattern -->
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">AsChild Pattern</h2>
+        <p class="text-sm text-muted-foreground">
+            Use AsChild to compose triggers with your own styled Button components.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Without AsChild -->
+            <div class="space-y-3 p-4 border rounded-lg">
+                <h3 class="text-lg font-medium">Without AsChild</h3>
+                <p class="text-sm text-muted-foreground">
+                    SheetTrigger renders its own button with inline classes.
+                </p>
+                <BbSheet>
+                    <BbSheetTrigger AsChild="false" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Open Sheet
+                    </BbSheetTrigger>
+                    <BbSheetContent>
+                        <BbSheetHeader>
+                            <BbSheetTitle>Without AsChild</BbSheetTitle>
+                            <BbSheetDescription>Uses inline CSS classes on trigger.</BbSheetDescription>
+                        </BbSheetHeader>
+                    </BbSheetContent>
+                </BbSheet>
+            </div>
+
+            <!-- With AsChild -->
+            <div class="space-y-3 p-4 border rounded-lg">
+                <h3 class="text-lg font-medium">With AsChild</h3>
+                <p class="text-sm text-muted-foreground">
+                    Button receives trigger behavior via TriggerContext.
+                </p>
+                <BbSheet>
+                    <BbSheetTrigger>
+                        <BbButton Variant="ButtonVariant.Outline">
+                            <LucideIcon Name="menu" Size="16" />
+                            Open Menu
+                        </BbButton>
+                    </BbSheetTrigger>
+                    <BbSheetContent Side="SheetSide.Left">
+                        <BbSheetHeader>
+                            <BbSheetTitle>With AsChild</BbSheetTitle>
+                            <BbSheetDescription>Button component styled trigger.</BbSheetDescription>
+                        </BbSheetHeader>
+                        <BbSheetFooter>
+                            <BbSheetClose>
+                                <BbButton Variant="ButtonVariant.Outline">Close</BbButton>
+                            </BbSheetClose>
+                        </BbSheetFooter>
+                    </BbSheetContent>
+                </BbSheet>
+            </div>
+        </div>
+
+        <CodeBlock Source="Components/Sheet/as-child.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Side: Right (Default)</h2>
+        <p class="text-sm text-muted-foreground">
+            A sheet that slides in from the right side of the screen.
+        </p>
+
+        <BbSheet>
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Sheet</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Edit profile</BbSheetTitle>
+                    <BbSheetDescription>
+                        Make changes to your profile here. Click save when you're done.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="grid gap-4 py-4">
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <label for="name" class="text-right text-sm font-medium">
+                            Name
+                        </label>
+                        <input id="name"
+                               value="Pedro Duarte"
+                               class="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    </div>
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <label for="username" class="text-right text-sm font-medium">
+                            Username
+                        </label>
+                        <input id="username"
+                               value="@@peduarte"
+                               class="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    </div>
+                </div>
+
+                <BbSheetFooter>
+                    <BbButton>Save changes</BbButton>
+                </BbSheetFooter>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/side-right.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Side: Top</h2>
+        <p class="text-sm text-muted-foreground">
+            A sheet that slides in from the top of the screen.
+        </p>
+
+        <BbSheet Side="SheetSide.Top">
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open from Top</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Notifications</BbSheetTitle>
+                    <BbSheetDescription>
+                        View your recent notifications and updates.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4 space-y-4">
+                    <div class="flex items-start gap-4 pb-4 border-b">
+                        <div class="w-2 h-2 mt-2 rounded-full bg-blue-500"></div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium">New message from John</p>
+                            <p class="text-sm text-muted-foreground">2 minutes ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 pb-4 border-b">
+                        <div class="w-2 h-2 mt-2 rounded-full bg-green-500"></div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium">Your deployment is complete</p>
+                            <p class="text-sm text-muted-foreground">15 minutes ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-2 h-2 mt-2 rounded-full bg-gray-400"></div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium">System maintenance scheduled</p>
+                            <p class="text-sm text-muted-foreground">1 hour ago</p>
+                        </div>
+                    </div>
+                </div>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/side-top.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Side: Bottom</h2>
+        <p class="text-sm text-muted-foreground">
+            A sheet that slides in from the bottom of the screen.
+        </p>
+
+        <BbSheet Side="SheetSide.Bottom">
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open from Bottom</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Cookie Settings</BbSheetTitle>
+                    <BbSheetDescription>
+                        Manage your cookie preferences.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-0.5">
+                            <label class="text-sm font-medium">Strictly Necessary</label>
+                            <p class="text-xs text-muted-foreground">
+                                These cookies are essential for the website to function.
+                            </p>
+                        </div>
+                        <input type="checkbox" checked disabled class="h-4 w-4" />
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-0.5">
+                            <label class="text-sm font-medium">Functional Cookies</label>
+                            <p class="text-xs text-muted-foreground">
+                                These cookies enable enhanced functionality.
+                            </p>
+                        </div>
+                        <input type="checkbox" class="h-4 w-4" />
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-0.5">
+                            <label class="text-sm font-medium">Performance Cookies</label>
+                            <p class="text-xs text-muted-foreground">
+                                These cookies help improve performance.
+                            </p>
+                        </div>
+                        <input type="checkbox" class="h-4 w-4" />
+                    </div>
+                </div>
+
+                <BbSheetFooter>
+                    <BbButton>Save Preferences</BbButton>
+                </BbSheetFooter>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/side-bottom.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Side: Left</h2>
+        <p class="text-sm text-muted-foreground">
+            A sheet that slides in from the left side of the screen.
+        </p>
+
+        <BbSheet Side="SheetSide.Left">
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open from Left</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Navigation Menu</BbSheetTitle>
+                    <BbSheetDescription>
+                        Browse through the application sections.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4 space-y-2">
+                    <a href="#" class="block px-3 py-2 rounded-md hover:bg-accent text-sm font-medium">
+                        Dashboard
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded-md hover:bg-accent text-sm font-medium">
+                        Projects
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded-md hover:bg-accent text-sm font-medium">
+                        Team
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded-md hover:bg-accent text-sm font-medium">
+                        Settings
+                    </a>
+                    <div class="pt-2 border-t">
+                        <a href="#" class="block px-3 py-2 rounded-md hover:bg-accent text-sm font-medium">
+                            Help & Support
+                        </a>
+                    </div>
+                </div>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/side-left.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Controlled Sheet</h2>
+        <p class="text-sm text-muted-foreground">
+            Control the sheet state programmatically using @@bind-Open.
+        </p>
+
+        <div class="flex gap-2">
+            <button @onclick="() => isSheetOpen = true"
+                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                Open Sheet
+            </button>
+        </div>
+
+        <BbSheet @bind-Open="isSheetOpen">
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Controlled Sheet</BbSheetTitle>
+                    <BbSheetDescription>
+                        This sheet's open state is controlled from the parent component.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4">
+                    <p class="text-sm mb-4">
+                        Sheet is open: <strong>@isSheetOpen</strong>
+                    </p>
+                    <p class="text-sm text-muted-foreground">
+                        You can programmatically control when this sheet opens and closes.
+                    </p>
+                </div>
+
+                <BbSheetFooter>
+                    <button @onclick="() => isSheetOpen = false"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                        Close
+                    </button>
+                </BbSheetFooter>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/controlled.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Without Close Button</h2>
+        <p class="text-sm text-muted-foreground">
+            Hide the default close button using ShowClose="false".
+        </p>
+
+        <BbSheet>
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Sheet</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent ShowClose="false">
+                <BbSheetHeader>
+                    <BbSheetTitle>Confirm Action</BbSheetTitle>
+                    <BbSheetDescription>
+                        This sheet doesn't have a close button in the top-right corner.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4">
+                    <p class="text-sm text-muted-foreground">
+                        You must use one of the action buttons or press Escape to close this sheet.
+                    </p>
+                </div>
+
+                <BbSheetFooter>
+                    <BbSheetClose>
+                        <BbButton Variant="ButtonVariant.Outline">Cancel</BbButton>
+                    </BbSheetClose>
+                    <BbSheetClose>
+                        <BbButton>Confirm</BbButton>
+                    </BbSheetClose>
+                </BbSheetFooter>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/without-close.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Custom Width</h2>
+        <p class="text-sm text-muted-foreground">
+            Customize the sheet width using the Class parameter.
+        </p>
+
+        <BbSheet>
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Wide Sheet</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent Class="w-[400px] sm:w-[540px]">
+                <BbSheetHeader>
+                    <BbSheetTitle>Wide Sheet</BbSheetTitle>
+                    <BbSheetDescription>
+                        This sheet uses a custom width class.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+
+                <div class="py-4">
+                    <p class="text-sm">
+                        You can customize the sheet width by passing additional classes to the SheetContent component.
+                        This example uses <code class="bg-muted px-1 py-0.5 rounded text-xs">w-[400px] sm:w-[540px]</code>
+                        instead of the default <code class="bg-muted px-1 py-0.5 rounded text-xs">w-3/4 sm:max-w-sm</code>.
+                    </p>
+                </div>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/custom-width.txt" />
+    </div>
+
+    <div class="space-y-4">
+        <h2 class="text-2xl font-semibold">Non-Dismissible</h2>
+        <p class="text-sm text-muted-foreground">
+            Set <code class="bg-muted px-1 py-0.5 rounded">Modal="false"</code> on <code class="bg-muted px-1 py-0.5 rounded">BbSheet</code> to prevent the sheet from closing when the backdrop is clicked or Escape is pressed.
+            For overlay-click-only prevention, use <code class="bg-muted px-1 py-0.5 rounded">CloseOnOverlayClick="false"</code> on <code class="bg-muted px-1 py-0.5 rounded">BbSheetContent</code> instead.
+        </p>
+
+        <BbSheet Modal="false">
+            <BbSheetTrigger>
+                <BbButton Variant="ButtonVariant.Outline">Open Sheet</BbButton>
+            </BbSheetTrigger>
+
+            <BbSheetContent>
+                <BbSheetHeader>
+                    <BbSheetTitle>Non-Dismissible</BbSheetTitle>
+                    <BbSheetDescription>
+                        Clicking the backdrop or pressing Escape will not close this sheet. Use the button below.
+                    </BbSheetDescription>
+                </BbSheetHeader>
+                <BbSheetFooter>
+                    <BbSheetClose>
+                        <BbButton>Got it</BbButton>
+                    </BbSheetClose>
+                </BbSheetFooter>
+            </BbSheetContent>
+        </BbSheet>
+
+        <CodeBlock Source="Components/Sheet/non-dismissible.txt" />
+    </div>
+
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>Renders with <code>role="dialog"</code> and <code>aria-modal="true"</code> for screen readers</AccessibilityItem>
+            <AccessibilityItem><code>aria-labelledby</code> automatically linked to SheetTitle</AccessibilityItem>
+            <AccessibilityItem><code>aria-describedby</code> automatically linked to SheetDescription</AccessibilityItem>
+            <AccessibilityItem>Focus is trapped within the sheet when open</AccessibilityItem>
+            <AccessibilityItem>Body scroll is locked when sheet is open</AccessibilityItem>
+            <AccessibilityItem>Respects <code>prefers-reduced-motion</code> for animations</AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Close the sheet">
+                <BbKbd>Escape</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Move focus between elements">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="Sheet">
+                <ApiParameter Name="Open" Type="bool?" Default="null">
+                    Controls whether the sheet is open (controlled mode). When null, the sheet manages its own state.
+                </ApiParameter>
+                <ApiParameter Name="OpenChanged" Type="EventCallback&lt;bool&gt;">
+                    Event callback invoked when the open state changes. Use with <code>@@bind-Open</code> for two-way binding.
+                </ApiParameter>
+                <ApiParameter Name="DefaultOpen" Type="bool" Default="false">
+                    Default open state when in uncontrolled mode.
+                </ApiParameter>
+                <ApiParameter Name="Side" Type="SheetSide" Default="Right">
+                    The side from which the sheet slides in. Options: Top, Right, Bottom, Left.
+                </ApiParameter>
+                <ApiParameter Name="Modal" Type="bool" Default="true">
+                    Whether the sheet can be dismissed by clicking the overlay or pressing Escape.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="SheetTrigger">
+                <ApiParameter Name="AsChild" Type="bool" Default="true">
+                    When true, passes trigger behavior to child components instead of rendering its own button.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="SheetContent">
+                <ApiParameter Name="Side" Type="SheetSide?" Default="null">
+                    Override the side from the parent Sheet component.
+                </ApiParameter>
+                <ApiParameter Name="ShowClose" Type="bool" Default="true">
+                    Whether to show the close button (X icon).
+                </ApiParameter>
+                <ApiParameter Name="CloseOnOverlayClick" Type="bool" Default="true">
+                    Whether clicking the backdrop overlay should close the sheet.
+                </ApiParameter>
+                <ApiParameter Name="CloseOnEscape" Type="bool" Default="true">
+                    Whether pressing Escape should close the sheet.
+                </ApiParameter>
+                <ApiParameter Name="TrapFocus" Type="bool" Default="true">
+                    Whether to trap focus within the sheet.
+                </ApiParameter>
+                <ApiParameter Name="LockScroll" Type="bool" Default="true">
+                    Whether to lock body scroll when sheet is open.
+                </ApiParameter>
+                <ApiParameter Name="Class" Type="string?" Default="null">
+                    Additional CSS classes for custom width or styling.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="SheetClose">
+                <ApiParameter Name="AsChild" Type="bool" Default="true">
+                    When true, passes close behavior to child components instead of rendering its own button.
+                </ApiParameter>
+                <ApiParameter Name="PreventClose" Type="bool" Default="false">
+                    When true, prevents the default close behavior. Only the OnClick handler is invoked.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="The sheet close button aria label is configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Close", "Close", "Aria label for the close button"),
+        })"
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.Sheet.Close = ""Schließen"";
+});")" />
+</div>
+
+@code {
+    private bool isSheetOpen = false;
+}

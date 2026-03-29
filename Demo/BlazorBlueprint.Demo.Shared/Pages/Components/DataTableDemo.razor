@@ -1,0 +1,477 @@
+@page "/components/datatable"
+@using BlazorBlueprint.Demo.Services
+@inject MockDataService MockDataService
+
+<PageTitle>Data Table Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-7xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Data Table Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A powerful and flexible data table component with sorting, filtering, pagination, and row selection.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Table</h2>
+            <p class="text-sm text-muted-foreground">
+                A simple table with automatic sorting and pagination.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" InitialPageSize="5">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Id)" Header="ID" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" Sortable />
+                <BbDataTableColumn TData="Person" TValue="DateTime?" Property="@(p => p.LastPromotionDate?.LocalDateTime)" Format="MM/dd/yyyy hh:mm:ss tt" Header="Last Promotion Date" Sortable />
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Salary)" Format="C0" Header="Salary" Sortable />
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Age)" Header="Age" Sortable />
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/basic.txt" />
+    </div>
+
+    <!-- With Row Selection -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Row Selection</h2>
+            <p class="text-sm text-muted-foreground">
+                Table with multiple row selection using checkboxes. Use arrow keys to navigate and Enter/Space to select.
+            </p>
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+            <input type="checkbox"
+                   id="enableKeyboardNavDataTable"
+                   checked="@enableKeyboardNavigation"
+                   @onchange="@((e) => enableKeyboardNavigation = (bool)(e.Value ?? true))"
+                   class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary" />
+            <label for="enableKeyboardNavDataTable" class="text-sm font-medium">Enable keyboard navigation</label>
+        </div>
+        <BbDataTable TData="Person"
+                   Data="@people"
+                   SelectionMode="DataTableSelectionMode.Multiple"
+                   EnableKeyboardNavigation="@enableKeyboardNavigation"
+                   @bind-SelectedItems="@selectedPeople"
+                   InitialPageSize="5">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+            </Columns>
+        </BbDataTable>
+        @if (selectedPeople.Any())
+        {
+            <div class="p-4 bg-muted rounded-md">
+                <p class="text-sm font-medium">Selected: @selectedPeople.Count people</p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    @foreach (var person in selectedPeople)
+                    {
+                        <BbBadge>@person.Name</BbBadge>
+                    }
+                </div>
+            </div>
+        }
+        <CodeBlock Source="Components/DataTable/row-selection.txt" />
+    </div>
+
+    <!-- Custom Cell Templates -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Cell Templates</h2>
+            <p class="text-sm text-muted-foreground">
+                Use custom templates to render cells with badges, buttons, and other components.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" ShowPagination="false">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Status)" Header="Status" Sortable>
+                    <CellTemplate Context="person">
+                        <BbBadge Variant="@(person.Status == "Active" ? BadgeVariant.Default : BadgeVariant.Outline)">
+                            @person.Status
+                        </BbBadge>
+                    </CellTemplate>
+                </BbDataTableColumn>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role">
+                    <CellTemplate Context="person">
+                        <BbBadge Variant="BadgeVariant.Secondary">@person.Role</BbBadge>
+                    </CellTemplate>
+                </BbDataTableColumn>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Actions">
+                    <CellTemplate Context="person">
+                        <div class="flex gap-2">
+                            <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small" OnClick="@(() => ShowDetails(person))">
+                                View
+                            </BbButton>
+                            <BbButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small" OnClick="@(() => EditPerson(person))">
+                                Edit
+                            </BbButton>
+                        </div>
+                    </CellTemplate>
+                </BbDataTableColumn>
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/custom-cell-templates.txt" />
+    </div>
+
+    <!-- Dialog with Combobox in CellTemplate (Issue #119 regression test) -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Dialog with Combobox in Cell Template</h2>
+            <p class="text-sm text-muted-foreground">
+                Each row has an "Edit" button that opens a Dialog containing a Combobox.
+                This tests nested portals (DataTable row &rarr; Dialog portal &rarr; Combobox FloatingPortal).
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" ShowPagination="true" InitialPageSize="5" ShowToolbar="false">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Status)" Header="Status">
+                    <CellTemplate Context="person">
+                        <BbBadge Variant="@(person.Status == "Active" ? BadgeVariant.Default : BadgeVariant.Outline)">
+                            @person.Status
+                        </BbBadge>
+                    </CellTemplate>
+                </BbDataTableColumn>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Actions">
+                    <CellTemplate Context="person">
+                        <BbDialog>
+                            <BbDialogTrigger>
+                                <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small">
+                                    Edit Role
+                                </BbButton>
+                            </BbDialogTrigger>
+                            <BbDialogContent>
+                                <BbDialogHeader>
+                                    <BbDialogTitle>Edit @person.Name</BbDialogTitle>
+                                    <BbDialogDescription>
+                                        Change the role for this person using the combobox below.
+                                    </BbDialogDescription>
+                                </BbDialogHeader>
+                                <div class="py-4">
+                                    <BbCombobox TValue="string"
+                                              Options="roleOptions"
+                                              @bind-Value="selectedCellRole"
+                                              Placeholder="Select role..."
+                                              SearchPlaceholder="Search roles..."
+                                              EmptyMessage="No roles found."
+                                              MatchTriggerWidth="true" />
+                                    @if (!string.IsNullOrEmpty(selectedCellRole))
+                                    {
+                                        <p class="text-sm mt-2">Selected: <strong>@selectedCellRole</strong></p>
+                                    }
+                                </div>
+                                <BbDialogFooter>
+                                    <BlazorBlueprint.Primitives.Dialog.BbDialogClose class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                                        Cancel
+                                    </BlazorBlueprint.Primitives.Dialog.BbDialogClose>
+                                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+                                        Save
+                                    </button>
+                                </BbDialogFooter>
+                            </BbDialogContent>
+                        </BbDialog>
+                    </CellTemplate>
+                </BbDataTableColumn>
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/dialog-combobox-cell.txt" />
+    </div>
+
+    <!-- Actions Column (No Property) -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Actions Column</h2>
+            <p class="text-sm text-muted-foreground">
+                Columns with only a <code class="bg-muted px-1 py-0.5 rounded">CellTemplate</code> no longer need a <code class="bg-muted px-1 py-0.5 rounded">Property</code> — useful for action buttons.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" ShowPagination="true" InitialPageSize="5" ShowToolbar="false">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+                <BbDataTableColumn TData="Person" TValue="object" Header="Actions">
+                    <CellTemplate Context="person">
+                        <div class="flex items-center gap-2">
+                            <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small" OnClick="@(() => ShowDetails(person))">
+                                View
+                            </BbButton>
+                            <BbButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small" OnClick="@(() => EditPerson(person))">
+                                Edit
+                            </BbButton>
+                        </div>
+                    </CellTemplate>
+                </BbDataTableColumn>
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/actions-column.txt" />
+    </div>
+
+    <!-- With Global Search -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Global Search & Column Visibility</h2>
+            <p class="text-sm text-muted-foreground">
+                Search across all columns and toggle column visibility.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" InitialPageSize="10">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Id)" Header="ID" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Age)" Header="Age" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Status)" Header="Status">
+                    <CellTemplate Context="person">
+                        <BbBadge Variant="@(person.Status == "Active" ? BadgeVariant.Default : BadgeVariant.Destructive)">
+                            @person.Status
+                        </BbBadge>
+                    </CellTemplate>
+                </BbDataTableColumn>
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/global-search.txt" />
+    </div>
+
+    <!-- Empty State -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Empty State</h2>
+            <p class="text-sm text-muted-foreground">
+                Displays a message when there's no data to show.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@emptyPeople" InitialPageSize="5">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/empty.txt" />
+    </div>
+
+    <!-- Loading State -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Loading State</h2>
+            <p class="text-sm text-muted-foreground">
+                Shows a loading indicator while data is being fetched.
+            </p>
+        </div>
+        <div class="flex gap-2 mb-4">
+            <BbButton OnClick="@(() => isLoading = !isLoading)">
+                Toggle Loading
+            </BbButton>
+        </div>
+        <BbDataTable TData="Person" Data="@people" IsLoading="@isLoading" InitialPageSize="5">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/loading.txt" />
+    </div>
+
+    <!-- Without Toolbar -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Without Toolbar</h2>
+            <p class="text-sm text-muted-foreground">
+                A minimal table without the toolbar (no search or column visibility).
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" ShowToolbar="false" InitialPageSize="5">
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="int" Property="@(p => p.Age)" Header="Age" Sortable />
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/without-toolbar.txt" />
+    </div>
+
+    <!-- Custom Toolbar Actions -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Toolbar Actions</h2>
+            <p class="text-sm text-muted-foreground">
+                Add custom action buttons to the toolbar.
+            </p>
+        </div>
+        <BbDataTable TData="Person" Data="@people" InitialPageSize="5">
+            <ToolbarActions>
+                <BbButton Variant="ButtonVariant.Default" Size="ButtonSize.Small" OnClick="@AddNewPerson">
+                    Add Person
+                </BbButton>
+                <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small" OnClick="@ExportData">
+                    Export
+                </BbButton>
+            </ToolbarActions>
+            <Columns>
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Name)" Header="Name" Sortable />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Email)" Header="Email" />
+                <BbDataTableColumn TData="Person" TValue="string" Property="@(p => p.Role)" Header="Role" />
+            </Columns>
+        </BbDataTable>
+        <CodeBlock Source="Components/DataTable/custom-toolbar-actions.txt" />
+    </div>
+
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>Uses role="grid" for screen readers</AccessibilityItem>
+            <AccessibilityItem>aria-sort indicates column sort direction</AccessibilityItem>
+            <AccessibilityItem>aria-selected indicates row selection state</AccessibilityItem>
+            <AccessibilityItem>aria-label on checkboxes for selection</AccessibilityItem>
+            <AccessibilityItem>Focusable rows with visible focus indicator</AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Navigate to next row">
+                <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Navigate to previous row">
+                <BbKbd>ArrowUp</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Toggle row selection">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Sort column (click header)">
+                <BbKbd>Click</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="DataTable">
+                <ApiParameter Name="Data" Type="IEnumerable&lt;TData&gt;">
+                    The data source for the table.
+                </ApiParameter>
+                <ApiParameter Name="SelectionMode" Type="DataTableSelectionMode" Default="None">
+                    The selection mode: None, Single, or Multiple.
+                </ApiParameter>
+                <ApiParameter Name="SelectedItems" Type="IReadOnlyCollection&lt;TData&gt;">
+                    The currently selected items. Use with @@bind-SelectedItems for two-way binding.
+                </ApiParameter>
+                <ApiParameter Name="EnableKeyboardNavigation" Type="bool" Default="true">
+                    When true, enables keyboard navigation for table rows (arrow keys to navigate, Enter/Space to select).
+                </ApiParameter>
+                <ApiParameter Name="ShowToolbar" Type="bool" Default="true">
+                    Whether to show the toolbar with global search and column visibility.
+                </ApiParameter>
+                <ApiParameter Name="ShowPagination" Type="bool" Default="true">
+                    Whether to show pagination controls.
+                </ApiParameter>
+                <ApiParameter Name="IsLoading" Type="bool" Default="false">
+                    Whether the table is in a loading state.
+                </ApiParameter>
+                <ApiParameter Name="InitialPageSize" Type="int" Default="5">
+                    The initial page size.
+                </ApiParameter>
+                <ApiParameter Name="PageSizes" Type="int[]" Default="[5, 10, 20, 50, 100]">
+                    The available page size options.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="DataTableColumn">
+                <ApiParameter Name="Property" Type="Func&lt;TData, TValue&gt;">
+                    Expression to get the column value from a data item.
+                </ApiParameter>
+                <ApiParameter Name="Format" Type="string?" Default="null">
+                    Optional formatting string used to format the column value.
+                </ApiParameter>
+                <ApiParameter Name="Header" Type="string">
+                    The column header text.
+                </ApiParameter>
+                <ApiParameter Name="Sortable" Type="bool" Default="false">
+                    Whether the column is sortable.
+                </ApiParameter>
+                <ApiParameter Name="CellTemplate" Type="RenderFragment&lt;TData&gt;?" Default="null">
+                    Custom template for rendering the cell content.
+                </ApiParameter>
+                <ApiParameter Name="Visible" Type="bool" Default="true">
+                    Whether the column is visible.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="DataTable toolbar, selection, and empty state labels are configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Loading", "Loading...", "Shown while data is loading"),
+            new("NoResultsFound", "No results found", "Shown when there are no rows"),
+            new("Search", "Search...", "Placeholder for the toolbar search input"),
+            new("Columns", "Columns", "Label for the column visibility button"),
+            new("ToggleColumns", "Toggle columns", "Aria label for column toggle checkboxes"),
+            new("Filter", "Filter", "Label for the filter button"),
+            new("FilterColumns", "Filter columns", "Placeholder in the filter columns search"),
+            new("SelectAllRows", "Select all rows", "Aria label for the header checkbox"),
+            new("SelectThisRow", "Select this row", "Aria label for row checkboxes"),
+            new("ClearSelection", "Clear selection", "Label for the clear selection action"),
+        })"
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.DataTable.Search = ""Suchen..."";
+    opts.DataTable.NoResultsFound = ""Keine Ergebnisse gefunden"";
+    opts.DataTable.Columns = ""Spalten"";
+});")" />
+</div>
+
+@code {
+    private List<Person> people = new();
+    private List<Person> emptyPeople = new();
+    private IReadOnlyCollection<Person> selectedPeople = Array.Empty<Person>();
+    private bool isLoading = false;
+    private bool enableKeyboardNavigation = true;
+    private string? selectedCellRole;
+
+    private readonly SelectOption<string>[] roleOptions =
+    [
+        new("Developer", "Developer"),
+        new("Designer", "Designer"),
+        new("Manager", "Manager"),
+        new("QA Engineer", "QA Engineer"),
+        new("DevOps", "DevOps"),
+        new("Product Owner", "Product Owner")
+    ];
+
+    protected override void OnInitialized()
+    {
+        // Generate 500 sample records using MockDataService
+        people = MockDataService.GeneratePersons(500);
+    }
+
+    private void ShowDetails(Person person)
+    {
+        // TODO: Implement show details dialog
+    }
+
+    private void EditPerson(Person person)
+    {
+        // TODO: Implement edit dialog
+    }
+
+    private void AddNewPerson()
+    {
+        // TODO: Implement add person dialog
+    }
+
+    private void ExportData()
+    {
+        // TODO: Implement export functionality
+    }
+}

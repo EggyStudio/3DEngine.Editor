@@ -1,0 +1,457 @@
+@page "/components/rich-text-editor"
+<PageTitle>Rich Text Editor - Blazor Blueprint</PageTitle>
+
+<div class="space-y-10 max-w-4xl">
+    <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">Rich Text Editor</h1>
+        <p class="text-xl text-muted-foreground">
+            A WYSIWYG rich text editor built on Quill.js with toolbar formatting. Text is formatted directly as you type.
+        </p>
+    </div>
+
+    @* Basic Example *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Usage</h2>
+            <p class="text-muted-foreground">
+                A simple rich text editor with two-way data binding. Formatting appears directly as you type.
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <BbRichTextEditor @bind-Value="basicValue" Placeholder="Start typing here..." />
+            @RenderHtmlOutput(basicValue)
+        </div>
+        <CodeBlock Source="Components/RichTextEditor/basic.txt" />
+    </section>
+
+    @* With Label *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Label</h2>
+            <p class="text-muted-foreground">
+                Associate a label with the editor for better accessibility.
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <BbLabel For="description-editor">Description</BbLabel>
+                <BbRichTextEditor @bind-Value="labeledValue"
+                                Id="description-editor"
+                                Placeholder="Enter a description..." />
+            </div>
+            @RenderHtmlOutput(labeledValue)
+        </div>
+        <CodeBlock Source="Components/RichTextEditor/with-label.txt" />
+    </section>
+
+    @* Toolbar Presets *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Toolbar Presets</h2>
+            <p class="text-muted-foreground">
+                Choose from preset toolbar configurations to match your needs.
+            </p>
+        </div>
+
+        <div class="grid gap-6">
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>Simple Toolbar</BbLabel>
+                    <BbRichTextEditor @bind-Value="simpleValue"
+                                    Toolbar="ToolbarPreset.Simple"
+                                    Placeholder="Basic formatting only..." />
+                </div>
+                @RenderHtmlOutput(simpleValue)
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>Standard Toolbar (Default)</BbLabel>
+                    <BbRichTextEditor @bind-Value="standardValue"
+                                    Toolbar="ToolbarPreset.Standard"
+                                    Placeholder="Common formatting options..." />
+                </div>
+                @RenderHtmlOutput(standardValue)
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>Full Toolbar</BbLabel>
+                    <BbRichTextEditor @bind-Value="fullValue"
+                                    Toolbar="ToolbarPreset.Full"
+                                    Placeholder="All formatting options..." />
+                </div>
+                @RenderHtmlOutput(fullValue)
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>No Toolbar</BbLabel>
+                    <BbRichTextEditor @bind-Value="noToolbarValue"
+                                    Toolbar="ToolbarPreset.None"
+                                    Placeholder="Plain editor without toolbar..." />
+                </div>
+                @RenderHtmlOutput(noToolbarValue)
+            </div>
+        </div>
+        <CodeBlock Source="Components/RichTextEditor/toolbar-presets.txt" />
+    </section>
+
+    @* Toolbar Features Demo *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Toolbar Features</h2>
+            <p class="text-muted-foreground">
+                The toolbar provides quick access to formatting options. You can also use keyboard shortcuts.
+            </p>
+        </div>
+
+        <div class="rounded-lg border p-6 space-y-4">
+            <div class="space-y-3">
+                <h3 class="font-semibold">Available Formatting (Full Toolbar)</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li><strong>Bold</strong> - Select text and click B or press <BbKbd>Ctrl+B</BbKbd></li>
+                    <li><em>Italic</em> - Select text and click I or press <BbKbd>Ctrl+I</BbKbd></li>
+                    <li><u>Underline</u> - Select text and click U or press <BbKbd>Ctrl+U</BbKbd></li>
+                    <li><s>Strikethrough</s> - Select text and click the strikethrough button</li>
+                    <li>Headers - H1, H2, H3 heading levels via dropdown</li>
+                    <li>Bullet List - Click the bullet list icon</li>
+                    <li>Numbered List - Click the numbered list icon</li>
+                    <li>Link - Select text and click link icon to add URL</li>
+                    <li>Blockquote - Add quoted text blocks</li>
+                    <li>Code Block - Add code snippets</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <BbRichTextEditor @bind-Value="toolbarDemoValue"
+                            Toolbar="ToolbarPreset.Full"
+                            Placeholder="Try out the toolbar features..." />
+            @RenderHtmlOutput(toolbarDemoValue)
+        </div>
+    </section>
+
+    @* Pre-populated Content *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Pre-populated Content</h2>
+            <p class="text-muted-foreground">
+                The editor can be initialized with existing HTML content.
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <BbRichTextEditor @bind-Value="prePopulatedValue" />
+            @RenderHtmlOutput(prePopulatedValue)
+        </div>
+        <CodeBlock Source="Components/RichTextEditor/pre-populated.txt" />
+    </section>
+
+    @* Height Control *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Height Control</h2>
+            <p class="text-muted-foreground">
+                Control the editor height with MaxHeight or fixed Height properties.
+            </p>
+        </div>
+
+        <div class="grid gap-6">
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>MaxHeight="200px" (scrollbar appears after 200px)</BbLabel>
+                    <BbRichTextEditor @bind-Value="maxHeightValue"
+                                    MaxHeight="200px"
+                                    Placeholder="Type a lot of content to see the scrollbar..." />
+                </div>
+                @RenderHtmlOutput(maxHeightValue)
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel>Height="150px" (fixed height, always shows scrollbar when needed)</BbLabel>
+                    <BbRichTextEditor @bind-Value="fixedHeightValue"
+                                    Height="150px"
+                                    Placeholder="Fixed height editor..." />
+                </div>
+                @RenderHtmlOutput(fixedHeightValue)
+            </div>
+        </div>
+        <CodeBlock Source="Components/RichTextEditor/height-control.txt" />
+    </section>
+
+    @* Disabled State *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled State</h2>
+            <p class="text-muted-foreground">
+                The editor can be disabled to prevent user input.
+            </p>
+        </div>
+
+        <BbRichTextEditor Value="<p>This editor is <strong>disabled</strong> and cannot be edited.</p>"
+                        Disabled="true" />
+        <CodeBlock Source="Components/RichTextEditor/disabled.txt" />
+    </section>
+
+    @* Form Integration *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Form Integration</h2>
+            <p class="text-muted-foreground">
+                Use the editor within forms for content submission.
+            </p>
+        </div>
+
+        <BbCard>
+            <BbCardHeader>
+                <BbCardTitle>Submit Feedback</BbCardTitle>
+                <BbCardDescription>Share your thoughts with us using rich text formatting.</BbCardDescription>
+            </BbCardHeader>
+            <BbCardContent Class="space-y-4">
+                <div class="space-y-2">
+                    <BbLabel For="feedback-editor">Your Feedback</BbLabel>
+                    <BbRichTextEditor @bind-Value="feedbackValue"
+                                    Id="feedback-editor"
+                                    Placeholder="What's on your mind?" />
+                </div>
+                @RenderHtmlOutput(feedbackValue)
+            </BbCardContent>
+            <BbCardFooter>
+                <BbButton OnClick="HandleSubmit" Disabled="@string.IsNullOrWhiteSpace(feedbackValue)">
+                    Submit Feedback
+                </BbButton>
+            </BbCardFooter>
+        </BbCard>
+
+        @if (submitted)
+        {
+            <div class="p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-md">
+                Feedback submitted successfully!
+            </div>
+        }
+        <CodeBlock Source="Components/RichTextEditor/form-integration.txt" />
+    </section>
+
+    @* Usage Notes *@
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Usage Notes</h2>
+        </div>
+
+        <div class="rounded-lg border p-6 space-y-4">
+            <div class="space-y-3">
+                <h3 class="font-semibold">Setup Requirements</h3>
+                <p class="text-sm text-muted-foreground">
+                    Add Quill.js CSS to your <code class="bg-muted px-1 rounded">&lt;head&gt;</code>:
+                </p>
+                <pre class="text-xs bg-muted p-3 rounded-md overflow-auto">&lt;link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.core.css" rel="stylesheet" /&gt;</pre>
+                <p class="text-sm text-muted-foreground mt-2">
+                    Add Quill.js script before the closing <code class="bg-muted px-1 rounded">&lt;/body&gt;</code> tag:
+                </p>
+                <pre class="text-xs bg-muted p-3 rounded-md overflow-auto">&lt;script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"&gt;&lt;/script&gt;</pre>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-semibold">Toolbar Presets</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li><strong>None</strong> - No toolbar, plain editing area</li>
+                    <li><strong>Simple</strong> - Bold, italic, underline, and lists</li>
+                    <li><strong>Standard</strong> - Headers, basic formatting, lists, links (default)</li>
+                    <li><strong>Full</strong> - All formatting options including blockquote and code blocks</li>
+                    <li><strong>Custom</strong> - Use ToolbarContent to provide your own toolbar</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-semibold">Key Features</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li>WYSIWYG editing powered by Quill.js v2</li>
+                    <li>Toolbar presets for different use cases</li>
+                    <li>Keyboard shortcuts for bold, italic, and underline</li>
+                    <li>Two-way data binding with @("@bind-Value")</li>
+                    <li>Delta (JSON) binding available via @("@bind-DeltaValue")</li>
+                    <li>Outputs clean HTML for storage and display</li>
+                    <li>Height control via MinHeight, MaxHeight, and Height</li>
+                    <li>Disabled and ReadOnly states</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-semibold">Accessibility</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li>Supports ARIA labels and descriptions</li>
+                    <li>Keyboard shortcuts for common formatting</li>
+                    <li>Associate with Label component using <code class="text-xs bg-muted px-1 py-0.5 rounded">Id</code> parameter</li>
+                    <li>Supports disabled and read-only states</li>
+                    <li>Focus and blur event callbacks</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="Toolbar button tooltips, heading options, and link dialog text are configurable via IBbLocalizer with RichTextEditor.* keys."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Normal", "Normal", "Label for the normal text heading option"),
+            new("Heading1/2/3", "Heading 1, Heading 2, Heading 3", "Labels for heading level options"),
+            new("Bold", "Bold (Ctrl+B)", "Tooltip for the bold toggle"),
+            new("Italic", "Italic (Ctrl+I)", "Tooltip for the italic toggle"),
+            new("Underline", "Underline (Ctrl+U)", "Tooltip for the underline toggle"),
+            new("Strikethrough", "Strikethrough", "Tooltip for the strikethrough toggle"),
+            new("BulletList", "Bullet List", "Tooltip for the bullet list toggle"),
+            new("NumberedList", "Numbered List", "Tooltip for the numbered list toggle"),
+            new("InsertLink", "Insert Link", "Aria label and tooltip for the link button"),
+            new("Blockquote", "Blockquote", "Tooltip for the blockquote toggle"),
+            new("CodeBlock", "Code Block", "Tooltip for the code block toggle"),
+            new("EditLink/RemoveLink", "Edit Link, Remove Link", "Link dialog title and remove button"),
+            new("Cancel/Update/Insert", "Cancel, Update, Insert", "Link dialog action buttons"),
+        })"
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.RichTextEditor.Bold = ""Fett (Strg+B)"";
+    opts.RichTextEditor.InsertLink = ""Link einfügen"";
+    opts.RichTextEditor.Cancel = ""Abbrechen"";
+});")" />
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> parameter sets an accessible label on the editor region
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-describedby</code> parameter associates supplementary description text
+            </AccessibilityItem>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-invalid</code> parameter indicates validation state for assistive technology
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Toolbar buttons have descriptive <code class="text-xs bg-muted px-1 py-0.5 rounded">title</code> attributes including keyboard shortcuts
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Toggle buttons use <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-pressed</code> to indicate active formatting state
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Bold formatting">
+                <BbKbd>Ctrl+B</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Italic formatting">
+                <BbKbd>Ctrl+I</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Underline formatting">
+                <BbKbd>Ctrl+U</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Navigate toolbar buttons">
+                <BbKbd>Tab</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="BbRichTextEditor">
+                <ApiParameter Name="Value" Type="string?" Default="null">
+                    HTML content of the editor. Supports two-way binding with <code>@@bind-Value</code>.
+                </ApiParameter>
+                <ApiParameter Name="DeltaValue" Type="string?" Default="null">
+                    Delta (JSON) representation of editor content. Supports two-way binding with <code>@@bind-DeltaValue</code>.
+                </ApiParameter>
+                <ApiParameter Name="Toolbar" Type="ToolbarPreset" Default="ToolbarPreset.Standard">
+                    Toolbar preset. Options: None, Simple, Standard, Full, Custom.
+                </ApiParameter>
+                <ApiParameter Name="ToolbarContent" Type="RenderFragment?" Default="null">
+                    Custom toolbar content when Toolbar is set to Custom.
+                </ApiParameter>
+                <ApiParameter Name="Placeholder" Type="string?" Default="null">
+                    Placeholder text when the editor is empty.
+                </ApiParameter>
+                <ApiParameter Name="MinHeight" Type="string" Default="&quot;150px&quot;">
+                    Minimum height of the editor area.
+                </ApiParameter>
+                <ApiParameter Name="MaxHeight" Type="string?" Default="null">
+                    Maximum height of the editor area. Content scrolls when exceeded.
+                </ApiParameter>
+                <ApiParameter Name="Height" Type="string?" Default="null">
+                    Fixed height for the editor area.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Whether the editor is disabled.
+                </ApiParameter>
+                <ApiParameter Name="ReadOnly" Type="bool" Default="false">
+                    Whether the editor is read-only.
+                </ApiParameter>
+                <ApiParameter Name="AriaLabel" Type="string?" Default="null">
+                    ARIA label for the editor region.
+                </ApiParameter>
+                <ApiParameter Name="AriaDescribedBy" Type="string?" Default="null">
+                    ID of the element that describes the editor.
+                </ApiParameter>
+                <ApiParameter Name="AriaInvalid" Type="bool?" Default="null">
+                    Whether the editor value is invalid.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string? basicValue;
+    private string? labeledValue;
+    private string? simpleValue;
+    private string? standardValue;
+    private string? fullValue;
+    private string? noToolbarValue;
+    private string? toolbarDemoValue;
+    private string? feedbackValue;
+    private string? maxHeightValue;
+    private string? fixedHeightValue;
+    private bool submitted;
+
+    private string prePopulatedValue = @"<h2>Welcome to the Rich Text Editor</h2>
+<p>This is a <strong>bold</strong> statement and this is <em>italic</em> text.</p>
+<h3>Features</h3>
+<ul>
+<li>Write with visual formatting</li>
+<li>See your changes immediately</li>
+<li>Use keyboard shortcuts for quick formatting</li>
+</ul>
+<p>Enjoy writing!</p>";
+
+    private void HandleSubmit()
+    {
+        submitted = true;
+        StateHasChanged();
+    }
+
+    private RenderFragment RenderHtmlOutput(string? value) => builder =>
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            builder.OpenElement(0, "div");
+            builder.AddAttribute(1, "class", "mt-4 rounded-lg border bg-muted/30 p-4");
+
+            builder.OpenElement(2, "div");
+            builder.AddAttribute(3, "class", "text-xs font-medium text-muted-foreground mb-2");
+            builder.AddContent(4, "HTML Output");
+            builder.CloseElement();
+
+            builder.OpenElement(5, "pre");
+            builder.AddAttribute(6, "class", "text-xs bg-muted p-3 rounded-md overflow-auto whitespace-pre-wrap break-all");
+            builder.AddContent(7, value);
+            builder.CloseElement();
+
+            builder.CloseElement();
+        }
+    };
+}

@@ -1,0 +1,406 @@
+@page "/components/alert"
+@using BlazorBlueprint.Icons.Lucide.Components
+
+<PageTitle>Alert Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Alert Component</h1>
+            <p class="text-xl text-muted-foreground">
+                Displays a callout for important messages that attract user attention.
+            </p>
+        </div>
+    </div>
+
+    <!-- All Variants -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Variants</h2>
+            <p class="text-sm text-muted-foreground">
+                Five semantic variants for different message types.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <!-- Default -->
+            <BbAlert>
+                <Icon>
+                    <LucideIcon Name="terminal" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Default</BbAlertTitle>
+                    <BbAlertDescription>
+                        A neutral alert for general informational messages.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <!-- Success -->
+            <BbAlert Variant="AlertVariant.Success">
+                <Icon>
+                    <LucideIcon Name="circle-check" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Success</BbAlertTitle>
+                    <BbAlertDescription>
+                        Your changes have been saved successfully.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <!-- Info -->
+            <BbAlert Variant="AlertVariant.Info">
+                <Icon>
+                    <LucideIcon Name="info" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Information</BbAlertTitle>
+                    <BbAlertDescription>
+                        This feature is currently in beta. Some functionality may change.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <!-- Warning -->
+            <BbAlert Variant="AlertVariant.Warning">
+                <Icon>
+                    <LucideIcon Name="triangle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Warning</BbAlertTitle>
+                    <BbAlertDescription>
+                        Your account is approaching its storage limit.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <!-- Danger -->
+            <BbAlert Variant="AlertVariant.Danger">
+                <Icon>
+                    <LucideIcon Name="circle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Danger</BbAlertTitle>
+                    <BbAlertDescription>
+                        Your session has expired. Please log in again.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+        </div>
+
+        <CodeBlock Source="Components/Alert/variants.txt" />
+    </div>
+
+    <!-- With Accent Border -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Accent Border</h2>
+            <p class="text-sm text-muted-foreground">
+                Use <code class="text-xs bg-muted px-1 py-0.5 rounded">AccentBorder="true"</code> to display a thick left border with a subtle tinted background.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <BbAlert Variant="AlertVariant.Warning" AccentBorder="true">
+                <Icon>
+                    <LucideIcon Name="triangle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Note</BbAlertTitle>
+                    <BbAlertDescription>
+                        Each component has its own namespace (e.g., <code class="text-xs bg-muted px-1 py-0.5 rounded">BlazorBlueprint.Components.BbButton</code>, <code class="text-xs bg-muted px-1 py-0.5 rounded">BlazorBlueprint.Components.BbDialog</code>). Import only the components you use to keep your imports clean.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <BbAlert Variant="AlertVariant.Info" AccentBorder="true">
+                <Icon>
+                    <LucideIcon Name="info" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Tip</BbAlertTitle>
+                    <BbAlertDescription>
+                        You can customize the theme colors by modifying the CSS variables in your theme file.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <BbAlert Variant="AlertVariant.Danger" AccentBorder="true">
+                <Icon>
+                    <LucideIcon Name="circle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Breaking Change</BbAlertTitle>
+                    <BbAlertDescription>
+                        The <code class="text-xs bg-muted px-1 py-0.5 rounded">Destructive</code> variant has been replaced with <code class="text-xs bg-muted px-1 py-0.5 rounded">Danger</code>.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+        </div>
+
+        <CodeBlock Source="Components/Alert/accent-border.txt" />
+    </div>
+
+    <!-- Without Icons -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Without Icons</h2>
+            <p class="text-sm text-muted-foreground">
+                Alerts can be used without icons for simpler messages.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <BbAlert>
+                <BbAlertTitle>Heads up!</BbAlertTitle>
+                <BbAlertDescription>
+                    You can add components to your app using the CLI.
+                </BbAlertDescription>
+            </BbAlert>
+
+            <BbAlert Variant="AlertVariant.Warning" AccentBorder="true">
+                <BbAlertTitle>Note</BbAlertTitle>
+                <BbAlertDescription>
+                    Remember to save your work before leaving the page.
+                </BbAlertDescription>
+            </BbAlert>
+        </div>
+
+        <CodeBlock Source="Components/Alert/without-icons.txt" />
+    </div>
+
+    <!-- Dismissible -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-semibold">Dismissible</h2>
+                <span class="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">v3</span>
+            </div>
+            <p class="text-sm text-muted-foreground">
+                Use <code class="text-xs bg-muted px-1 py-0.5 rounded">Dismissible="true"</code> to show a close button. Handle the <code class="text-xs bg-muted px-1 py-0.5 rounded">OnDismiss</code> callback to remove or hide the alert.
+            </p>
+        </div>
+        <div class="space-y-4">
+            @if (_showDismissibleAlert)
+            {
+                <BbAlert Variant="AlertVariant.Info" Dismissible="true" OnDismiss="@(() => _showDismissibleAlert = false)">
+                    <Icon>
+                        <LucideIcon Name="info" Class="h-4 w-4" />
+                    </Icon>
+                    <ChildContent>
+                        <BbAlertTitle>Dismissible Alert</BbAlertTitle>
+                        <BbAlertDescription>
+                            Click the X button to dismiss this alert.
+                        </BbAlertDescription>
+                    </ChildContent>
+                </BbAlert>
+            }
+            else
+            {
+                <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small" OnClick="@(() => _showDismissibleAlert = true)">
+                    Show Alert Again
+                </BbButton>
+            }
+
+            <BbAlert Variant="AlertVariant.Warning" Dismissible="true" AccentBorder="true">
+                <Icon>
+                    <LucideIcon Name="triangle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Warning</BbAlertTitle>
+                    <BbAlertDescription>
+                        This dismissible alert also uses the accent border style.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+        </div>
+        <CodeBlock Source="Components/Alert/dismissible.txt" />
+    </div>
+
+    <!-- Auto-Dismiss -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-semibold">Auto-Dismiss</h2>
+                <span class="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">v3</span>
+            </div>
+            <p class="text-sm text-muted-foreground">
+                Use <code class="text-xs bg-muted px-1 py-0.5 rounded">AutoDismissAfter</code> (in milliseconds) to automatically dismiss the alert after a delay.
+                Enable <code class="text-xs bg-muted px-1 py-0.5 rounded">ShowCountdown</code> for a visual progress bar. Hover to pause the countdown.
+            </p>
+        </div>
+        <div class="space-y-4">
+            @if (_showAutoDismissAlert)
+            {
+                <BbAlert Variant="AlertVariant.Success"
+                         AutoDismissAfter="5000"
+                         ShowCountdown="true"
+                         PauseOnHover="true"
+                         OnDismiss="@(() => _showAutoDismissAlert = false)">
+                    <Icon>
+                        <LucideIcon Name="circle-check" Class="h-4 w-4" />
+                    </Icon>
+                    <ChildContent>
+                        <BbAlertTitle>Changes Saved</BbAlertTitle>
+                        <BbAlertDescription>
+                            Your settings have been saved successfully. This alert will dismiss in 5 seconds. Hover to pause.
+                        </BbAlertDescription>
+                    </ChildContent>
+                </BbAlert>
+            }
+            else
+            {
+                <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small" OnClick="@(() => _showAutoDismissAlert = true)">
+                    Show Alert Again
+                </BbButton>
+            }
+        </div>
+
+        <CodeBlock Source="Components/Alert/auto-dismiss.txt" />
+    </div>
+
+    <!-- With Actions -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-semibold">With Actions</h2>
+                <span class="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">v3</span>
+            </div>
+            <p class="text-sm text-muted-foreground">
+                Use the <code class="text-xs bg-muted px-1 py-0.5 rounded">Actions</code> slot to add inline action buttons below the alert content.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <BbAlert Variant="AlertVariant.Warning">
+                <Icon>
+                    <LucideIcon Name="triangle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Unsaved Changes</BbAlertTitle>
+                    <BbAlertDescription>
+                        You have unsaved changes that will be lost if you leave this page.
+                    </BbAlertDescription>
+                </ChildContent>
+                <Actions>
+                    <BbButton Variant="ButtonVariant.Default" Size="ButtonSize.Small">Save</BbButton>
+                    <BbButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small">Discard</BbButton>
+                </Actions>
+            </BbAlert>
+
+            <BbAlert Variant="AlertVariant.Danger" AccentBorder="true">
+                <Icon>
+                    <LucideIcon Name="circle-alert" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Deployment Failed</BbAlertTitle>
+                    <BbAlertDescription>
+                        The deployment to production failed. Check logs for details.
+                    </BbAlertDescription>
+                </ChildContent>
+                <Actions>
+                    <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small">View Logs</BbButton>
+                    <BbButton Variant="ButtonVariant.Default" Size="ButtonSize.Small">Retry</BbButton>
+                </Actions>
+            </BbAlert>
+        </div>
+
+        <CodeBlock Source="Components/Alert/actions.txt" />
+    </div>
+
+    <!-- Custom Styling -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Custom Styling</h2>
+            <p class="text-sm text-muted-foreground">
+                Use the <code class="text-xs bg-muted px-1 py-0.5 rounded">Class</code> parameter to create custom-styled alerts. TailwindMerge ensures your classes override the built-in variant styles.
+            </p>
+        </div>
+        <div class="space-y-4">
+            <BbAlert Class="border-purple-500/30 bg-purple-500/10 [&>svg]:text-purple-500">
+                <Icon>
+                    <LucideIcon Name="sparkles" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>New Feature</BbAlertTitle>
+                    <BbAlertDescription>
+                        A custom-styled alert using the Class parameter to apply purple theming.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+
+            <BbAlert Class="border-pink-500/30 bg-gradient-to-r from-pink-500/10 to-purple-500/10 [&>svg]:text-pink-500">
+                <Icon>
+                    <LucideIcon Name="heart" Class="h-4 w-4" />
+                </Icon>
+                <ChildContent>
+                    <BbAlertTitle>Brand Alert</BbAlertTitle>
+                    <BbAlertDescription>
+                        Alerts can be styled with gradients and custom colors to match your brand.
+                    </BbAlertDescription>
+                </ChildContent>
+            </BbAlert>
+        </div>
+
+        <CodeBlock Source="Components/Alert/custom-styling.txt" />
+    </div>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="Alert">
+                <ApiParameter Name="Variant" Type="AlertVariant" Default="Default">
+                    The visual style variant. Options: Default, Success, Info, Warning, Danger.
+                </ApiParameter>
+                <ApiParameter Name="AccentBorder" Type="bool" Default="false">
+                    When true, displays a thick left border with a subtle tinted background.
+                </ApiParameter>
+                <ApiParameter Name="Dismissible" Type="bool" Default="false">
+                    When true, displays a close button in the top-right corner.
+                </ApiParameter>
+                <ApiParameter Name="OnDismiss" Type="EventCallback">
+                    Callback invoked when the dismiss button is clicked.
+                </ApiParameter>
+                <ApiParameter Name="Icon" Type="RenderFragment?">
+                    Optional icon to display in the alert.
+                </ApiParameter>
+                <ApiParameter Name="Actions" Type="RenderFragment?">
+                    Optional action buttons to display below the alert content.
+                </ApiParameter>
+                <ApiParameter Name="AutoDismissAfter" Type="int?">
+                    Duration in milliseconds after which the alert is automatically dismissed. Null (default) disables auto-dismiss.
+                </ApiParameter>
+                <ApiParameter Name="PauseOnHover" Type="bool" Default="true">
+                    Whether to pause the auto-dismiss countdown when hovering over the alert.
+                </ApiParameter>
+                <ApiParameter Name="ShowCountdown" Type="bool" Default="false">
+                    Whether to show a visual countdown progress bar at the bottom of the alert.
+                </ApiParameter>
+                <ApiParameter Name="Class" Type="string?">
+                    Additional CSS classes to apply to the alert.
+                </ApiParameter>
+                <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                    Content of the alert. Should contain AlertTitle and AlertDescription.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+
+    <LocalizationSection
+        Description="The dismiss button aria label is configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("Dismiss", "Dismiss", "Aria label for the dismiss button"),
+        })"
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.Alert.Dismiss = ""Schließen"";
+});")" />
+</div>
+
+@code {
+    private bool _showDismissibleAlert = true;
+    private bool _showAutoDismissAlert = true;
+}

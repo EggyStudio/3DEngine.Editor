@@ -1,0 +1,207 @@
+@page "/primitives/collapsible"
+<PageTitle>Collapsible Primitive - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">Collapsible Primitive</h1>
+            <p class="text-xl text-muted-foreground">
+                Unstyled, accessible primitive component for building custom collapsibles.
+            </p>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <!-- AsChild Pattern -->
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">AsChild Pattern</h2>
+                <p class="text-muted-foreground">
+                    Use AsChild to compose triggers with your own styled elements.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Without AsChild -->
+                <div class="space-y-3 p-4 border rounded-lg">
+                    <h3 class="text-lg font-medium">Without AsChild</h3>
+                    <p class="text-sm text-muted-foreground">
+                        CollapsibleTrigger renders its own button element.
+                    </p>
+                    <BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger class="h-9 px-3 py-2 border rounded text-sm cursor-pointer">
+                            Click to toggle
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger>
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent class="mt-2">
+                            Without AsChild - content controlled by the primitive.
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent>
+                    </BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                </div>
+
+                <!-- With AsChild -->
+                <div class="space-y-3 p-4 border rounded-lg">
+                    <h3 class="text-lg font-medium">With AsChild</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Button receives click behavior via TriggerContext.
+                    </p>
+                    <BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger AsChild>
+                            <BbButton Variant="ButtonVariant.Outline" Size="ButtonSize.Small">
+                                Click to toggle
+                                <LucideIcon Name="chevron-down" Size="16" Class="ml-2" />
+                            </BbButton>
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger>
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent class="mt-2">
+                            With AsChild - Button handles the trigger behavior.
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent>
+                    </BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                </div>
+            </div>
+
+            <CodeBlock Source="Primitives/Collapsible/as-child.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Basic Headless Primitive</h2>
+                <p class="text-muted-foreground">
+                    The primitive provides behavior and accessibility without styling.
+                </p>
+            </div>
+
+            <div class="rounded-lg border bg-card p-6 max-w-md">
+                <BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                    <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger class="cursor-pointer">
+                        Click to toggle (unstyled primitive)
+                    </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger>
+                    <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent class="mt-2">
+                        This content is controlled by the headless primitive. Style it however you want!
+                    </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent>
+                </BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+            </div>
+
+            <CodeBlock Source="Primitives/Collapsible/basic.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Controlled State</h2>
+                <p class="text-muted-foreground">
+                    Control the primitive state externally.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex gap-2">
+                    <button @onclick="@(() => isPrimitiveOpen = true)"
+                            class="px-3 py-2 border rounded text-sm">
+                        Open
+                    </button>
+                    <button @onclick="@(() => isPrimitiveOpen = false)"
+                            class="px-3 py-2 border rounded text-sm">
+                        Close
+                    </button>
+                </div>
+
+                <div class="rounded-lg border bg-card p-6 max-w-md">
+                    <BlazorBlueprint.Primitives.Collapsible.BbCollapsible @bind-Open="isPrimitiveOpen">
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger class="cursor-pointer">
+                            Controlled Primitive (State: @(isPrimitiveOpen ? "Open" : "Closed"))
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleTrigger>
+                        <BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent class="mt-2">
+                            External buttons control this primitive's state.
+                        </BlazorBlueprint.Primitives.Collapsible.BbCollapsibleContent>
+                    </BlazorBlueprint.Primitives.Collapsible.BbCollapsible>
+                </div>
+
+                <CodeBlock Source="Primitives/Collapsible/controlled.txt" />
+            </div>
+        </section>
+
+        <AccessibilityList>
+            <AriaAttributes>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-expanded</code> automatically applied to trigger
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">data-state</code> attribute for CSS styling (open|closed)
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">role="region"</code> on content with proper <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-hidden</code>
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    Focus management with visible focus indicators
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    Proper <code class="text-xs bg-muted px-1 py-0.5 rounded">disabled</code> attribute and behavior
+                </AccessibilityItem>
+            </AriaAttributes>
+            <KeyboardNavigation>
+                <KeyboardShortcutItem Description="Navigate to trigger">
+                    <BbKbd>Tab</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Toggle collapsible">
+                    <BbKbd>Space</BbKbd>
+                    <BbKbd>Enter</BbKbd>
+                </KeyboardShortcutItem>
+            </KeyboardNavigation>
+        </AccessibilityList>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">API Reference</h2>
+                <p class="text-muted-foreground">
+                    Component properties and parameters.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <ApiReference ComponentName="Collapsible">
+                    <ApiParameter Name="Open" Type="bool" Default="false">
+                        Controls whether the collapsible is expanded. Supports two-way binding with <code>@@bind-Open</code>.
+                    </ApiParameter>
+                    <ApiParameter Name="OpenChanged" Type="EventCallback&lt;bool&gt;">
+                        Callback invoked when the open state changes.
+                    </ApiParameter>
+                    <ApiParameter Name="Disabled" Type="bool" Default="false">
+                        Prevents toggling when true.
+                    </ApiParameter>
+                    <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                        Content rendered inside the collapsible container.
+                    </ApiParameter>
+                    <ApiParameter Name="AdditionalAttributes" Type="Dictionary&lt;string, object&gt;?">
+                        Additional HTML attributes applied to the container element (e.g. <code>class</code>, <code>style</code>).
+                    </ApiParameter>
+                </ApiReference>
+
+                <ApiReference ComponentName="CollapsibleTrigger">
+                    <ApiParameter Name="AsChild" Type="bool" Default="false">
+                        When true, does not render its own button element. Instead passes trigger behavior via <code>TriggerContext</code> to child components.
+                    </ApiParameter>
+                    <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                        Content rendered inside the trigger button.
+                    </ApiParameter>
+                    <ApiParameter Name="AdditionalAttributes" Type="Dictionary&lt;string, object&gt;?">
+                        Additional HTML attributes applied to the button element (e.g. <code>class</code>, <code>style</code>).
+                    </ApiParameter>
+                </ApiReference>
+
+                <ApiReference ComponentName="CollapsibleContent">
+                    <ApiParameter Name="ForceMount" Type="bool" Default="false">
+                        When true, content remains mounted even when collapsed. Useful for CSS animations.
+                    </ApiParameter>
+                    <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                        Content to be shown/hidden when collapsible is toggled.
+                    </ApiParameter>
+                    <ApiParameter Name="AdditionalAttributes" Type="Dictionary&lt;string, object&gt;?">
+                        Additional HTML attributes applied to the content container element (e.g. <code>class</code>, <code>style</code>).
+                    </ApiParameter>
+                </ApiReference>
+            </div>
+        </section>
+    </div>
+</div>
+
+@code {
+    private bool isPrimitiveOpen = false;
+}

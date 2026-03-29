@@ -1,0 +1,205 @@
+@page "/primitives/radio-group"
+<PageTitle>RadioGroup Primitive - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">RadioGroup Primitive</h1>
+        <p class="text-xl text-muted-foreground">
+            Headless, unstyled radio group primitive with keyboard support and ARIA attributes.
+        </p>
+    </div>
+
+    <div class="space-y-6">
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Basic Headless Primitive</h2>
+                <p class="text-muted-foreground">
+                    The primitive provides behavior, accessibility, and arrow key navigation.
+                </p>
+            </div>
+
+            <div class="rounded-lg border bg-card p-6 max-w-md">
+                <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup @bind-Value="basicValue" AriaLabel="Basic radio group"
+                    ItemClass="h-4 w-4 rounded-full border-2 border-input cursor-pointer data-[state=checked]:border-primary data-[state=checked]:bg-primary flex items-center justify-center">
+                    @foreach (var option in new[] { "Option 1", "Option 2", "Option 3" })
+                    {
+                        <div class="flex items-center gap-3 mb-2">
+                            <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem Value="@option" Id="@($"basic-{option}")">
+                                <span class="h-2 w-2 rounded-full bg-background data-[state=unchecked]:scale-0 transition-transform" data-state="@(basicValue == option ? "checked" : "unchecked")"></span>
+                            </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem>
+                            <label for="@($"basic-{option}")" class="cursor-pointer">@option</label>
+                        </div>
+                    }
+                </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup>
+                <p class="text-sm text-muted-foreground mt-3">Selected: @(basicValue ?? "None")</p>
+                <p class="text-xs text-muted-foreground mt-1">Try using arrow keys to navigate!</p>
+            </div>
+
+            <CodeBlock Source="Primitives/RadioGroup/basic.txt" />
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Controlled State</h2>
+                <p class="text-muted-foreground">
+                    Control the primitive state externally with buttons.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex gap-2">
+                    <button @onclick='@(() => controlledValue = "Small")' class="px-3 py-2 border rounded text-sm">
+                        Select Small
+                    </button>
+                    <button @onclick='@(() => controlledValue = "Medium")' class="px-3 py-2 border rounded text-sm">
+                        Select Medium
+                    </button>
+                    <button @onclick='@(() => controlledValue = "Large")' class="px-3 py-2 border rounded text-sm">
+                        Select Large
+                    </button>
+                </div>
+
+                <div class="rounded-lg border bg-card p-6 max-w-md">
+                    <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup @bind-Value="controlledValue" AriaLabel="Size selection"
+                        ItemClass="h-4 w-4 rounded-full border-2 border-input cursor-pointer data-[state=checked]:border-primary data-[state=checked]:bg-primary flex items-center justify-center">
+                        @foreach (var size in new[] { "Small", "Medium", "Large" })
+                        {
+                            <div class="flex items-center gap-3 mb-2">
+                                <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem Value="@size" Id="@($"size-{size}")">
+                                    <span class="h-2 w-2 rounded-full bg-background data-[state=unchecked]:scale-0 transition-transform" data-state="@(controlledValue == size ? "checked" : "unchecked")"></span>
+                                </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem>
+                                <label for="@($"size-{size}")" class="cursor-pointer">@size</label>
+                            </div>
+                        }
+                    </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup>
+                    <p class="text-sm text-muted-foreground mt-3">Selected size: @(controlledValue ?? "None")</p>
+                </div>
+
+                <CodeBlock Source="Primitives/RadioGroup/controlled.txt" />
+            </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">Disabled State</h2>
+                <p class="text-muted-foreground">
+                    Disable the entire group or individual items.
+                </p>
+            </div>
+
+            <div class="rounded-lg border bg-card p-6 max-w-md space-y-4">
+                <div>
+                    <h3 class="text-sm font-semibold mb-2">Disabled Group:</h3>
+                    <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup Value="@disabledValue" Disabled="true" AriaLabel="Disabled group" class="space-y-2 opacity-50"
+                        ItemClass="h-4 w-4 rounded-full border-2 border-input flex items-center justify-center cursor-not-allowed">
+                        @foreach (var opt in new[] { "Option A", "Option B" })
+                        {
+                            <div class="flex items-center gap-3">
+                                <BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem Value="@opt" Id="@($"disabled-{opt}")">
+                                    <span class="h-2 w-2 rounded-full bg-muted"></span>
+                                </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroupItem>
+                                <label for="@($"disabled-{opt}")" class="cursor-not-allowed">@opt</label>
+                            </div>
+                        }
+                    </BlazorBlueprint.Primitives.RadioGroup.BbRadioGroup>
+                </div>
+            </div>
+
+            <CodeBlock Source="Primitives/RadioGroup/disabled.txt" />
+        </section>
+
+        <AccessibilityList>
+            <AriaAttributes>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">role="radiogroup"</code> on container and <code class="text-xs bg-muted px-1 py-0.5 rounded">role="radio"</code> on items
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-checked</code> reflects selected state on each item
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-disabled</code> applied to group and individual items
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> for assistive technology context on group and items
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    <code class="text-xs bg-muted px-1 py-0.5 rounded">data-state</code> attribute for CSS styling hooks (checked/unchecked)
+                </AccessibilityItem>
+                <AccessibilityItem>
+                    Roving tab index pattern for focus management
+                </AccessibilityItem>
+            </AriaAttributes>
+            <KeyboardNavigation>
+                <KeyboardShortcutItem Description="Navigate between options">
+                    <BbKbd>Arrow Keys</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Select option">
+                    <BbKbd>Space / Enter</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Navigate to group">
+                    <BbKbd>Tab</BbKbd>
+                </KeyboardShortcutItem>
+            </KeyboardNavigation>
+        </AccessibilityList>
+
+        <section class="space-y-4">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold">API Reference</h2>
+                <p class="text-muted-foreground">Component properties and parameters.</p>
+            </div>
+
+            <div class="space-y-4">
+                <ApiReference ComponentName="RadioGroup&lt;TValue&gt;">
+                    <ApiParameter Name="Value" Type="TValue?" Default="default">
+                        The currently selected value. Supports two-way binding with <code>@@bind-Value</code>.
+                    </ApiParameter>
+                    <ApiParameter Name="ValueChanged" Type="EventCallback&lt;TValue&gt;">
+                        Callback invoked when the selected value changes.
+                    </ApiParameter>
+                    <ApiParameter Name="Disabled" Type="bool" Default="false">
+                        Disables the entire radio group when true.
+                    </ApiParameter>
+                    <ApiParameter Name="AriaLabel" Type="string?">
+                        Accessible label for screen readers.
+                    </ApiParameter>
+                    <ApiParameter Name="ItemClass" Type="string?">
+                        Default CSS classes applied to all RadioGroupItem children. Items merge this with their own class attribute.
+                    </ApiParameter>
+                    <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                        Content rendered inside the radio group. Should contain RadioGroupItem components.
+                    </ApiParameter>
+                    <ApiParameter Name="AdditionalAttributes" Type="Dictionary&lt;string, object&gt;?">
+                        Additional HTML attributes applied to the container div element (e.g. <code>class</code>, <code>style</code>).
+                    </ApiParameter>
+                </ApiReference>
+
+                <ApiReference ComponentName="RadioGroupItem&lt;TValue&gt;">
+                    <ApiParameter Name="Value" Type="TValue?">
+                        The value of this radio item. Required.
+                    </ApiParameter>
+                    <ApiParameter Name="Disabled" Type="bool" Default="false">
+                        Disables this individual radio item when true.
+                    </ApiParameter>
+                    <ApiParameter Name="Id" Type="string?">
+                        Unique identifier for the radio item element. Auto-generated if not provided. Used for label association.
+                    </ApiParameter>
+                    <ApiParameter Name="AriaLabel" Type="string?">
+                        Accessible label for screen readers when no visible label is associated.
+                    </ApiParameter>
+                    <ApiParameter Name="ChildContent" Type="RenderFragment?">
+                        Content rendered inside the radio item button element.
+                    </ApiParameter>
+                    <ApiParameter Name="AdditionalAttributes" Type="Dictionary&lt;string, object&gt;?">
+                        Additional HTML attributes applied to the button element. Auto-applied attributes: <code>data-state</code>, <code>aria-checked</code>, <code>disabled</code>, <code>tabindex</code>.
+                    </ApiParameter>
+                </ApiReference>
+            </div>
+        </section>
+    </div>
+</div>
+
+@code {
+    private string? basicValue = "Option 1";
+    private string? controlledValue = "Medium";
+    private string? disabledValue = "Option A";
+}

@@ -1,0 +1,364 @@
+@page "/components/numeric-input"
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>NumericInput Component - Blazor Blueprint</PageTitle>
+
+<div class="space-y-8 max-w-4xl">
+    <div>
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight">NumericInput Component</h1>
+            <p class="text-xl text-muted-foreground">
+                A generic numeric input supporting int, double, decimal, float, long, and short with min/max/step constraints.
+            </p>
+        </div>
+    </div>
+
+    <!-- Basic Integer Example -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Basic Integer</h2>
+            <p class="text-sm text-muted-foreground">
+                A simple integer input with default settings.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" @bind-Value="_intValue" Placeholder="Enter a number" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_intValue</p>
+        <CodeBlock Source="Components/NumericInput/basic-integer.txt" />
+    </div>
+
+    <!-- Double with Decimal Places -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Double with Decimal Places</h2>
+            <p class="text-sm text-muted-foreground">
+                A double input with 2 decimal places.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="double" @bind-Value="_doubleValue" DecimalPlaces="2" Placeholder="0.00" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_doubleValue.ToString("F2")</p>
+        <CodeBlock Source="Components/NumericInput/double-decimal.txt" />
+    </div>
+
+    <!-- With Min/Max Constraints -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Min/Max Constraints</h2>
+            <p class="text-sm text-muted-foreground">
+                Value is constrained between 0 and 100.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" @bind-Value="_constrainedValue" Min="0" Max="100" Placeholder="0-100" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_constrainedValue (min: 0, max: 100)</p>
+        <CodeBlock Source="Components/NumericInput/min-max.txt" />
+    </div>
+
+    <!-- With Step -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Step</h2>
+            <p class="text-sm text-muted-foreground">
+                Use arrow keys to increment/decrement by step value (5).
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" @bind-Value="_steppedValue" Step="5" Min="0" Max="100" Placeholder="Step: 5" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_steppedValue (step: 5, use arrow keys)</p>
+        <CodeBlock Source="Components/NumericInput/step.txt" />
+    </div>
+
+    <!-- With Buttons -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Increment/Decrement Buttons</h2>
+            <p class="text-sm text-muted-foreground">
+                Shows +/- buttons for easy value adjustment.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" @bind-Value="_buttonValue" ShowButtons="true" Min="0" Max="99" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_buttonValue</p>
+        <CodeBlock Source="Components/NumericInput/buttons.txt" />
+    </div>
+
+    <!-- Decimal Type -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Decimal Type (Currency)</h2>
+            <p class="text-sm text-muted-foreground">
+                Using decimal type with 2 decimal places for currency values.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="decimal" @bind-Value="_decimalValue" DecimalPlaces="2" Step="0.01m" Min="0m" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: $@_decimalValue.ToString("F2")</p>
+    </div>
+
+    <!-- Positive Only -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Positive Numbers Only</h2>
+            <p class="text-sm text-muted-foreground">
+                Negative values are not allowed.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" @bind-Value="_positiveValue" AllowNegative="false" Placeholder="Positive only" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_positiveValue</p>
+    </div>
+
+    <!-- Disabled -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled</h2>
+            <p class="text-sm text-muted-foreground">
+                A disabled numeric input.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="int" Value="42" Disabled="true" />
+        </div>
+    </div>
+
+    <!-- Float Type -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Float Type</h2>
+            <p class="text-sm text-muted-foreground">
+                Using float type with custom format.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="float" @bind-Value="_floatValue" Format="F3" Step="0.1f" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_floatValue.ToString("F3")</p>
+    </div>
+
+    <!-- Long Type -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Long Type</h2>
+            <p class="text-sm text-muted-foreground">
+                Using long type for large numbers.
+            </p>
+        </div>
+        <div class="w-64">
+            <BbNumericInput TValue="long" @bind-Value="_longValue" Step="1000" Placeholder="Large number" />
+        </div>
+        <p class="text-sm text-muted-foreground">Value: @_longValue.ToString("N0")</p>
+    </div>
+
+    <!-- Debounce -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Debounce</h2>
+            <p class="text-sm text-muted-foreground">
+                By default, <code class="text-xs bg-muted px-1 py-0.5 rounded">ValueChanged</code> is debounced during typing to reduce re-renders.
+                Arrow keys, buttons, and blur always fire immediately. Set
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">DisableDebounce="true"</code> to fire on every keystroke.
+            </p>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 max-w-2xl">
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Debounced (default)</label>
+                <div class="w-64">
+                    <BbNumericInput TValue="int"
+                                  Value="@_debouncedInt"
+                                  ValueChanged="@((v) => _debouncedInt = v)"
+                                  Placeholder="Type to see delay" />
+                </div>
+                <div class="rounded-lg border p-3 bg-muted/50">
+                    <p class="text-xs text-muted-foreground mb-1">Value:</p>
+                    <p class="text-sm font-mono">@_debouncedInt</p>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Immediate (DisableDebounce)</label>
+                <div class="w-64">
+                    <BbNumericInput TValue="int"
+                                  DisableDebounce="true"
+                                  Value="@_immediateInt"
+                                  ValueChanged="@((v) => _immediateInt = v)"
+                                  Placeholder="Updates instantly" />
+                </div>
+                <div class="rounded-lg border p-3 bg-muted/50">
+                    <p class="text-xs text-muted-foreground mb-1">Value:</p>
+                    <p class="text-sm font-mono">@_immediateInt</p>
+                </div>
+            </div>
+        </div>
+        <CodeBlock Source="Components/NumericInput/debounce.txt" />
+    </div>
+
+    <!-- Form Validation with EditForm -->
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Form Validation</h2>
+            <p class="text-sm text-muted-foreground">
+                NumericInput integrates with Blazor's EditForm and EditContext for model validation.
+                Use <code class="text-xs bg-muted px-1 py-0.5 rounded">@@bind-Value</code> within an EditForm and
+                validation errors will automatically apply error styling via <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-invalid</code>.
+            </p>
+        </div>
+        <EditForm Model="numericFormModel" OnValidSubmit="HandleNumericFormSubmit" class="max-w-md space-y-4">
+            <DataAnnotationsValidator />
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Age</label>
+                <BbNumericInput TValue="int" @bind-Value="numericFormModel.Age" Placeholder="Enter your age" />
+                <ValidationMessage For="@(() => numericFormModel.Age)" class="text-sm text-destructive" />
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Quantity</label>
+                <BbNumericInput TValue="int" @bind-Value="numericFormModel.Quantity" Min="0" Max="999" ShowButtons="true" />
+                <ValidationMessage For="@(() => numericFormModel.Quantity)" class="text-sm text-destructive" />
+            </div>
+
+            <div class="flex gap-4">
+                <BbButton Type="ButtonType.Submit" Variant="ButtonVariant.Default">Submit</BbButton>
+                <BbButton Type="ButtonType.Button" Variant="ButtonVariant.Outline" OnClick="ResetNumericForm">Reset</BbButton>
+            </div>
+
+            @if (!string.IsNullOrEmpty(numericFormMessage))
+            {
+                <div class="p-4 bg-card rounded-lg border">
+                    <p class="text-sm">@numericFormMessage</p>
+                </div>
+            }
+        </EditForm>
+        <CodeBlock Source="Components/NumericInput/form-validation.txt" />
+    </div>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+
+        <div class="space-y-4">
+            <ApiReference ComponentName="NumericInput<TValue>">
+                <ApiParameter Name="TValue" Type="struct, INumber<TValue>">
+                    The numeric type (int, double, decimal, float, long, short).
+                </ApiParameter>
+                <ApiParameter Name="Value" Type="TValue">
+                    Current value.
+                </ApiParameter>
+                <ApiParameter Name="Min" Type="TValue?">
+                    Minimum allowed value.
+                </ApiParameter>
+                <ApiParameter Name="Max" Type="TValue?">
+                    Maximum allowed value.
+                </ApiParameter>
+                <ApiParameter Name="Step" Type="TValue?" Default="1">
+                    Step increment for arrow keys/buttons.
+                </ApiParameter>
+                <ApiParameter Name="DecimalPlaces" Type="int?">
+                    Number of decimal places to display.
+                </ApiParameter>
+                <ApiParameter Name="AllowNegative" Type="bool" Default="true">
+                    Whether negative values are allowed.
+                </ApiParameter>
+                <ApiParameter Name="ShowButtons" Type="bool" Default="false">
+                    Show increment/decrement buttons.
+                </ApiParameter>
+                <ApiParameter Name="Format" Type="string?">
+                    Custom format string (e.g., "F2", "N0").
+                </ApiParameter>
+                <ApiParameter Name="DisableDebounce" Type="bool" Default="false">
+                    Disable debounce to fire ValueChanged on every keystroke.
+                </ApiParameter>
+                <ApiParameter Name="DebounceInterval" Type="int" Default="500">
+                    Debounce delay in milliseconds.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool">
+                    Disables the input.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+
+        <AccessibilityList>
+            <KeyboardNavigation>
+                <KeyboardShortcutItem Description="Increment by step">
+                    <BbKbd>Arrow Up</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Decrement by step">
+                    <BbKbd>Arrow Down</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Increment by 10x step">
+                    <BbKbd>Page Up</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Decrement by 10x step">
+                    <BbKbd>Page Down</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Go to minimum value">
+                    <BbKbd>Home</BbKbd>
+                </KeyboardShortcutItem>
+                <KeyboardShortcutItem Description="Go to maximum value">
+                    <BbKbd>End</BbKbd>
+                </KeyboardShortcutItem>
+            </KeyboardNavigation>
+        </AccessibilityList>
+    </section>
+
+    <LocalizationSection
+        Description="Numeric input stepper button aria labels are configurable."
+        Labels="@(new LocalizationSection.LabelInfo[]
+        {
+            new("IncreaseValue", "Increase value", "Aria label for the increment button"),
+            new("DecreaseValue", "Decrease value", "Aria label for the decrement button"),
+        })"
+        CultureAware="true"
+        CultureDescription="Number formatting and parsing respect CultureInfo.CurrentCulture, including decimal separators and grouping."
+        CodeExample="@(@"services.AddBlazorBlueprintComponents(opts =>
+{
+    opts.NumericInput.IncreaseValue = ""Wert erhöhen"";
+    opts.NumericInput.DecreaseValue = ""Wert verringern"";
+});")" />
+</div>
+
+@code {
+    private int _intValue = 0;
+    private double _doubleValue = 0.0;
+    private int _constrainedValue = 50;
+    private int _steppedValue = 0;
+    private int _buttonValue = 1;
+    private decimal _decimalValue = 99.99m;
+    private int _positiveValue = 0;
+    private float _floatValue = 3.14f;
+    private long _longValue = 0;
+    private int _debouncedInt = 0;
+    private int _immediateInt = 0;
+    private NumericFormModel numericFormModel = new();
+    private string? numericFormMessage;
+
+    private void HandleNumericFormSubmit()
+    {
+        numericFormMessage = $"Form submitted! Age: {numericFormModel.Age}, Quantity: {numericFormModel.Quantity}";
+    }
+
+    private void ResetNumericForm()
+    {
+        numericFormModel = new();
+        numericFormMessage = null;
+    }
+
+    private class NumericFormModel
+    {
+        [Range(1, 120, ErrorMessage = "Age must be between 1 and 120.")]
+        public int Age { get; set; }
+
+        [Range(1, 999, ErrorMessage = "Quantity must be between 1 and 999.")]
+        public int Quantity { get; set; }
+    }
+}

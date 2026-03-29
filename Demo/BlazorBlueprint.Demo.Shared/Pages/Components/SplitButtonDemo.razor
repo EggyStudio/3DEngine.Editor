@@ -1,0 +1,372 @@
+@page "/components/split-button"
+@using BlazorBlueprint.Icons.Lucide.Components
+
+<PageTitle>Split Button - Blazor Blueprint</PageTitle>
+
+<div class="space-y-10 max-w-4xl">
+    <div class="space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight">Split Button</h1>
+        <p class="text-xl text-muted-foreground">
+            A button with a primary action and a dropdown menu for secondary actions.
+        </p>
+    </div>
+
+    <!-- Default -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Default</h2>
+            <p class="text-muted-foreground">
+                Click the main button for the primary action, or the chevron for more options.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <BbSplitButton OnClick="HandleSave">
+                <ChildContent>Save</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem OnClick="HandleSaveAs">Save As...</BbSplitButtonItem>
+                    <BbSplitButtonItem OnClick="HandleSaveDraft">Save Draft</BbSplitButtonItem>
+                    <BbSplitButtonSeparator />
+                    <BbSplitButtonItem OnClick="HandleExport">Export</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+
+        @if (!string.IsNullOrEmpty(_lastAction))
+        {
+            <p class="text-sm text-muted-foreground">Last action: @_lastAction</p>
+        }
+        <CodeBlock Source="Components/SplitButton/default.txt" />
+    </section>
+
+    <!-- Variants -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Variants</h2>
+            <p class="text-muted-foreground">
+                SplitButton supports all button variants.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <BbSplitButton Variant="ButtonVariant.Default" OnClick="HandleSave">
+                <ChildContent>Default</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Variant="ButtonVariant.Secondary" OnClick="HandleSave">
+                <ChildContent>Secondary</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Variant="ButtonVariant.Outline" OnClick="HandleSave">
+                <ChildContent>Outline</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Variant="ButtonVariant.Destructive" OnClick="HandleSave">
+                <ChildContent>Destructive</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+        <CodeBlock Source="Components/SplitButton/variants.txt" />
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Sizes</h2>
+            <p class="text-muted-foreground">
+                Available in small, default, and large sizes.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4">
+            <BbSplitButton Size="ButtonSize.Small" Variant="ButtonVariant.Outline" OnClick="HandleSave">
+                <ChildContent>Small</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Size="ButtonSize.Default" Variant="ButtonVariant.Outline" OnClick="HandleSave">
+                <ChildContent>Default</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Size="ButtonSize.Large" Variant="ButtonVariant.Outline" OnClick="HandleSave">
+                <ChildContent>Large</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                    <BbSplitButtonItem>Option 2</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+        <CodeBlock Source="Components/SplitButton/sizes.txt" />
+    </section>
+
+    <!-- With Icon -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">With Icon</h2>
+            <p class="text-muted-foreground">
+                Add an icon to the primary button for visual context.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <BbSplitButton OnClick="HandleSave">
+                <ChildContent>
+                    <LucideIcon Name="save" Size="16" Class="mr-2" />
+                    Save
+                </ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem OnClick="HandleSaveAs">
+                        <LucideIcon Name="file-plus" Size="16" Class="mr-2" />
+                        Save As...
+                    </BbSplitButtonItem>
+                    <BbSplitButtonItem OnClick="HandleSaveDraft">
+                        <LucideIcon Name="file-edit" Size="16" Class="mr-2" />
+                        Save Draft
+                    </BbSplitButtonItem>
+                    <BbSplitButtonSeparator />
+                    <BbSplitButtonItem OnClick="HandleExport">
+                        <LucideIcon Name="download" Size="16" Class="mr-2" />
+                        Export
+                    </BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Variant="ButtonVariant.Outline" OnClick="HandlePublish">
+                <ChildContent>
+                    <LucideIcon Name="send" Size="16" Class="mr-2" />
+                    Publish
+                </ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>
+                        <LucideIcon Name="eye" Size="16" Class="mr-2" />
+                        Preview
+                    </BbSplitButtonItem>
+                    <BbSplitButtonItem>
+                        <LucideIcon Name="clock" Size="16" Class="mr-2" />
+                        Schedule
+                    </BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+        <CodeBlock Source="Components/SplitButton/with-icon.txt" />
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Disabled</h2>
+            <p class="text-muted-foreground">
+                Both the primary button and dropdown trigger are disabled.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <BbSplitButton Disabled="true" OnClick="HandleSave">
+                <ChildContent>Save</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Save As...</BbSplitButtonItem>
+                    <BbSplitButtonItem>Save Draft</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+
+            <BbSplitButton Disabled="true" Variant="ButtonVariant.Outline" OnClick="HandleSave">
+                <ChildContent>Outline Disabled</ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>Option 1</BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+        <CodeBlock Source="Components/SplitButton/disabled.txt" />
+    </section>
+
+    <!-- Practical Example -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Practical Example</h2>
+            <p class="text-muted-foreground">
+                A merge button commonly seen in version control interfaces.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+            <BbSplitButton OnClick="HandleMerge">
+                <ChildContent>
+                    <LucideIcon Name="git-merge" Size="16" Class="mr-2" />
+                    Merge pull request
+                </ChildContent>
+                <DropdownContent>
+                    <BbSplitButtonItem>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Create a merge commit</span>
+                            <span class="text-xs text-muted-foreground">All commits will be added to the base branch.</span>
+                        </div>
+                    </BbSplitButtonItem>
+                    <BbSplitButtonItem>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Squash and merge</span>
+                            <span class="text-xs text-muted-foreground">Commits will be combined into one commit.</span>
+                        </div>
+                    </BbSplitButtonItem>
+                    <BbSplitButtonItem>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Rebase and merge</span>
+                            <span class="text-xs text-muted-foreground">Commits will be rebased onto the base branch.</span>
+                        </div>
+                    </BbSplitButtonItem>
+                </DropdownContent>
+            </BbSplitButton>
+        </div>
+        <CodeBlock Source="Components/SplitButton/practical.txt" />
+    </section>
+
+    <!-- Usage Notes -->
+    <section class="space-y-6">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">Usage Notes</h2>
+        </div>
+
+        <div class="rounded-lg border p-6 space-y-4">
+            <div class="space-y-3">
+                <h3 class="font-semibold">Key Features</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li>Primary action button with a dropdown for secondary actions</li>
+                    <li>Supports all button variants (Default, Secondary, Outline, Destructive)</li>
+                    <li>Available in Small, Default, and Large sizes</li>
+                    <li>Disabled state applies to both buttons</li>
+                    <li>Composes Button and DropdownMenu components internally</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-semibold">Accessibility</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                    <li>Uses <code class="text-xs bg-muted px-1 py-0.5 rounded">role="group"</code> on the container</li>
+                    <li>Dropdown trigger has <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> for screen readers</li>
+                    <li>Keyboard navigation supported via DropdownMenu primitive</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accessibility Notes -->
+    <AccessibilityList>
+        <AriaAttributes>
+            <AccessibilityItem>
+                <code class="text-xs bg-muted px-1 py-0.5 rounded">role="group"</code> on the container groups primary and dropdown buttons
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Primary button supports custom <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label</code> via the AriaLabel parameter
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Dropdown trigger has <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-haspopup="menu"</code> and <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-expanded</code> indicating menu state
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Dropdown trigger defaults to <code class="text-xs bg-muted px-1 py-0.5 rounded">aria-label="More options"</code> when DropdownAriaLabel is not set
+            </AccessibilityItem>
+            <AccessibilityItem>
+                Menu items use <code class="text-xs bg-muted px-1 py-0.5 rounded">role="menuitem"</code> within a <code class="text-xs bg-muted px-1 py-0.5 rounded">role="menu"</code> container
+            </AccessibilityItem>
+        </AriaAttributes>
+        <KeyboardNavigation>
+            <KeyboardShortcutItem Description="Open the dropdown menu">
+                <BbKbd>Enter</BbKbd> / <BbKbd>Space</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Open dropdown and focus first item">
+                <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Navigate menu items">
+                <BbKbd>ArrowUp</BbKbd> / <BbKbd>ArrowDown</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Activate the focused menu item">
+                <BbKbd>Enter</BbKbd>
+            </KeyboardShortcutItem>
+            <KeyboardShortcutItem Description="Close the dropdown menu">
+                <BbKbd>Escape</BbKbd>
+            </KeyboardShortcutItem>
+        </KeyboardNavigation>
+    </AccessibilityList>
+
+    <!-- API Reference -->
+    <section class="space-y-4">
+        <div class="space-y-2">
+            <h2 class="text-2xl font-semibold">API Reference</h2>
+            <p class="text-muted-foreground">Component properties and parameters.</p>
+        </div>
+        <div class="space-y-4">
+            <ApiReference ComponentName="BbSplitButton">
+                <ApiParameter Name="Variant" Type="ButtonVariant" Default="ButtonVariant.Default">
+                    Visual style variant applied to both buttons.
+                </ApiParameter>
+                <ApiParameter Name="Size" Type="ButtonSize" Default="ButtonSize.Default">
+                    Size of both the primary button and dropdown trigger.
+                </ApiParameter>
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Disables both the primary button and dropdown trigger.
+                </ApiParameter>
+                <ApiParameter Name="OnClick" Type="EventCallback&lt;MouseEventArgs&gt;">
+                    Click handler for the primary action button.
+                </ApiParameter>
+                <ApiParameter Name="Icon" Type="RenderFragment?" Default="null">
+                    Icon rendered inside the primary button.
+                </ApiParameter>
+                <ApiParameter Name="IconPosition" Type="IconPosition" Default="IconPosition.Start">
+                    Position of the icon relative to text.
+                </ApiParameter>
+                <ApiParameter Name="AriaLabel" Type="string?" Default="null">
+                    ARIA label for the primary action button.
+                </ApiParameter>
+                <ApiParameter Name="DropdownAriaLabel" Type="string?" Default="&quot;More options&quot;">
+                    ARIA label for the dropdown trigger button.
+                </ApiParameter>
+                <ApiParameter Name="DropdownContent" Type="RenderFragment?" Default="null">
+                    Content for the dropdown menu. Should contain BbSplitButtonItem components.
+                </ApiParameter>
+            </ApiReference>
+
+            <ApiReference ComponentName="BbSplitButtonItem">
+                <ApiParameter Name="Disabled" Type="bool" Default="false">
+                    Whether the menu item is disabled.
+                </ApiParameter>
+                <ApiParameter Name="OnClick" Type="EventCallback&lt;MouseEventArgs&gt;">
+                    Click handler for this menu item.
+                </ApiParameter>
+                <ApiParameter Name="CloseOnSelect" Type="bool" Default="true">
+                    Whether clicking this item closes the dropdown.
+                </ApiParameter>
+            </ApiReference>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string? _lastAction;
+
+    private void HandleSave() => _lastAction = "Save clicked";
+    private void HandleSaveAs() => _lastAction = "Save As clicked";
+    private void HandleSaveDraft() => _lastAction = "Save Draft clicked";
+    private void HandleExport() => _lastAction = "Export clicked";
+    private void HandlePublish() => _lastAction = "Publish clicked";
+    private void HandleMerge() => _lastAction = "Merge pull request clicked";
+}
