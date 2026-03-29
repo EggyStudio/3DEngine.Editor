@@ -8,7 +8,7 @@ clear
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR" && pwd)"
 
-DEMO_SERVER="$PROJECT_ROOT/demo/BlazorBlueprint.Demo.Server/BlazorBlueprint.Demo.Server.csproj"
+DEMO_SERVER="$PROJECT_ROOT/Demo/BlazorBlueprint.Demo.Server/BlazorBlueprint.Demo.Server.csproj"
 
 run_demo() {
     local project_path=""
