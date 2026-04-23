@@ -1,1 +1,0 @@
-<BbTypographyMuted>Enter your email address.</BbTypographyMuted>

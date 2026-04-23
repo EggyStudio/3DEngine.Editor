@@ -1,1 +1,0 @@
-Press <BbKbd>Ctrl</BbKbd> + <BbKbd>I</BbKbd> to open the command palette.

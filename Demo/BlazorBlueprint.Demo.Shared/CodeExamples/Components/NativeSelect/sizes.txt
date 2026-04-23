@@ -1,3 +1,0 @@
-<BbNativeSelect TValue="string" Size="NativeSelectSize.Small">...</BbNativeSelect>
-<BbNativeSelect TValue="string" Size="NativeSelectSize.Default">...</BbNativeSelect>
-<BbNativeSelect TValue="string" Size="NativeSelectSize.Large">...</BbNativeSelect>

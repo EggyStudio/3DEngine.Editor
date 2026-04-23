@@ -1,1 +1,0 @@
-<BbRating Value="3" Disabled="true" />

@@ -1,3 +1,0 @@
-<BbProgress Value="3" Max="10" />
-
-<BbProgress Value="750" Max="1000" />

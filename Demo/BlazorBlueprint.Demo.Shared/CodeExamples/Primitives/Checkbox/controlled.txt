@@ -1,6 +1,0 @@
-<button @onclick="@(() => checked = true)">Check</button>
-<button @onclick="@(() => checked = false)">Uncheck</button>
-
-<BbCheckbox @bind-Checked="checked">
-    <BbCheckboxIndicator />
-</BbCheckbox>

@@ -1,3 +1,0 @@
-<BbRangeSlider @bind-Value="rangeValue"
-             ShowTickMarks="true"
-             TickValues="@(new double[] { 0, 25, 50, 75, 100 })" />

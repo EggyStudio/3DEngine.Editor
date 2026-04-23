@@ -1,2 +1,0 @@
-<BbKbd>⌘</BbKbd>
-<BbKbd>I</BbKbd>

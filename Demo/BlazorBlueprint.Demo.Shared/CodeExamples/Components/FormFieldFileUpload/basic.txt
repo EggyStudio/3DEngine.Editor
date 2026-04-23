@@ -1,3 +1,0 @@
-<BbFormFieldFileUpload @bind-Files="singleFile"
-                      Label="Attachment"
-                      HelperText="Upload a file (max 10 MB)." />

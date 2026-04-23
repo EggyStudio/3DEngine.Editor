@@ -1,1 +1,0 @@
-<BbProgress Value="33" />

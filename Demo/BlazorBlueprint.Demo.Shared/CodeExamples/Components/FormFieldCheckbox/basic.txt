@@ -1,3 +1,0 @@
-<BbFormFieldCheckbox @bind-Checked="acceptTerms"
-                       Label="Accept terms and conditions"
-                       HelperText="You must accept before continuing." />

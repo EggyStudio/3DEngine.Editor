@@ -1,4 +1,0 @@
-<BbFormFieldMaskedInput Value="5551234567"
-                       Label="Phone (locked)"
-                       Preset="MaskPreset.Phone"
-                       Disabled="true" />

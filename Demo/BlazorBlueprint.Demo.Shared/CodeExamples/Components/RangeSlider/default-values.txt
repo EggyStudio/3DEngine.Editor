@@ -1,1 +1,0 @@
-<BbRangeSlider DefaultStart="10" DefaultEnd="90" />

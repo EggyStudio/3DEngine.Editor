@@ -1,3 +1,0 @@
-<BbNativeSelect TValue="string" Disabled="true" Placeholder="Disabled select">
-    <option value="1">Option 1</option>
-</BbNativeSelect>

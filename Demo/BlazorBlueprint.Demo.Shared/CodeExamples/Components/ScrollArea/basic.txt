@@ -1,3 +1,0 @@
-<BbScrollArea Height="200px">
-    <!-- Content... -->
-</BbScrollArea>

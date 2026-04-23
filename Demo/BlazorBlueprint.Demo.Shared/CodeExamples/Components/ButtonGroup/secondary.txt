@@ -1,6 +1,0 @@
-<BbButtonGroup>
-    <BbButton Variant="ButtonVariant.Secondary">Year</BbButton>
-    <BbButton Variant="ButtonVariant.Secondary">Month</BbButton>
-    <BbButton Variant="ButtonVariant.Secondary">Week</BbButton>
-    <BbButton Variant="ButtonVariant.Secondary">Day</BbButton>
-</BbButtonGroup>

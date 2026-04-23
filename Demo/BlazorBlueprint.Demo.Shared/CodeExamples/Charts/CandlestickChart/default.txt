@@ -1,6 +1,0 @@
-<BbCandlestickChart Data="@data" Height="300px">
-    <BbXAxis DataKey="date" />
-    <BbYAxis Scale="true" />
-    <BbChartTooltip />
-    <BbCandlestick OpenKey="open" CloseKey="close" HighKey="high" LowKey="low" />
-</BbCandlestickChart>

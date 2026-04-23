@@ -1,5 +1,0 @@
-<BbGaugeChart Data="@data" Height="250px">
-    <BbGauge DataKey="value" Name="Score" Color="var(--chart-2)"
-             ShowProgress="true" ProgressWidth="18"
-             ShowPointer="false" AxisLineWidth="18" />
-</BbGaugeChart>

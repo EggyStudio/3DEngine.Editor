@@ -1,5 +1,0 @@
-<BbButtonGroup>
-    <BbButton Variant="ButtonVariant.Outline">Archive</BbButton>
-    <BbButton Variant="ButtonVariant.Outline">Report</BbButton>
-    <BbButton Variant="ButtonVariant.Outline">Delete</BbButton>
-</BbButtonGroup>

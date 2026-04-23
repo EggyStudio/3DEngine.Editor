@@ -1,4 +1,0 @@
-<button @onclick="@(() => checked = true)">Turn On</button>
-<button @onclick="@(() => checked = false)">Turn Off</button>
-
-<BbSwitch @bind-Checked="checked" />

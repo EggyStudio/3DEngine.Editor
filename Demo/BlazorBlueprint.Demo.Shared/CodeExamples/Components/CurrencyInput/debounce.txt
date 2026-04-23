@@ -1,2 +1,0 @@
-<BbCurrencyInput @bind-Value="_value" CurrencyCode="USD" />
-<BbCurrencyInput @bind-Value="_value" CurrencyCode="USD" DisableDebounce="true" />

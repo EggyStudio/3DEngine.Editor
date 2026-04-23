@@ -1,2 +1,0 @@
-<BbToggle Variant="ToggleVariant.Default">...</BbToggle>
-<BbToggle Variant="ToggleVariant.Outline">...</BbToggle>

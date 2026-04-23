@@ -1,3 +1,0 @@
-<BbInputField @ref="_errorInput" TValue="int" @bind-Value="_value"
-            OnParseError="HandleParseError"
-            OnErrorCleared="HandleParseErrorCleared" />

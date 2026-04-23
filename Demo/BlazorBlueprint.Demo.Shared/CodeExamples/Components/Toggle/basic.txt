@@ -1,3 +1,0 @@
-<BbToggle @bind-Pressed="_isPressed">
-    <LucideIcon Name="bold" Class="h-4 w-4" />
-</BbToggle>

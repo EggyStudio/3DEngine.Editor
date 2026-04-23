@@ -1,3 +1,0 @@
-<BbToggle Disabled="true" class="...your-styles...">
-    Disabled
-</BbToggle>

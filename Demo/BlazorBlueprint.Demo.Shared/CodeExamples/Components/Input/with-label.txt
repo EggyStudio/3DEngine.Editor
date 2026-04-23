@@ -1,3 +1,0 @@
-<label>Email</label>
-<BbInput Type="InputType.Email" Placeholder="m@example.com" />
-<p>We'll never share your email.</p>

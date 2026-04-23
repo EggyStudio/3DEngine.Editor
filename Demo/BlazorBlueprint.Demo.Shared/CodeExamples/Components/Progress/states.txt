@@ -1,5 +1,0 @@
-<BbProgress Value="0" />
-<BbProgress Value="25" />
-<BbProgress Value="50" />
-<BbProgress Value="75" />
-<BbProgress Value="100" />

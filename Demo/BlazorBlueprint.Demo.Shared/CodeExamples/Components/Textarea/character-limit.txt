@@ -1,1 +1,0 @@
-<BbTextarea MaxLength="280" Placeholder="What's happening?" />

@@ -1,2 +1,0 @@
-<BbMarkdownEditor @bind-Value="basicValue"
-                Placeholder="Write something amazing..." />

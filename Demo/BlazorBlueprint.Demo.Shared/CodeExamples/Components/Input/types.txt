@@ -1,3 +1,0 @@
-<BbInput Type="InputType.Email" Placeholder="Enter email" />
-<BbInput Type="InputType.Password" Placeholder="Enter password" />
-<BbInput Type="InputType.Date" />

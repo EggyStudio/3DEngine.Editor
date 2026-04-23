@@ -1,1 +1,0 @@
-<BbRangeSlider @bind-Value="rangeValue" ShowTooltips="true" />

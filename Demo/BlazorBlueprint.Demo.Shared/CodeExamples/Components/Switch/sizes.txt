@@ -1,3 +1,0 @@
-<BbSwitch Size="SwitchSize.Small" />
-<BbSwitch Size="SwitchSize.Medium" />
-<BbSwitch Size="SwitchSize.Large" />

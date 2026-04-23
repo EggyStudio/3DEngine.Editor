@@ -1,4 +1,0 @@
-<BbFormFieldCurrencyInput @bind-Value="amount"
-                         Label="Amount"
-                         Placeholder="0.00"
-                         HelperText="Enter the payment amount." />

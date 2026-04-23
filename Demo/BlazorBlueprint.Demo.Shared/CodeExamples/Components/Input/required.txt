@@ -1,1 +1,0 @@
-<BbInput Required="true" Placeholder="Enter username" />

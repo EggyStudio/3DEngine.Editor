@@ -1,3 +1,0 @@
-<BbTypographyLead>
-    A modal dialog that interrupts the user with important content.
-</BbTypographyLead>

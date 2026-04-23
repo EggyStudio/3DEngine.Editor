@@ -1,5 +1,0 @@
-<BbTagInput @bind-Tags="tags" Clearable="true" Placeholder="Add tags..." />
-
-@code {
-    private IReadOnlyList<string>? tags;
-}

@@ -1,2 +1,0 @@
-<BbSwitch @bind-Checked="notifications" Id="notifications" />
-<BbSwitch @bind-Checked="autoSave" Id="auto-save" />

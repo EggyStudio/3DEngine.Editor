@@ -1,3 +1,0 @@
-<BbFormFieldSwitch @bind-Checked="darkMode"
-                     Label="Dark mode"
-                     HelperText="Toggle the application theme." />

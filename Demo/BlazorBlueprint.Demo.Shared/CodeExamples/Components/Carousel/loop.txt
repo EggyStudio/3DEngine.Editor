@@ -1,9 +1,0 @@
-<BbCarousel Class="w-full" Loop="true">
-    <BbCarouselContent>
-        <BbCarouselItem>...</BbCarouselItem>
-        <BbCarouselItem>...</BbCarouselItem>
-        <BbCarouselItem>...</BbCarouselItem>
-    </BbCarouselContent>
-    <BbCarouselPrevious />
-    <BbCarouselNext />
-</BbCarousel>

@@ -1,1 +1,0 @@
-<BbDateRangePicker @bind-Value="_customFormat" DateFormat="yyyy-MM-dd" />

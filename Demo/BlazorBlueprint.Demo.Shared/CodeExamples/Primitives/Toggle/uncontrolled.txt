@@ -1,3 +1,0 @@
-<BbToggle class="...your-styles...">
-    Bold
-</BbToggle>

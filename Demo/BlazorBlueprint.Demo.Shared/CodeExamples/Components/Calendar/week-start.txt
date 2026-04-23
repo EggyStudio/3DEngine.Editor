@@ -1,2 +1,0 @@
-<BbCalendar @bind-Selected="_sundayStart" FirstDayOfWeek="DayOfWeek.Sunday" />
-<BbCalendar @bind-Selected="_mondayStart" FirstDayOfWeek="DayOfWeek.Monday" />

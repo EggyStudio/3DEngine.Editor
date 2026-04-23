@@ -1,5 +1,0 @@
-<BbInputField @ref="_guidInput" TValue="Guid" @bind-Value="_guidValue" OnParseError="HandleGuidError" />
-@if (_guidInput?.HasParseError == true)
-{
-    <p>Invalid GUID format.</p>
-}

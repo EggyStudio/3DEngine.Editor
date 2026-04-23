@@ -1,7 +1,0 @@
-@using BlazorBlueprint.Primitives.Switch
-
-<BbSwitch @bind-Checked="checked" Id="basic"
-        class="your-switch-classes">
-    <BbSwitchThumb class="your-thumb-classes" />
-</BbSwitch>
-<label for="basic">Label text</label>

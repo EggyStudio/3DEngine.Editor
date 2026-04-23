@@ -1,4 +1,0 @@
-<BbFileUpload @bind-Files="files"
-    Multiple="true"
-    Accept="image/*"
-    MaxFileCount="4" />

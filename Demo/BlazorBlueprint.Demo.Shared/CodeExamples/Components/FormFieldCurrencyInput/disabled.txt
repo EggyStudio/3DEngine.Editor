@@ -1,4 +1,0 @@
-<BbFormFieldCurrencyInput Value="99.99m"
-                         Label="Fixed price"
-                         HelperText="Cannot be changed."
-                         Disabled="true" />

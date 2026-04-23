@@ -1,1 +1,0 @@
-<BbSwitch @bind-Checked="basicChecked" Id="basic-switch" />

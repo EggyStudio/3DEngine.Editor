@@ -1,5 +1,0 @@
-<BbColorPicker @bind-Value="_color" />
-
-@code {
-    private string _color = "#EC4899";
-}

@@ -1,4 +1,0 @@
-<BbFunnelChart Data="@data" Height="250px">
-    <BbChartTooltip />
-    <BbFunnel DataKey="value" NameKey="stage" Sort="FunnelSort.Ascending" />
-</BbFunnelChart>

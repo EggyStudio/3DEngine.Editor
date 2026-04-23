@@ -1,1 +1,0 @@
-<BbProgress Value="@progressValue" />

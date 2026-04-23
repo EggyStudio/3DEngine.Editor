@@ -1,1 +1,0 @@
-<BbColorPicker @bind-Value="_color" />

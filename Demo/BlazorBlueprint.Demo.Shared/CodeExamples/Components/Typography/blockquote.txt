@@ -1,3 +1,0 @@
-<BbTypographyBlockquote>
-    "After all," he said, "everyone enjoys a good joke..."
-</BbTypographyBlockquote>

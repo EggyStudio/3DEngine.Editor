@@ -1,3 +1,0 @@
-<BbGaugeChart Data="@data" Height="250px">
-    <BbGauge DataKey="value" Name="Speed" />
-</BbGaugeChart>

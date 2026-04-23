@@ -1,1 +1,0 @@
-<BbInput Type="InputType.Text" Placeholder="Enter your text..." />

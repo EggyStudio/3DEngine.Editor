@@ -1,5 +1,0 @@
-<EditForm Model="formModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <BbTextarea @bind-Value="formModel.Bio" />
-    <ValidationMessage For="@(() => formModel.Bio)" />
-</EditForm>

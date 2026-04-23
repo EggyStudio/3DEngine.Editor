@@ -1,3 +1,0 @@
-<BbToggle Size="ToggleSize.Small">...</BbToggle>
-<BbToggle Size="ToggleSize.Default">...</BbToggle>
-<BbToggle Size="ToggleSize.Large">...</BbToggle>

@@ -1,2 +1,0 @@
-<BbTimePicker @bind-Value="_startTime" />
-<BbTimePicker @bind-Value="_endTime" />

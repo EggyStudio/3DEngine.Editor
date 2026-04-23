@@ -1,3 +1,0 @@
-<BbInputField TValue="int" @bind-Value="_value"
-            Validation="v => v >= 1 && v <= 100"
-            OnParseError="HandleError" />

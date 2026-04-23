@@ -1,4 +1,0 @@
-<BbBadge Variant="BadgeVariant.Default">Active</BbBadge>
-<BbBadge Variant="BadgeVariant.Secondary">Pending</BbBadge>
-<BbBadge Variant="BadgeVariant.Destructive">Error</BbBadge>
-<BbBadge Variant="BadgeVariant.Outline">Draft</BbBadge>

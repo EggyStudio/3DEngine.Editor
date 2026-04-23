@@ -1,3 +1,0 @@
-<BbFormFieldDateRangePicker @bind-Value="dateRange"
-                           Label="Date range"
-                           HelperText="Select a start and end date." />

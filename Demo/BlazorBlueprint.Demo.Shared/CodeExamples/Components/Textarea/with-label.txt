@@ -1,3 +1,0 @@
-<label>Bio</label>
-<BbTextarea Placeholder="Tell us about yourself..." />
-<p>Your bio will be displayed on your public profile.</p>

@@ -1,4 +1,0 @@
-<BbFormFieldCheckbox @bind-Checked="newsletter"
-                       Label="Subscribe to newsletter"
-                       HelperText="Get weekly updates."
-                       Orientation="FieldOrientation.Horizontal" />

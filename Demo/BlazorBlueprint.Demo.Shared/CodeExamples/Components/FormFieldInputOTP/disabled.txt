@@ -1,4 +1,0 @@
-<BbFormFieldInputOTP Value="123456"
-                    Label="Code (locked)"
-                    HelperText="Already verified."
-                    Disabled="true" />

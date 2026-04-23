@@ -1,4 +1,0 @@
-<BbAlert>
-    <BbAlertTitle>Heads up!</BbAlertTitle>
-    <BbAlertDescription>You can add components using the CLI.</BbAlertDescription>
-</BbAlert>

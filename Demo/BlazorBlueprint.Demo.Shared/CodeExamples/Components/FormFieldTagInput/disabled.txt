@@ -1,4 +1,0 @@
-<BbFormFieldTagInput Tags="@readOnlyTags"
-                    Label="Tags (locked)"
-                    HelperText="These tags cannot be modified."
-                    Disabled="true" />
