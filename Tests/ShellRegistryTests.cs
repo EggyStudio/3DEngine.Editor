@@ -1,119 +1,165 @@
 using Editor.Shell;
 using FluentAssertions;
 using Xunit;
-
 namespace Engine.Tests.Editor;
-
 [Trait("Category", "Unit")]
 public class ShellRegistryTests
 {
+    // -- Defaults --
     [Fact]
     public void Version_Starts_At_Zero()
     {
-        var registry = new ShellRegistry();
-
-        registry.Version.Should().Be(0);
+        new ShellRegistry().Version.Should().Be(0);
     }
-
     [Fact]
     public void Current_Returns_Empty_Descriptor_By_Default()
     {
         var registry = new ShellRegistry();
-
         registry.Current.Should().NotBeNull();
         registry.Current.Panels.Should().BeEmpty();
     }
-
+    // -- RegisterSource --
     [Fact]
-    public void Update_Bumps_Version()
+    public void RegisterSource_Bumps_Version()
     {
         var registry = new ShellRegistry();
-
-        registry.Update(new ShellDescriptor());
+        registry.RegisterSource("a", new ShellSource());
         registry.Version.Should().Be(1);
-
-        registry.Update(new ShellDescriptor());
+        registry.RegisterSource("a", new ShellSource()); // upsert still bumps
         registry.Version.Should().Be(2);
     }
-
     [Fact]
-    public void Update_Sets_Current_To_New_Descriptor()
+    public void RegisterSource_Surfaces_Builder_Output_In_Current()
     {
         var registry = new ShellRegistry();
-        var desc = new ShellDescriptor
+        var src = new ShellSource
         {
-            Panels = [new PanelDescriptor { Id = "test", Title = "Test Panel" }]
+            Builders = new IEditorShellBuilder[] { new TestBuilder("p1", "Panel 1", DockZone.Left) }
         };
-
-        registry.Update(desc);
-
-        registry.Current.Should().BeSameAs(desc);
+        registry.RegisterSource(ShellSourceIds.Static, src);
         registry.Current.Panels.Should().HaveCount(1);
-        registry.Current.Panels[0].Id.Should().Be("test");
+        registry.Current.Panels[0].Id.Should().Be("p1");
+        registry.Current.Panels[0].Title.Should().Be("Panel 1");
     }
-
     [Fact]
-    public void Update_Null_Throws_ArgumentNullException()
+    public void RegisterSource_Null_SourceId_Throws()
     {
         var registry = new ShellRegistry();
-
-        var act = () => registry.Update(null!);
-
-        act.Should().Throw<ArgumentNullException>()
-            .WithParameterName("descriptor");
+        var act = () => registry.RegisterSource("", new ShellSource());
+        act.Should().Throw<ArgumentException>();
     }
-
     [Fact]
-    public void Changed_Event_Fires_On_Update()
+    public void RegisterSource_Null_Source_Throws()
+    {
+        var registry = new ShellRegistry();
+        var act = () => registry.RegisterSource("x", null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+    // -- RemoveSource --
+    [Fact]
+    public void RemoveSource_Drops_Contribution_And_Bumps_Version()
+    {
+        var registry = new ShellRegistry();
+        registry.RegisterSource("dyn", new ShellSource
+        {
+            Builders = new IEditorShellBuilder[] { new TestBuilder("a", "A", DockZone.Center) }
+        });
+        registry.Current.Panels.Should().HaveCount(1);
+        registry.RemoveSource("dyn");
+        registry.Current.Panels.Should().BeEmpty();
+        registry.Version.Should().Be(2);
+    }
+    [Fact]
+    public void RemoveSource_Unknown_Id_Is_NoOp()
+    {
+        var registry = new ShellRegistry();
+        registry.RemoveSource("does-not-exist");
+        registry.Version.Should().Be(0);
+    }
+    // -- Multi-source merging + collision policy --
+    [Fact]
+    public void Dynamic_Source_Overrides_Static_On_Same_Panel_Id()
+    {
+        var registry = new ShellRegistry();
+        registry.RegisterSource(ShellSourceIds.Static, new ShellSource
+        {
+            Precedence = 0,
+            Builders = new IEditorShellBuilder[] { new TestBuilder("inspector", "Static Inspector", DockZone.Right) }
+        });
+        registry.RegisterSource(ShellSourceIds.Dynamic, new ShellSource
+        {
+            Precedence = 100,
+            Builders = new IEditorShellBuilder[] { new TestBuilder("inspector", "Hot-Reloaded Inspector", DockZone.Right) }
+        });
+        registry.Current.Panels.Should().HaveCount(1);
+        registry.Current.Panels[0].Title.Should().Be("Hot-Reloaded Inspector");
+    }
+    [Fact]
+    public void Different_Panel_Ids_From_Multiple_Sources_All_Appear()
+    {
+        var registry = new ShellRegistry();
+        registry.RegisterSource(ShellSourceIds.Static, new ShellSource
+        {
+            Builders = new IEditorShellBuilder[] { new TestBuilder("a", "A", DockZone.Left) }
+        });
+        registry.RegisterSource(ShellSourceIds.Dynamic, new ShellSource
+        {
+            Precedence = 100,
+            Builders = new IEditorShellBuilder[] { new TestBuilder("b", "B", DockZone.Right) }
+        });
+        registry.Current.Panels.Select(p => p.Id).Should().BeEquivalentTo(new[] { "a", "b" });
+    }
+    [Fact]
+    public void CustomCss_From_All_Sources_Concatenates()
+    {
+        var registry = new ShellRegistry();
+        registry.RegisterSource(ShellSourceIds.Static, new ShellSource { CustomCss = new[] { "/* static */" } });
+        registry.RegisterSource(ShellSourceIds.Dynamic, new ShellSource { Precedence = 100, CustomCss = new[] { "/* dynamic */" } });
+        registry.Current.CustomCss.Should().BeEquivalentTo("/* static */", "/* dynamic */");
+    }
+    // -- Events / threading --
+    [Fact]
+    public void Changed_Event_Fires_On_RegisterSource()
     {
         var registry = new ShellRegistry();
         int eventCount = 0;
         registry.Changed += () => eventCount++;
-
-        registry.Update(new ShellDescriptor());
-
+        registry.RegisterSource("x", new ShellSource());
         eventCount.Should().Be(1);
     }
-
     [Fact]
-    public void Changed_Event_Fires_Outside_Lock()
+    public void Changed_Event_Handler_Can_Read_Current_Without_Deadlock()
     {
-        // Verify that subscribing handler can read Current without deadlock
         var registry = new ShellRegistry();
-        ShellDescriptor? capturedDescriptor = null;
-        registry.Changed += () => capturedDescriptor = registry.Current;
-
-        var desc = new ShellDescriptor();
-        registry.Update(desc);
-
-        capturedDescriptor.Should().BeSameAs(desc);
+        ShellDescriptor? captured = null;
+        registry.Changed += () => captured = registry.Current;
+        registry.RegisterSource("x", new ShellSource
+        {
+            Builders = new IEditorShellBuilder[] { new TestBuilder("p", "P", DockZone.Center) }
+        });
+        captured.Should().NotBeNull();
+        captured!.Panels.Should().HaveCount(1);
     }
-
     [Fact]
-    public void Concurrent_Updates_Do_Not_Corrupt_State()
+    public void Concurrent_RegisterSource_Does_Not_Corrupt_State()
     {
         var registry = new ShellRegistry();
         const int iterations = 100;
-
         Parallel.For(0, iterations, i =>
         {
-            registry.Update(new ShellDescriptor
+            registry.RegisterSource($"src-{i % 4}", new ShellSource
             {
-                Metadata = new Dictionary<string, object> { ["i"] = i }
+                Builders = new IEditorShellBuilder[] { new TestBuilder($"p-{i}", $"P{i}", DockZone.Center) }
             });
         });
-
         registry.Version.Should().Be(iterations);
         registry.Current.Should().NotBeNull();
     }
-
-    // -- PanelDescriptor defaults --
-
+    // -- PanelDescriptor / ShellDescriptor defaults (unchanged) --
     [Fact]
     public void PanelDescriptor_Has_Sensible_Defaults()
     {
         var panel = new PanelDescriptor();
-
         panel.Id.Should().BeEmpty();
         panel.Title.Should().BeEmpty();
         panel.DefaultZone.Should().Be(DockZone.Left);
@@ -125,15 +171,20 @@ public class ShellRegistryTests
         panel.TabGroupId.Should().BeNull();
         panel.Route.Should().BeNull();
     }
-
-    // -- ShellDescriptor defaults --
-
     [Fact]
     public void ShellDescriptor_Defaults_Are_Empty()
     {
         var desc = new ShellDescriptor();
-
         desc.Panels.Should().BeEmpty();
         desc.Metadata.Should().BeEmpty();
+    }
+    // -- Test fixtures --
+    private sealed class TestBuilder : IEditorShellBuilder
+    {
+        private readonly string _id, _title;
+        private readonly DockZone _zone;
+        public TestBuilder(string id, string title, DockZone zone) { _id = id; _title = title; _zone = zone; }
+        public int Order => 0;
+        public void Build(IShellBuilder shell) => shell.Panel(_id, _title, _zone, _ => { });
     }
 }

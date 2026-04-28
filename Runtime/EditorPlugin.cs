@@ -7,7 +7,9 @@ namespace Engine;
 /// <summary>
 /// Composite plugin that brings up the in-process editor:
 /// <list type="bullet">
-///   <item><description>A <see cref="ShellRegistry"/> + hot-reload <see cref="ShellCompiler"/> watching a script directory.</description></item>
+///   <item><description>A <see cref="ShellRegistry"/> populated by both the static source-generator
+///         loader (<see cref="StaticShellLoader"/>) and a hot-reload <see cref="RuntimeShellCompiler"/>
+///         watching a script directory.</description></item>
 ///   <item><description>The <see cref="EditorServerHost"/> Blazor Server, started in-process.</description></item>
 ///   <item><description>A <see cref="WebViewPlugin"/> that renders the Blazor URL inside the engine's window.</description></item>
 /// </list>
@@ -29,7 +31,8 @@ namespace Engine;
 /// </code>
 /// </example>
 /// <seealso cref="WebViewPlugin"/>
-/// <seealso cref="ShellCompiler"/>
+/// <seealso cref="RuntimeShellCompiler"/>
+/// <seealso cref="StaticShellLoader"/>
 /// <seealso cref="EditorServerHost"/>
 public sealed class EditorPlugin : IPlugin
 {
@@ -39,7 +42,7 @@ public sealed class EditorPlugin : IPlugin
     public string ServerUrl { get; init; } = "http://localhost:5000";
 
     /// <summary>
-    /// Directory the <see cref="ShellCompiler"/> watches for hot-reloadable shell scripts.
+    /// Directory the <see cref="RuntimeShellCompiler"/> watches for hot-reloadable shell scripts.
     /// Defaults to <c>{AppContext.BaseDirectory}/source/shells</c> (matches the build-staged layout
     /// produced by the engine's <c>Modules\**</c> Content glob).
     /// </summary>
@@ -50,11 +53,19 @@ public sealed class EditorPlugin : IPlugin
     {
         Logger.Info("EditorPlugin: Building...");
 
-        // -- 1. Shell registry + hot-reload script compiler --
-        var scriptsDir = ScriptsDirectory ?? Path.Combine(AppContext.BaseDirectory, "source", "shells");
-
+        // -- 1. Shell registry: static (source-generated) + dynamic (hot-reload) sources --
         var registry = new ShellRegistry();
-        var compiler = new ShellCompiler(registry)
+
+        // 1a. Static contribution: every [EditorShell] / [EditorPanel] type compiled into a loaded
+        //     assembly is registered via the source-generator-emitted [GeneratedShellRegistration]
+        //     methods. AOT-friendly, no per-startup reflection scanning of user types.
+        var staticCount = StaticShellLoader.LoadInto(registry);
+        Logger.Info($"StaticShellLoader: {staticCount} generated shell registration(s) invoked.");
+
+        // 1b. Dynamic contribution: Roslyn compiler watches a scripts directory and pushes a
+        //     dynamic ShellSource on every successful compile. Overrides static panels by id.
+        var scriptsDir = ScriptsDirectory ?? Path.Combine(AppContext.BaseDirectory, "source", "shells");
+        var compiler = new RuntimeShellCompiler(registry)
             .WatchDirectory(scriptsDir)
             .AddReference(typeof(App).Assembly)             // Engine (3DEngine.dll)
             .AddReference(typeof(ShellRegistry).Assembly);  // 3DEngine.Server.dll (Editor.Shell types)
@@ -102,7 +113,7 @@ public sealed class EditorPlugin : IPlugin
         {
             Logger.Info("Shutting down editor...");
             try { compiler.Dispose(); }
-            catch (Exception ex) { Logger.Warn($"ShellCompiler dispose failed: {ex.Message}"); }
+            catch (Exception ex) { Logger.Warn($"RuntimeShellCompiler dispose failed: {ex.Message}"); }
 
             try
             {
