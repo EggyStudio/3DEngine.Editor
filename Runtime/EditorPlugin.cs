@@ -59,8 +59,8 @@ public sealed class EditorPlugin : IPlugin
             .AddReference(typeof(App).Assembly)             // Engine (3DEngine.dll)
             .AddReference(typeof(ShellRegistry).Assembly);  // 3DEngine.Server.dll (Editor.Shell types)
 
-        // EcsWorld is currently in the same assembly as App, but keep this guarded
-        // so the plugin still works if it ever moves out.
+        // EcsWorld currently lives in the engine assembly; guard the reference so the plugin
+        // keeps working if it ever moves to its own assembly.
         try { compiler.AddReference(typeof(EcsWorld).Assembly); }
         catch (Exception ex) { Logger.Debug($"EcsWorld reference skipped: {ex.Message}"); }
 
