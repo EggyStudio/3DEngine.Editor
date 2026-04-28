@@ -107,7 +107,7 @@ public class ShellRegistryTests
         registry.Current.Should().NotBeNull();
     }
 
-    // ── PanelDescriptor defaults ────────────────────────────────────────
+    // -- PanelDescriptor defaults --
 
     [Fact]
     public void PanelDescriptor_Has_Sensible_Defaults()
@@ -126,7 +126,7 @@ public class ShellRegistryTests
         panel.Route.Should().BeNull();
     }
 
-    // ── ShellDescriptor defaults ────────────────────────────────────────
+    // -- ShellDescriptor defaults --
 
     [Fact]
     public void ShellDescriptor_Defaults_Are_Empty()

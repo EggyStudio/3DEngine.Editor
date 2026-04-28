@@ -50,7 +50,7 @@ public sealed class EditorPlugin : IPlugin
     {
         Logger.Info("EditorPlugin: Building...");
 
-        // ── 1. Shell registry + hot-reload script compiler ─────────────
+        // -- 1. Shell registry + hot-reload script compiler --
         var scriptsDir = ScriptsDirectory ?? Path.Combine(AppContext.BaseDirectory, "source", "shells");
 
         var registry = new ShellRegistry();
@@ -76,7 +76,7 @@ public sealed class EditorPlugin : IPlugin
                 Logger.Error($"  {err.FileName}({err.Line},{err.Column}): {err.Message}");
         };
 
-        // ── 2. Blazor Server in-process (non-blocking after this awaits the listener bind) ──
+        // -- 2. Blazor Server in-process (non-blocking after this awaits the listener bind) --
         WebApplication server;
         try
         {
@@ -94,10 +94,10 @@ public sealed class EditorPlugin : IPlugin
         app.World.InsertResource(registry);
         app.World.InsertResource(compiler);
 
-        // ── 3. Embed the Blazor UI in the engine window via the existing WebView plugin ──
+        // -- 3. Embed the Blazor UI in the engine window via the existing WebView plugin --
         app.AddPlugin(new WebViewPlugin { InitialUrl = ServerUrl });
 
-        // ── 4. Graceful shutdown when the engine window closes ──────────
+        // -- 4. Graceful shutdown when the engine window closes --
         app.AddSystem(Stage.Cleanup, new SystemDescriptor(_ =>
         {
             Logger.Info("Shutting down editor...");

@@ -28,7 +28,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                 {
                     content.Div(Css.MarginXAuto().MaxWidth("3xl").SpaceY(6), inner =>
                     {
-                        // ── Menubar ────────────────────────────────────────────
+                        // -- Menubar --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Menubar");
@@ -80,7 +80,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── Navigation Menu ────────────────────────────────────
+                        // -- Navigation Menu --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Navigation Menu");
@@ -117,7 +117,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── Tabs ────────────────────────────────────────────
+                        // -- Tabs --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Tabs");
@@ -188,7 +188,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── Collapsible ─────────────────────────────────────
+                        // -- Collapsible --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Collapsible");
@@ -204,7 +204,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── FAQ (Multiple Collapsibles) ─────────────────────
+                        // -- FAQ (Multiple Collapsibles) --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("FAQ Section");
@@ -229,7 +229,7 @@ public class ShowcaseNavigationShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── Breadcrumb ──────────────────────────────────────
+                        // -- Breadcrumb --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Breadcrumb");

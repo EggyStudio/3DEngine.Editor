@@ -30,7 +30,7 @@ public static class ShowcasePageHelper
         {
             container.Div("flex flex-col lg:flex-row gap-8", layout =>
             {
-                // ── Sidebar ────────────────────────────────────────
+                // -- Sidebar --
                 layout.Div("lg:w-64 shrink-0", sidebar =>
                 {
                     sidebar.Div("sticky top-20 space-y-1", nav =>
@@ -49,7 +49,7 @@ public static class ShowcasePageHelper
                     });
                 });
 
-                // ── Content ────────────────────────────────────────
+                // -- Content --
                 layout.Div("flex-1 min-w-0", pageContent);
             });
         });

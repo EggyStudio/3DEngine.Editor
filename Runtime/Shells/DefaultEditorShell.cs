@@ -21,7 +21,7 @@ public class DefaultEditorShell : IEditorShellBuilder
     /// <inheritdoc />
     public void Build(IShellBuilder shell)
     {
-        // ── Home panel ───────────────────────────────────────────────
+        // -- Home panel --
         shell.Panel("showcase-home", "Home", DockZone.Center, panel =>
         {
             panel.Icon(Icon.From(Lucide.House)).TabGroup("showcase", 0).Closeable(false).Route("/");
@@ -31,7 +31,7 @@ public class DefaultEditorShell : IEditorShellBuilder
                 {
                     container.Div(Css.MarginXAuto().MaxWidth("3xl").SpaceY(8), inner =>
                     {
-                        // ── Hero Section ────────────────────────────────────
+                        // -- Hero Section --
                         inner.Div(Css.TextCenter().SpaceY(4), hero =>
                         {
                             hero.Div(Css.Flex().Column().Items(Align.Center).Gap(2), badges =>
@@ -44,7 +44,7 @@ public class DefaultEditorShell : IEditorShellBuilder
                             hero.Paragraph(Css.Default, "Your Blazor app is ready with 80+ beautiful components.");
                         });
 
-                        // ── Quick Demo (like App1) ───────────────────────────
+                        // -- Quick Demo (like App1) --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Quick Demo");
@@ -134,7 +134,7 @@ public class DefaultEditorShell : IEditorShellBuilder
                             });
                         });
 
-                        // ── Next Steps ──────────────────────────────────────
+                        // -- Next Steps --
                         inner.Card(Css.Default, card =>
                         {
                             card.Title("Next Steps");
