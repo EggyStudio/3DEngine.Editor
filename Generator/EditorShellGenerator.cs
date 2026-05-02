@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -47,18 +47,16 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext ctx)
     {
         var candidates = ctx.SyntaxProvider.CreateSyntaxProvider(
-            static (node, _) => node is ClassDeclarationSyntax cds && cds.AttributeLists.Count > 0,
-            static (context, _) =>
-            {
-                var cds = (ClassDeclarationSyntax)context.Node;
-                return context.SemanticModel.GetDeclaredSymbol(cds) as INamedTypeSymbol;
-            })
+                static (node, _) => node is ClassDeclarationSyntax cds && cds.AttributeLists.Count > 0,
+                static (context, _) =>
+                {
+                    var cds = (ClassDeclarationSyntax)context.Node;
+                    return context.SemanticModel.GetDeclaredSymbol(cds) as INamedTypeSymbol;
+                })
             .Where(s => s is not null)
             .Collect();
 
-        var combined = ctx.CompilationProvider.Combine(candidates);
-
-        ctx.RegisterSourceOutput(combined, (spc, pair) =>
+        ctx.RegisterSourceOutput(ctx.CompilationProvider.Combine(candidates), (spc, pair) =>
         {
             var (compilation, types) = pair;
 
@@ -67,47 +65,13 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
 
             foreach (var t in types.Distinct(SymbolEqualityComparer.Default).OfType<INamedTypeSymbol>())
             {
-                AttributeData? shellAttr = null;
-                AttributeData? panelAttr = null;
-                foreach (var a in t.GetAttributes())
-                {
-                    var name = a.AttributeClass?.ToDisplayString();
-                    if (name == EditorShellAttr) shellAttr = a;
-                    else if (name == EditorPanelAttr) panelAttr = a;
-                }
+                var (shellAttr, panelAttr) = FindAttrs(t);
 
                 if (shellAttr is not null)
-                {
-                    if (!ImplementsInterface(t, ShellBuilderIface))
-                    {
-                        spc.ReportDiagnostic(Diagnostic.Create(SkippedTypeDiag, t.Locations.FirstOrDefault(),
-                            t.ToDisplayString(), $"does not implement {ShellBuilderIface}"));
-                    }
-                    else if (t.IsAbstract)
-                    {
-                        spc.ReportDiagnostic(Diagnostic.Create(SkippedTypeDiag, t.Locations.FirstOrDefault(),
-                            t.ToDisplayString(), "type is abstract"));
-                    }
-                    else if (t.IsGenericType)
-                    {
-                        spc.ReportDiagnostic(Diagnostic.Create(SkippedTypeDiag, t.Locations.FirstOrDefault(),
-                            t.ToDisplayString(), "type is generic"));
-                    }
-                    else if (!HasPublicParameterlessCtor(t))
-                    {
-                        spc.ReportDiagnostic(Diagnostic.Create(SkippedTypeDiag, t.Locations.FirstOrDefault(),
-                            t.ToDisplayString(), "no public parameterless constructor"));
-                    }
-                    else
-                    {
-                        shellTypes.Add(t);
-                    }
-                }
+                    TryRegisterShell(t, spc, shellTypes);
 
                 if (panelAttr is not null && !t.IsAbstract && !t.IsGenericType)
-                {
                     panelTypes.Add((t, panelAttr));
-                }
             }
 
             if (shellTypes.Count == 0 && panelTypes.Count == 0) return;
@@ -117,21 +81,48 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
         });
     }
 
-    private static bool ImplementsInterface(INamedTypeSymbol t, string fqn)
+    // -- Discovery / validation --
+
+    private static (AttributeData? Shell, AttributeData? Panel) FindAttrs(INamedTypeSymbol t)
     {
-        foreach (var i in t.AllInterfaces)
-            if (i.ToDisplayString() == fqn) return true;
-        return false;
+        AttributeData? shell = null, panel = null;
+        foreach (var a in t.GetAttributes())
+        {
+            switch (a.AttributeClass?.ToDisplayString())
+            {
+                case EditorShellAttr: shell = a; break;
+                case EditorPanelAttr: panel = a; break;
+            }
+        }
+
+        return (shell, panel);
     }
+
+    private static void TryRegisterShell(INamedTypeSymbol t, SourceProductionContext spc, List<INamedTypeSymbol> sink)
+    {
+        string? reason =
+            !ImplementsInterface(t, ShellBuilderIface) ? $"does not implement {ShellBuilderIface}" :
+            t.IsAbstract ? "type is abstract" :
+            t.IsGenericType ? "type is generic" :
+            !HasPublicParameterlessCtor(t) ? "no public parameterless constructor" :
+            null;
+
+        if (reason is null)
+            sink.Add(t);
+        else
+            spc.ReportDiagnostic(Diagnostic.Create(SkippedTypeDiag, t.Locations.FirstOrDefault(),
+                t.ToDisplayString(), reason));
+    }
+
+    private static bool ImplementsInterface(INamedTypeSymbol t, string fqn)
+        => t.AllInterfaces.Any(i => i.ToDisplayString() == fqn);
 
     private static bool HasPublicParameterlessCtor(INamedTypeSymbol t)
     {
         // Implicit ctor counts.
         var explicitCtors = t.InstanceConstructors.Where(c => !c.IsImplicitlyDeclared).ToList();
-        if (explicitCtors.Count == 0) return true;
-        foreach (var c in explicitCtors)
-            if (c.Parameters.Length == 0 && c.DeclaredAccessibility == Accessibility.Public) return true;
-        return false;
+        return explicitCtors.Count == 0
+               || explicitCtors.Any(c => c.Parameters.Length == 0 && c.DeclaredAccessibility == Accessibility.Public);
     }
 
     private static string SanitizeIdentifier(string s)
@@ -143,74 +134,64 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
         return sb.ToString();
     }
 
+    // -- Source emission --
+
     private static string Emit(
         string asmIdent,
         IReadOnlyList<INamedTypeSymbol> shellTypes,
         IReadOnlyList<(INamedTypeSymbol Type, AttributeData Attr)> panelTypes)
     {
-        var sb = new StringBuilder();
-        sb.AppendLine("// <auto-generated />");
-        sb.AppendLine("#nullable enable");
-        sb.AppendLine("namespace Editor.Shell.Generated;");
-        sb.AppendLine();
-        sb.AppendLine($"internal static class EditorShellsRegistration_{asmIdent}");
-        sb.AppendLine("{");
-        sb.AppendLine("    [global::Editor.Shell.GeneratedShellRegistration]");
-        sb.AppendLine("    public static void Register(global::Editor.Shell.ShellRegistry registry)");
-        sb.AppendLine("    {");
+        var builders = string.Concat(shellTypes.Select(t =>
+            $"            new {t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}(),\n"));
 
-        sb.AppendLine("        var builders = new global::Editor.Shell.IEditorShellBuilder[]");
-        sb.AppendLine("        {");
-        foreach (var t in shellTypes)
-            sb.AppendLine($"            new {t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}(),");
-        sb.AppendLine("        };");
-        sb.AppendLine();
-
-        sb.AppendLine("        var panels = new global::System.Collections.Generic.List<(global::Editor.Shell.EditorPanelAttribute, global::System.Type)>");
-        sb.AppendLine("        {");
-        foreach (var (t, attr) in panelTypes)
+        var panels = string.Concat(panelTypes.Select(p =>
         {
-            var fqn = t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-            sb.AppendLine($"            ({EmitPanelAttributeCtor(attr)}, typeof({fqn})),");
-        }
-        sb.AppendLine("        };");
-        sb.AppendLine();
+            var fqn = p.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            return $"            ({EmitPanelAttributeCtor(p.Attr)}, typeof({fqn})),\n";
+        }));
 
-        sb.AppendLine("        registry.RegisterSource(global::Editor.Shell.ShellSourceIds.Static, new global::Editor.Shell.ShellSource");
-        sb.AppendLine("        {");
-        sb.AppendLine("            Builders = builders,");
-        sb.AppendLine("            PanelComponents = panels,");
-        sb.AppendLine("            Precedence = 0,");
-        sb.AppendLine("        });");
+        return
+            $$"""
+              // <auto-generated />
+              #nullable enable
+              namespace Editor.Shell.Generated;
 
-        sb.AppendLine("    }");
-        sb.AppendLine("}");
-        return sb.ToString();
+              internal static class EditorShellsRegistration_{{asmIdent}}
+              {
+                  [global::Editor.Shell.GeneratedShellRegistration]
+                  public static void Register(global::Editor.Shell.ShellRegistry registry)
+                  {
+                      var builders = new global::Editor.Shell.IEditorShellBuilder[]
+                      {
+                          {{builders}}        
+                      };
+
+                      var panels = new global::System.Collections.Generic.List<(global::Editor.Shell.EditorPanelAttribute, global::System.Type)>
+                      {
+                          {{panels}}        
+                      };
+
+                      registry.RegisterSource(global::Editor.Shell.ShellSourceIds.Static, new global::Editor.Shell.ShellSource
+                      {
+                          Builders = builders,
+                          PanelComponents = panels,
+                          Precedence = 0,
+                      });
+                  }
+              }
+
+              """;
     }
 
     /// <summary>Reproduces the call site of an <c>[EditorPanel(...)]</c> attribute as a runtime constructor expression.</summary>
     private static string EmitPanelAttributeCtor(AttributeData attr)
     {
-        var sb = new StringBuilder();
-        sb.Append("new global::Editor.Shell.EditorPanelAttribute(");
-        for (int i = 0; i < attr.ConstructorArguments.Length; i++)
-        {
-            if (i > 0) sb.Append(", ");
-            sb.Append(EmitTypedConstant(attr.ConstructorArguments[i]));
-        }
-        sb.Append(')');
-        if (attr.NamedArguments.Length > 0)
-        {
-            sb.Append(" { ");
-            for (int i = 0; i < attr.NamedArguments.Length; i++)
-            {
-                if (i > 0) sb.Append(", ");
-                var (k, v) = (attr.NamedArguments[i].Key, attr.NamedArguments[i].Value);
-                sb.Append(k).Append(" = ").Append(EmitTypedConstant(v));
-            }
-            sb.Append(" }");
-        }
-        return sb.ToString();
+        var ctorArgs = string.Join(", ", attr.ConstructorArguments.Select(EmitTypedConstant));
+        var named = attr.NamedArguments.Length == 0
+            ? ""
+            : " { " + string.Join(", ", attr.NamedArguments.Select(n => $"{n.Key} = {EmitTypedConstant(n.Value)}")) +
+              " }";
+        return $"new global::Editor.Shell.EditorPanelAttribute({ctorArgs}){named}";
     }
 
     private static string EmitTypedConstant(TypedConstant c)
@@ -218,13 +199,14 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
         if (c.IsNull) return "null";
         if (c.Kind == TypedConstantKind.Enum && c.Type is INamedTypeSymbol e)
             return $"({e.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}){c.Value}";
-        if (c.Value is string s) return "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
-        if (c.Value is bool b) return b ? "true" : "false";
-        if (c.Value is float f) return f.ToString(System.Globalization.CultureInfo.InvariantCulture) + "f";
-        if (c.Value is double d) return d.ToString(System.Globalization.CultureInfo.InvariantCulture) + "d";
-        return c.Value?.ToString() ?? "null";
+        return c.Value switch
+        {
+            string s => "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"",
+            bool b => b ? "true" : "false",
+            float f => f.ToString(CultureInfo.InvariantCulture) + "f",
+            double d => d.ToString(CultureInfo.InvariantCulture) + "d",
+            null => "null",
+            _ => c.Value.ToString(),
+        };
     }
 }
-
-
-
