@@ -206,7 +206,7 @@ public sealed class EditorShellGenerator : IIncrementalGenerator
             float f => f.ToString(CultureInfo.InvariantCulture) + "f",
             double d => d.ToString(CultureInfo.InvariantCulture) + "d",
             null => "null",
-            _ => c.Value.ToString(),
+            _ => c.Value.ToString() ?? "null",
         };
     }
 }
